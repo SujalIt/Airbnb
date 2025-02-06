@@ -8,8 +8,8 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 10),(){
-      Get.offAllNamed(Routes.home);
+    Future.delayed(Duration(seconds: 5),(){
+      Get.offAllNamed(Routes.explore);
     });
     return Scaffold(
       body: Center(
