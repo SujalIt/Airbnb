@@ -1,65 +1,75 @@
+import 'package:airbnb/utils/extensions.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../controllers/explore_carousel_slider_controller.dart';
-import '../../controllers/explore_switch_controller.dart';
+import '../../controllers/explore_controllers/explore_carousel_slider_controller.dart';
+import '../../controllers/explore_controllers/explore_switch_controller.dart';
 
-class ExploreHomeScreen extends StatelessWidget {
+class ExploreHomeScreen extends StatefulWidget {
   const ExploreHomeScreen({super.key});
 
   @override
+  State<StatefulWidget> createState() => _ExploreHomeScreenState();
+}
+
+class _ExploreHomeScreenState extends State<ExploreHomeScreen>{
+  late final SwitchButtonController switchController;
+  late final ExploreCarouselSliderController carouselController;
+
+  @override
+  void initState(){
+    super.initState();
+    switchController = Get.find();
+    carouselController = Get.find();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SwitchButton switchController = Get.find();
-    ExploreCarouselSliderController carouselController = Get.find();
-
-    final exploreScreenHeight = MediaQuery.of(context).size.height;
-    final exploreScreenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: exploreScreenWidth * 0.05),
+        padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
         child: Column(
           children: [
             // Search button
             SizedBox(
-              height: exploreScreenHeight * 0.05,
+              height: context.screenHeight * 0.05,
             ), //45
             SizedBox(
-              height: exploreScreenHeight * 0.07,
-              width: exploreScreenWidth * 0.9,
+              height: context.screenHeight * 0.07,
+              width: context.screenWidth * 0.9,
               child: ElevatedButton(
                   onPressed: () {},
                   style: ButtonStyle(
                       foregroundColor: WidgetStatePropertyAll(Colors.black),
                       backgroundColor: WidgetStatePropertyAll(Colors.white60)),
                   child: Padding(
-                    padding: EdgeInsets.only(left: exploreScreenWidth * 0.2),
+                    padding: EdgeInsets.only(left: context.screenWidth * 0.2),
                     //80
                     child: Row(
                       children: [
                         Icon(
                           Icons.search,
-                          size: exploreScreenWidth * 0.04,
+                          size: context.screenWidth * 0.04,
                           color: Colors.black,
                         ),
                         SizedBox(
-                          width: exploreScreenWidth * 0.01,
+                          width: context.screenWidth * 0.01,
                         ),
                         Text(
                           'Start your search',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: exploreScreenWidth * 0.04),
+                              fontSize: context.screenWidth * 0.04),
                         ),
                       ],
                     ),
                   )),
             ),
             SizedBox(
-              height: exploreScreenHeight * 0.01,
+              height: context.screenHeight * 0.01,
             ),
             // types of rooms or locations
             DefaultTabController(
@@ -106,6 +116,7 @@ class ExploreHomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+
             // display price and image container
             Expanded(
               child: SingleChildScrollView(
@@ -113,10 +124,10 @@ class ExploreHomeScreen extends StatelessWidget {
                   children: [
                     // total price switch
                     SizedBox(
-                      height: exploreScreenHeight * 0.03,
+                      height: context.screenHeight * 0.03,
                     ),
                     Container(
-                      padding: EdgeInsets.all(exploreScreenWidth * 0.03),
+                      padding: EdgeInsets.all(context.screenWidth * 0.03),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
                           borderRadius: BorderRadius.circular(10)),
@@ -131,17 +142,16 @@ class ExploreHomeScreen extends StatelessWidget {
                             ],
                           ),
                           SizedBox(
-                            width: exploreScreenWidth * 0.12,
+                            width: context.screenWidth * 0.12,
                           ),
                           Obx(() {
                             return Transform.scale(
-                              scaleX: 0.9,
                               scaleY: 1,
                               child: Switch(
                                   thumbIcon: WidgetStatePropertyAll(Icon(
                                     Icons.circle_sharp,
                                     color: Colors.white,
-                                    size: exploreScreenWidth * 0.01,
+                                    size: context.screenWidth * 0.01,
                                   )),
                                   activeColor: Colors.white,
                                   activeTrackColor: Colors.black,
@@ -171,7 +181,7 @@ class ExploreHomeScreen extends StatelessWidget {
                                   child: CarouselSlider(
                                     items: carouselController.images,
                                     options: CarouselOptions(
-                                      height: exploreScreenHeight * 0.4,
+                                      height: context.screenHeight * 0.4,
                                         viewportFraction: 1,
                                         onPageChanged: (index, reason) {
                                           carouselController.currentIndex.value = index;
@@ -184,21 +194,21 @@ class ExploreHomeScreen extends StatelessWidget {
                                     onPressed: () {},
                                     icon: Icon(
                                       Icons.favorite_outline_rounded,
-                                      size: exploreScreenWidth * 0.07,
+                                      size: context.screenWidth * 0.07,
                                       color: Colors.white60,
                                     ),
                                   ),
                                 ),
                                 Obx((){
                                   return Padding(
-                                    padding: EdgeInsets.only(top: 310,left: 160),
+                                    padding: EdgeInsets.only(top: context.screenHeight * 0.37,left: context.screenWidth * 0.4),//310,160
                                     child: SmoothPageIndicator(
                                         controller: PageController(initialPage: carouselController.currentIndex.value),
                                         count: carouselController.images.length,
                                       effect: SlideEffect(
                                         activeDotColor: Colors.grey,
-                                        dotHeight: exploreScreenHeight * 0.01,
-                                        dotWidth: exploreScreenWidth * 0.02,
+                                        dotHeight: context.screenHeight * 0.01,
+                                        dotWidth: context.screenWidth * 0.02,
                                         dotColor: Colors.white60,
                                       ),
                                     ),
@@ -206,7 +216,7 @@ class ExploreHomeScreen extends StatelessWidget {
                                 })
                               ]),
                               SizedBox(
-                                height: exploreScreenHeight * 0.01,
+                                height: context.screenHeight * 0.01,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,11 +229,11 @@ class ExploreHomeScreen extends StatelessWidget {
                                             fontWeight: FontWeight.w600),
                                       ),
                                       SizedBox(
-                                        width: exploreScreenWidth * 0.4,
+                                        width: context.screenWidth * 0.4,
                                       ),
                                       Icon(
                                         Icons.star,
-                                        size: exploreScreenWidth * 0.03,
+                                        size: context.screenWidth * 0.03,
                                       ),
                                       Text(
                                         '4.8',
@@ -245,15 +255,15 @@ class ExploreHomeScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w600),
                                   ),
                                   SizedBox(
-                                    height: exploreScreenHeight * 0.01,
+                                    height: context.screenHeight * 0.01,
                                   ),
                                   Row(
-                                    spacing: exploreScreenWidth * 0.01,
+                                    spacing: context.screenWidth * 0.01,
                                     children: [
                                       Text(
                                         '₹1,896',
                                         style: TextStyle(
-                                            fontSize: exploreScreenWidth * 0.04,
+                                            fontSize: context.screenWidth * 0.04,
                                             color: Colors.black,
                                             fontWeight: FontWeight.w900),
                                       ),
@@ -261,7 +271,7 @@ class ExploreHomeScreen extends StatelessWidget {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: exploreScreenHeight * 0.04,
+                                    height: context.screenHeight * 0.04,
                                   )
                                 ],
                               ),
@@ -276,15 +286,15 @@ class ExploreHomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: SizedBox(
-        height: exploreScreenHeight * 0.06,
+        height: context.screenHeight * 0.06,
         child: FloatingActionButton.extended(
           onPressed: () {},
           isExtended: true,
           shape: true
               ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))
               : CircleBorder(),
-          extendedIconLabelSpacing: exploreScreenWidth * 0.01,
-          extendedPadding: EdgeInsets.symmetric(horizontal: exploreScreenWidth * 0.05),
+          extendedIconLabelSpacing: context.screenWidth * 0.01,
+          extendedPadding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
           label: Icon(Icons.map),

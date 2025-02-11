@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: "Flutter Airbnb",
+      title: "Airbnb",
       initialRoute: AppRouter.initialRoute,
       getPages: AppRouter.appPages,
     );

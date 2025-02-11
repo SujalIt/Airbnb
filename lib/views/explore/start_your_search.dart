@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/explore_expansion_tile_controller.dart';
+import '../../controllers/explore_controllers/explore_expansion_tile_controller.dart';
 
 class StartYourSearch extends StatelessWidget {
    const StartYourSearch({super.key});

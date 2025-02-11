@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/explore_switch_controller.dart';
+import '../controllers/explore_controllers/explore_switch_controller.dart';
 
 class ExploreMainScreen extends StatelessWidget {
   const ExploreMainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    BottomNavigation bottomController = Get.find();
+    BottomNavigationController bottomController = Get.find();
     return Obx(() {
       return Scaffold(
         backgroundColor: Colors.white,

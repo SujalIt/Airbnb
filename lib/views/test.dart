@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/explore_expansion_tile_controller.dart';
+import '../controllers/explore_controllers/explore_expansion_tile_controller.dart';
 
 class ExpansionTileExample extends StatelessWidget {
-  // Instantiate the controller
   final ExploreExpansionTileController expansionTileController = Get.put(ExploreExpansionTileController());
 
   @override
