@@ -1,6 +1,4 @@
-import 'package:airbnb/routes/app_router.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:airbnb/airbnb_global_imports.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,8 +11,8 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "Airbnb",
-      initialRoute: AppRouter.initialRoute,
-      getPages: AppRouter.appPages,
+      initialRoute: Routes.explore,
+      getPages: AppRouter.routes,
     );
   }
 }
