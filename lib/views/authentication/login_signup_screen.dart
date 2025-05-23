@@ -8,13 +8,26 @@ class LoginSignupScreen extends StatefulWidget {
 }
 
 class _LoginSignupScreenState extends State<LoginSignupScreen> {
-  TextEditingController phoneTextController = TextEditingController();
-  late final LoginSignupPhoneController phoneController;
+  late TextEditingController phoneTextController;
+  late TextEditingController emailTextController;
+
+  late final PhoneController phoneController;
+  late final PhoneEmailController phoneEmailController;
 
   @override
   void initState() {
     super.initState();
+    phoneTextController = TextEditingController();
+    emailTextController = TextEditingController();
     phoneController = Get.find();
+    phoneEmailController = Get.find();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailTextController.dispose();
+    phoneTextController.dispose();
   }
 
   @override
@@ -27,7 +40,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
           padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.04),
           child: IconButton(
               onPressed: () {
-                Get.back();
+                Get.offNamed('/profile');
               },
               icon: Icon(
                 Icons.cancel_outlined,
@@ -60,55 +73,62 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Column(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Country/Region',
-                            style: TextStyle(
-                                fontSize: context.screenWidth * 0.032,
-                                color: Colors.blueGrey),
-                          ),
-                          IntlPhoneField(
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                            keyboardType: TextInputType.none,
-                            initialCountryCode: 'IN',
-                            showCursor: false,
-                            disableLengthCheck: true,
-                            onCountryChanged: (country) {
-                              phoneController
-                                  .updateCountryCode('+${country.dialCode}');
-                            },
-                          ),
-                        ],
-                      ),
-                      Divider(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Phone number',
-                            style: TextStyle(
-                                fontSize: context.screenWidth * 0.032,
-                                color: Colors.blueGrey),
-                          ),
-                          Obx(
-                            () => TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                prefixText:
-                                    phoneController.selectedCountryCode.value,
+                      Obx(
+                        () => phoneEmailController.isEmailSelected.value
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Country/Region',
+                                    style: TextStyle(
+                                        fontSize: context.screenWidth * 0.032,
+                                        color: Colors.blueGrey),
+                                  ),
+                                  IntlPhoneField(
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                    ),
+                                    keyboardType: TextInputType.none,
+                                    initialCountryCode: 'IN',
+                                    showCursor: false,
+                                    disableLengthCheck: true,
+                                    onCountryChanged: (country) {
+                                      phoneController.updateCountryCode(
+                                          '+${country.dialCode}');
+                                    },
+                                  ),
+                                  Divider(),
+                                  Text(
+                                    'Phone number',
+                                    style: TextStyle(
+                                        fontSize: context.screenWidth * 0.032,
+                                        color: Colors.blueGrey),
+                                  ),
+                                  Obx(
+                                    () => TextField(
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        prefixText: phoneController
+                                            .selectedCountryCode.value,
+                                      ),
+                                      style: TextStyle(
+                                          fontSize: context.screenWidth * 0.04),
+                                      controller: phoneTextController,
+                                      keyboardType: TextInputType.phone,
+                                      maxLength: 10,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : TextField(
+                                decoration: InputDecoration(
+                                  labelText: 'Email',
+                                  border: InputBorder.none,
+                                ),
+                                controller: emailTextController,
+                                keyboardType: TextInputType.emailAddress,
                               ),
-                              style: TextStyle(
-                                  fontSize: context.screenWidth * 0.04),
-                              controller: phoneTextController,
-                              keyboardType: TextInputType.phone,
-                            ),
-                          ),
-                        ],
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -123,13 +143,31 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               SizedBox(
                 height: context.screenHeight * 0.015,
               ),
-              // CustomLogInButton(
-              //     onPressed: (){},
-              //   width: context.screenWidth * 1,
-              //   child: Text('Continue',style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04,),),
-              // ),
               CustomButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (emailTextController.text.trim().isEmpty) {
+                    Get.snackbar(
+                      'Error',
+                      'Please enter email!',
+                    );
+                  }
+                  FirebaseAuth.instance
+                      .authStateChanges()
+                      .first
+                      .then((User? user) {
+                    if (user == null) {
+                      Get.toNamed(
+                        '/auth/signUp',
+                        arguments: emailTextController.text.trim(),
+                      );
+                    } else {
+                      Get.toNamed(
+                        '/auth/passwordScreen',
+                        arguments: emailTextController.text.trim(),
+                      );
+                    }
+                  });
+                },
                 width: context.screenWidth * 1,
                 text: 'Continue',
                 textStyle: TextStyle(
@@ -164,16 +202,20 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 height: context.screenHeight * 0.02,
               ),
               CustomButton(
-                onPressed: (){},
+                onPressed: () {
+                  phoneEmailController.isEmailSelected.value
+                      ? phoneEmailController.toggleField(false)
+                      : phoneEmailController.toggleField(true);
+                },
                 type: ButtonTypes.outlined,
                 leadingIcon: Icons.email,
-                text: "Continue with Email",
+                text: "Continue with Phone",
               ),
               SizedBox(
                 height: context.screenHeight * 0.02,
               ),
               CustomButton(
-                onPressed: (){},
+                onPressed: () {},
                 type: ButtonTypes.outlined,
                 leadingIcon: Icons.facebook_outlined,
                 text: "Continue with Facebook",
@@ -182,7 +224,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 height: context.screenHeight * 0.02,
               ),
               CustomButton(
-                onPressed: (){},
+                onPressed: () {
+                  phoneEmailController.signInWithGoogle();
+                },
                 type: ButtonTypes.outlined,
                 leadingIcon: Icons.g_mobiledata_outlined,
                 text: "Continue with Google",
@@ -191,7 +235,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 height: context.screenHeight * 0.02,
               ),
               CustomButton(
-                onPressed: (){},
+                onPressed: () {},
                 type: ButtonTypes.outlined,
                 leadingIcon: Icons.apple_outlined,
                 text: "Continue with Apple",

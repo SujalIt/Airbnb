@@ -1,0 +1,12 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.peanut.airbnb",
+      "sha256_cert_fingerprints": ["A4:55:DD:C5:CD:BB:2F:CF:F5:14:6C:3B:72:5E:73:E0:0C:82:E0:BE:28:CA:8D:5D:A0:C0:1D:9A:88:80:73:6A"]
+    }
+  }
+]

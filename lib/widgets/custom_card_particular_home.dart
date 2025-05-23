@@ -6,7 +6,7 @@ class CustomCardParticularHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: context.screenHeight * 0.33,
+      height: context.screenHeight * 0.34,
       width: context.screenWidth * 0.7,
       child: Card(
           color: Colors.white,

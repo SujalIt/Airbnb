@@ -8,6 +8,14 @@ allprojects {
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+
+    if (project.name == 'uni_links') {
+        afterEvaluate {
+            android {
+                namespace 'com.example.uni_links' // Force a namespace
+            }
+        }
+    }
 }
 subprojects {
     project.evaluationDependsOn(":app")

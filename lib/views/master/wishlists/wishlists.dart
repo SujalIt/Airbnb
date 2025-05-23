@@ -1,16 +1,11 @@
 import 'package:airbnb/airbnb_global_imports.dart';
-import 'package:airbnb/views/test.dart';
 
 class WishlistsScreen extends StatelessWidget {
   const WishlistsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body:
-
-
+    return
       Padding(
         padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.06),
         child: Column(
@@ -67,7 +62,9 @@ class WishlistsScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      );
+
+      // image component/.....
 
       // SafeArea(
       //   child: SingleChildScrollView(
@@ -106,6 +103,5 @@ class WishlistsScreen extends StatelessWidget {
       //     ),
       //   ),
       // ),
-    );
   }
 }

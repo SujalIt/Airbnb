@@ -1,4 +1,5 @@
 import 'package:airbnb/airbnb_global_imports.dart';
+import 'package:flutter/foundation.dart';
 
 class CustomImage extends GetView<ImagePickerController> {
   final String path; // path identify

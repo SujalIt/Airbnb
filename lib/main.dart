@@ -1,17 +1,25 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Firebase Init
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await PushNotifications.init();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget{
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: PushNotifications.navigatorKey,
       title: "Airbnb",
-      initialRoute: Routes.explore,
+      initialRoute: Routes.splashScreen,
       getPages: AppRouter.routes,
     );
   }
