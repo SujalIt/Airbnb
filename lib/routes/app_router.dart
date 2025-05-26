@@ -61,10 +61,10 @@ class AppRouter {
       bindings: [ExploreScreenBinding(),],
       transition: Transition.noTransition,
     ),
-    GetPage(
-      name: Routes.messageNotification,
-      page: () => MessageNotificationScreen(),
-    ),
+    // GetPage(
+    //   name: Routes.messageNotification,
+    //   page: () => MessageNotificationScreen(),
+    // ),
     GetPage(
       name: Routes.profile,
       page: () => ExploreMainScreen(),

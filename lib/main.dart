@@ -8,7 +8,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await PushNotifications.init();
+  // await PushNotifications.init();
   runApp(MyApp());
 }
 
@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      navigatorKey: PushNotifications.navigatorKey,
+      // navigatorKey: PushNotifications.navigatorKey,
       title: "Airbnb",
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.auth,
+      initialRoute: Routes.splashScreen,
       getPages: AppRouter.routes,
     );
   }
