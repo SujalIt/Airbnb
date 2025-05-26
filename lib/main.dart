@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       navigatorKey: PushNotifications.navigatorKey,
       title: "Airbnb",
-      initialRoute: Routes.splashScreen,
+      debugShowCheckedModeBanner: false,
+      initialRoute: Routes.auth,
       getPages: AppRouter.routes,
     );
   }

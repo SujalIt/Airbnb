@@ -215,30 +215,12 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 height: context.screenHeight * 0.02,
               ),
               CustomButton(
-                onPressed: () {},
-                type: ButtonTypes.outlined,
-                leadingIcon: Icons.facebook_outlined,
-                text: "Continue with Facebook",
-              ),
-              SizedBox(
-                height: context.screenHeight * 0.02,
-              ),
-              CustomButton(
                 onPressed: () {
                   phoneEmailController.signInWithGoogle();
                 },
                 type: ButtonTypes.outlined,
                 leadingIcon: Icons.g_mobiledata_outlined,
                 text: "Continue with Google",
-              ),
-              SizedBox(
-                height: context.screenHeight * 0.02,
-              ),
-              CustomButton(
-                onPressed: () {},
-                type: ButtonTypes.outlined,
-                leadingIcon: Icons.apple_outlined,
-                text: "Continue with Apple",
               ),
             ],
           ),

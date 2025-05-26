@@ -35,7 +35,6 @@ class PasswordLoginController extends GetxController {
   Future<void> resetPassword(String getEmail) async {
     try{
       await FirebaseAuth.instance.sendPasswordResetEmail(email: getEmail);
-      print(getEmail);
       SnackBar(
         content: Text('Password reset link sent to your email.'),
       );

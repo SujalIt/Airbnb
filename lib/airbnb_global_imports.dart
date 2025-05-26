@@ -42,6 +42,7 @@ export 'package:airbnb/views/master/messages/controllers/push_notification.dart'
 export 'package:airbnb/utils/extensions.dart';
 export 'package:airbnb/utils/app_string.dart';
 export 'package:airbnb/utils/colors.dart';
+export 'package:airbnb/utils/images.dart';
 
 // utils enums
 export 'package:airbnb/utils/enums.dart';

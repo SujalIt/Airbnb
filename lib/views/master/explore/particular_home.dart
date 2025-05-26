@@ -49,7 +49,7 @@ class ParticularHomeState extends State<ParticularHome> {
       context: context,
       barrierLabel: "Close full-screen map",
       barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.5),
+      barrierColor: Colors.black.withValues(alpha: 0.5),
       transitionDuration: Duration(milliseconds: 300),
       pageBuilder: (context, animation, secondaryAnimation) {
         return FullScreenMapDialog();

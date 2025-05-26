@@ -1,13 +1,12 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
 class PasswordLoginScreen extends GetView<PasswordLoginController> {
-  PasswordLoginScreen({super.key});
-
-  TextEditingController passwordController = TextEditingController();
-  String emailFromLoginSignupScreen = Get.arguments;
+  const PasswordLoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController passwordController = TextEditingController();
+    String emailFromLoginSignupScreen = Get.arguments;
     return Scaffold(
       appBar: AppBar(),
       body: Padding(

@@ -89,9 +89,9 @@ class ExploreCarouselSliderController extends GetxController {
         .get();
 
     Map<String, Map<String, dynamic>> documents = {};
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
       documents[doc.id] = doc.data() as Map<String, dynamic>;
-    });
+    }
     return documents;
   }
 }

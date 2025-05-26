@@ -17,7 +17,7 @@ class PhoneEmailController extends GetxController {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
       final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-      final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(
+      await FirebaseAuth.instance.signInWithCredential(
         GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
@@ -26,7 +26,7 @@ class PhoneEmailController extends GetxController {
       Get.snackbar('Successfully signed in!', 'Now you are logged in.',snackPosition: SnackPosition.BOTTOM);
       Get.offNamed('/profile');
     } catch (e) {
-      print('Error....$e');
+      // Error Logic....
     }
   }
 }

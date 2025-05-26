@@ -7,20 +7,23 @@ class SplashScreen extends GetView<SplashController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primary,
-      body: Column(
+      body: Stack(
         children: [
           Center(
             child: CustomImage(
-              path: 'assets/icon/airbnb_logo_splash_screen.png',
+              path: AppImages.logo,
+              height: 180,
             ),
           ),
-          Text(
-            AppString.splashTitle,
-            style: TextStyle(
-              fontSize: 29,
-              fontWeight: FontWeight.bold,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 25.0),
+              child: CircularProgressIndicator(
+                color: AppColor.white,
+              ),
             ),
-          ),
+          )
         ],
       ),
     );

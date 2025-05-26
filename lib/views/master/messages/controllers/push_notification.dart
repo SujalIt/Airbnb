@@ -37,12 +37,9 @@ class PushNotifications {
 
 
     try {
-      final token = await _firebaseMessaging.getToken();
-      print(('Device tokenn :----> $token'));
-      print("okay done");
+      await _firebaseMessaging.getToken();
     }catch (e){
-      print(e);
-      print('blocked');
+      // Error Logic....
     }
 
     const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
