@@ -9,7 +9,7 @@ class AppRouter {
       binding: SplashBinding(),
     ),
     GetPage(
-      name: Routes.auth,
+      name: Routes.login,
       page: () => LoginSignupScreen(),
       binding: LoginSignupBinding(),
       transition: Transition.rightToLeft,
@@ -21,19 +21,14 @@ class AppRouter {
       transition: Transition.rightToLeft,
     ),
     GetPage(
-      name: Routes.otpScreen,
-      page: () => ConfirmYourNumberOtpScreen(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage(
-      name: Routes.passwordScreen,
-      page: () => PasswordLoginScreen(),
+      name: Routes.forgotPass,
+      page: () => ForgotPasswordScreen(),
       binding: LoginSignupBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
       name: Routes.explore,
-      page: () => ExploreMainScreen(),
+      page: () => MasterScreen(),
       bindings: [ExploreScreenBinding()],
       transition: Transition.noTransition,
     ),
@@ -45,19 +40,19 @@ class AppRouter {
     ),
     GetPage(
       name: Routes.wishlists,
-      page: () => ExploreMainScreen(),
+      page: () => MasterScreen(),
       bindings: [ExploreScreenBinding()],
       transition: Transition.noTransition,
     ),
     GetPage(
       name: Routes.trips,
-      page: () => ExploreMainScreen(),
+      page: () => MasterScreen(),
       bindings: [ExploreScreenBinding(),],
       transition: Transition.noTransition,
     ),
     GetPage(
       name: Routes.messages,
-      page: () => ExploreMainScreen(),
+      page: () => MasterScreen(),
       bindings: [ExploreScreenBinding(),],
       transition: Transition.noTransition,
     ),
@@ -67,7 +62,7 @@ class AppRouter {
     // ),
     GetPage(
       name: Routes.profile,
-      page: () => ExploreMainScreen(),
+      page: () => MasterScreen(),
       bindings: [ExploreScreenBinding(),ProfileScreenBinding()],
       transition: Transition.noTransition,
     ),

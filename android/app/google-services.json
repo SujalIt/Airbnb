@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "9954417221-4ciljovg8k16grnb8kfratsrvbo2fu5n.apps.googleusercontent.com",
+          "client_id": "9954417221-445qujrvs9pui5pjm31m1fs780df3nh8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.peanut.airbnb",
-            "certificate_hash": "27acb103392fe2847c86ce4c43eaccddeb5d5a7d"
+            "certificate_hash": "0b9d72f841727b6250e1a91385a2045138758451"
           }
         },
         {

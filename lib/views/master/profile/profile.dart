@@ -31,7 +31,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                 CustomButton(
                   onPressed: () {
                     Get.toNamed(
-                      Routes.auth,
+                      Routes.login,
                     );
                   },
                   width: context.screenWidth * 1,
@@ -121,6 +121,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                 )
                     : TextButton(
                   onPressed: () {
+                    GoogleSignIn().signOut();
                     FirebaseAuth.instance.signOut();
                   },
                   child: Text('Logout!'),

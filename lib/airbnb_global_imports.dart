@@ -1,8 +1,10 @@
-export 'package:airbnb/routes/app_router.dart';
-export 'package:airbnb/routes/route_name.dart';
 export 'package:flutter/material.dart';
 export 'package:get/get.dart';
 export 'package:airbnb/main.dart';
+
+// routes
+export 'package:airbnb/routes/app_router.dart';
+export 'package:airbnb/routes/route_name.dart';
 
 // packages
 export 'package:firebase_core/firebase_core.dart';
@@ -24,18 +26,15 @@ export 'package:share_plus/share_plus.dart';
 
 // bindings
 export 'package:airbnb/views/master/explore/bindings/explore_screen_binding.dart';
-export 'package:airbnb/views/authentication/bindings/login_signup_binding.dart';
+export 'package:airbnb/views/authentication/bindings/auth_binding.dart';
 export 'package:airbnb/views/master/profile/bindings/profile_screen_binding.dart';
 
 // controllers
 export 'package:airbnb/views/master/explore/controllers/explore_home_screen_controller.dart';
-export 'package:airbnb/views/authentication/controllers/phone_controller.dart';
 export 'package:airbnb/views/master/explore/controllers/explore_expansion_tile_controller.dart';
 export 'package:airbnb/widgets/custom-image/controller/image_picker_controller.dart';
-export 'package:airbnb/views/authentication/controllers/phone_email_controller.dart';
-export 'package:airbnb/views/authentication/controllers/password_login_controller.dart';
+export 'package:airbnb/views/authentication/controllers/auth_controller.dart';
 export 'package:airbnb/views/master/profile/controllers/profile_screen_controller.dart';
-export 'package:airbnb/views/authentication/controllers/dob_controller.dart';
 export 'package:airbnb/views/master/messages/controllers/push_notification.dart';
 
 // utils   extensions
@@ -53,24 +52,40 @@ export 'package:airbnb/widgets/custom_list_tile.dart';
 export 'package:airbnb/widgets/custom_card_particular_home.dart';
 export 'package:airbnb/widgets/custom_cliprrect_bedroom_particular_home.dart';
 export 'package:airbnb/widgets/custom-image/custom_image.dart';
+export 'package:airbnb/widgets/alert/smart_alert.dart';
 
 // Screens
-export 'package:airbnb/views/explore_main_screen.dart';
 
 // Splash Screen
 export 'package:airbnb/views/splash/splash_screen.dart';
 export 'package:airbnb/views/splash/splash_controller.dart';
 export 'package:airbnb/views/splash/splash_binding.dart';
 
+// auth
+export 'package:airbnb/views/authentication/login_screen.dart';
+export 'package:airbnb/views/authentication/forgot_password_screen.dart';
+export 'package:airbnb/views/authentication/signup_screen.dart';
+
+// explore screen
+export 'package:airbnb/views/master_screen.dart';
 export 'package:airbnb/views/master/explore/explore_home_screen.dart';
 export 'package:airbnb/views/master/explore/particular_home.dart';
+
+// message screen
 export 'package:airbnb/views/master/messages/messages.dart';
+
+// profile screen
 export 'package:airbnb/views/master/profile/profile.dart';
+
+// lists screen
 export 'package:airbnb/views/master/Trips/trips.dart';
+
+// wishlists screen
 export 'package:airbnb/views/master/wishlists/wishlists.dart';
-export 'package:airbnb/views/authentication/login_signup_screen.dart';
-export 'package:airbnb/views/authentication/confirm_your_number_otp_screen.dart';
-export 'package:airbnb/views/authentication/password_login_screen.dart';
-export 'package:airbnb/views/authentication/finish_signing_up_screen.dart';
+
+
+//
 export 'package:airbnb/views/master/explore/fullscreen_map_dialog.dart';
+
+// msg notification screen
 export 'package:airbnb/views/master/messages/message_notification_screen.dart';

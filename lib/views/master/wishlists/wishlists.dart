@@ -51,7 +51,7 @@ class WishlistsScreen extends StatelessWidget {
             CustomButton(
               onPressed: () {
                 Get.toNamed(
-                  Routes.auth,
+                  Routes.login,
                 );
               },
               width: context.screenWidth * 0.23,

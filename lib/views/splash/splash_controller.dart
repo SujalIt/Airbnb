@@ -3,10 +3,10 @@ import 'package:airbnb/airbnb_global_imports.dart';
 class SplashController extends GetxController with StateMixin<List<dynamic>> {
   @override
   void onReady() {
-    Get.offNamed(Routes.auth);
+    Get.offNamed(Routes.login);
     print(FirebaseAuth.instance.currentUser);
     if (FirebaseAuth.instance.currentUser == null) {
-      Get.offNamed(Routes.auth);
+      Get.offNamed(Routes.login);
     } else {
       Get.offNamed(Routes.explore);
     }
@@ -23,10 +23,10 @@ class SplashController extends GetxController with StateMixin<List<dynamic>> {
       if (isLoggedIn) {
         Get.offAllNamed(Routes.explore);
       } else {
-        Get.offAllNamed(Routes.auth);
+        Get.offAllNamed(Routes.login);
       }
     } catch (e) {
-      Get.offAllNamed(Routes.auth);
+      Get.offAllNamed(Routes.login);
     }
   }
 }

@@ -312,7 +312,7 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                     CustomButton(
                       onPressed: () {
                         Get.toNamed(
-                          Routes.auth,
+                          Routes.login,
                         );
                       },
                       text: 'Log in',
