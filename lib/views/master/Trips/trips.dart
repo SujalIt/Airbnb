@@ -13,7 +13,8 @@ class TripsScreen extends StatelessWidget{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: context.screenHeight * 0.08,),
-            Text("Trips",
+            Text(
+              "Trips",
               style: TextStyle(
                 fontSize: context.screenWidth * 0.09,
                 fontWeight: FontWeight.w500
@@ -36,7 +37,7 @@ class TripsScreen extends StatelessWidget{
             SizedBox(height: context.screenHeight * 0.02,),
             CustomButton(
                 onPressed: (){
-                  Get.toNamed(Routes.auth,);
+                  Get.toNamed(Routes.login,);
                 },
                 text: 'Log in',
                   textStyle: TextStyle(fontSize: context.screenWidth * 0.04,),

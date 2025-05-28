@@ -1,7 +1,7 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class ExploreMainScreen extends GetView<BottomNavigationController> {
-  const ExploreMainScreen({super.key});
+class MasterScreen extends GetView<BottomNavigationController> {
+  const MasterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class ExploreMainScreen extends GetView<BottomNavigationController> {
                   type: BottomNavigationBarType.fixed,
                   unselectedItemColor: Colors.grey,
                   showUnselectedLabels: true,
-                  selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12,),
                   iconSize: 27,
                   selectedItemColor: Colors.pink,
                   items: [

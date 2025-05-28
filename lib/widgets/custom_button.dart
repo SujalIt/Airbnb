@@ -9,8 +9,10 @@ class CustomButton extends StatelessWidget {
   final double? height;
   final double? width;
   final TextStyle? textStyle;
+  final bool isLoading;
 
   final IconData? leadingIcon;
+  final ButtonStyle? outlineButtonStyle;
 
   const CustomButton({
     super.key,
@@ -23,6 +25,8 @@ class CustomButton extends StatelessWidget {
     this.width,
     this.textStyle,
     this.leadingIcon,
+    this.outlineButtonStyle,
+    this.isLoading = false,
   });
 
   @override
@@ -37,32 +41,38 @@ class CustomButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
               ),
               minimumSize: Size(width ?? context.screenWidth * 0,
-                  context.screenHeight * 0.065),
+                  height ?? context.screenHeight * 0.065),
             ),
-            child: Text(
-              text,
-              style: textStyle,
-            ),
+            child: isLoading
+                ? SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: CircularProgressIndicator(
+                      color: AppColor.white,
+                    ),
+                )
+                : Text(
+                    text,
+                    style: textStyle,
+                  ),
           )
         : OutlinedButton(
             onPressed: onPressed,
-            style: OutlinedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-                side: BorderSide(color: Colors.black, width: 1),
-              ),
-              minimumSize: Size(width ?? context.screenWidth * 1,
-                  context.screenHeight * 0.03),
+            style: outlineButtonStyle,
+            child: Row(
+              children: [
+                Icon(
+                  leadingIcon,
+                ),
+                SizedBox(
+                  width: context.screenWidth * 0.01,
+                ),
+                Text(
+                  text,
+                  style: textStyle,
+                ),
+              ],
             ),
-            child: ListTile(
-              title: Text(text),
-              contentPadding: EdgeInsets.all(1),
-              leading: Icon(
-                leadingIcon,
-                size: context.screenWidth * 0.06,
-              ),
-              visualDensity: VisualDensity(vertical: context.screenHeight * -0.0025),
-            ),
-          );
+    );
   }
 }
