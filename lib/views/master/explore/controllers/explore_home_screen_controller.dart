@@ -1,15 +1,7 @@
+import 'dart:io';
 import 'package:airbnb/airbnb_global_imports.dart';
-
-class SwitchButtonController extends GetxController {
-  var switchValue = false.obs;
-  switchFunction() {
-    if (switchValue.value == false) {
-      switchValue.value = true;
-    } else {
-      switchValue.value = false;
-    }
-  }
-}
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 class BottomNavigationController extends GetxController {
   var currentIndex = 0.obs;
@@ -48,7 +40,7 @@ class BottomNavigationController extends GetxController {
     }
   }
 
-  changeIndex(int index) {
+  void changeIndex(int index) {
     currentIndex.value = index;
     switch (index) {
       case 0:
@@ -72,18 +64,94 @@ class BottomNavigationController extends GetxController {
 
 class ExploreCarouselSliderController extends GetxController {
   var currentIndex = 0.obs;
-  final List<Widget> images = [
-    CustomImage(
-      path:
-          'https://www.smartextpros.com/wp-content/uploads/2024/07/horizontal-vs-vertical-siding-01.jpg',
-    ),
-    CustomImage(
-      path:
-          'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?cs=srgb&dl=pexels-fotoaibe-1643383.jpg&fm=jpg',
-    ),
-    CustomImage(
-      path:
-          'https://plus.unsplash.com/premium_photo-1661766077694-6e3750b0fb97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D',
-    ),
-  ];
+
+  Future<void> addPlace(
+      String name,
+      String rating,
+      // String imageUrl,
+      String distance,
+      String availableDates,
+      String price,
+      ) async {
+    await FirebaseFirestore.instance.collection("places").add({
+      "name": name,
+      "price": price,
+      // "image": imageUrl,
+      "distance": distance,
+      "available_dates": availableDates,
+      "created_at": FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<Map<String, Map<String, dynamic>>>getAllDocuments() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('places')
+        .get();
+
+    Map<String, Map<String, dynamic>> documents = {};
+    for (var doc in querySnapshot.docs) {
+      documents[doc.id] = doc.data() as Map<String, dynamic>;
+    }
+    return documents;
+  }
+}
+
+// imagekit.io website for image(places)
+Future<void> uploadImageToImageKit() async {
+  try {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile == null) {
+      Get.snackbar("Image not selected", 'Please select image');
+      return;
+    }
+
+    Uint8List? imageBytes;
+    String fileName = pickedFile.name;
+
+    if (kIsWeb) {
+      imageBytes = await pickedFile.readAsBytes();
+    } else {
+      File imageFile = File(pickedFile.path);
+      imageBytes = await imageFile.readAsBytes();
+    }
+
+    // ImageKit API details
+    String apiUrl = "https://upload.imagekit.io/api/v1/files/upload";
+    String privateApiKey = "private_FanKyRKRVNogDW4OhBxa8L6e6/s=:";
+    String authHeader = "Basic ${base64Encode(utf8.encode('$privateApiKey:'))}";
+
+    var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
+    request.headers["Authorization"] = authHeader;
+
+    request.fields["fileName"] = fileName;
+    request.fields["useUniqueFilename"] = "false";
+    request.fields["folder"] = "/dummy/folder/";
+    request.fields["tags"] = "nice,copy,books";
+
+    if (kIsWeb) {
+      request.files.add(http.MultipartFile.fromBytes(
+        "file",
+        imageBytes,
+        filename: fileName,
+      ));
+    } else {
+      request.files.add(http.MultipartFile.fromBytes(
+        "file",
+        imageBytes,
+        filename: fileName,
+      ));
+    }
+
+    var response = await request.send();
+    // String responseData = await response.stream.bytesToString();
+
+    if (response.statusCode == 200) {
+      // var jsonResponse = jsonDecode(responseData);
+      Get.snackbar("Successfully uploaded", 'Great!');
+    }
+  } catch (e) {
+    Get.snackbar('Error', '$e');
+  }
 }

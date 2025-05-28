@@ -1,5 +1,6 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 class ImagePickerController extends GetxController {
   var imageFile = Rx<File?>(null);

@@ -1,29 +1,40 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends GetView<SplashController> {
   const SplashScreen({super.key});
-
-  // Check Auth Fun
-  // User Login
-  // -> Go to dashboard
-  // If User is not login
-  // -> Then go to login screen
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 2), () {
-      Get.offAllNamed(Routes.explore);
-    });
     return Scaffold(
-      body: Center(
-        child: Text(
-          'Welcome to My App!\nFlutter Native Splash!',
-          style: TextStyle(
-            fontSize: 29,
-            fontWeight: FontWeight.bold,
+      backgroundColor: AppColor.primary,
+      body: controller.obx((value) {
+        return _bodyWidget();
+      },
+          onEmpty: _bodyWidget(),
+          onLoading: _bodyWidget(),
+          onError: (v) => _bodyWidget()),
+    );
+  }
+
+  Widget _bodyWidget() {
+    return Stack(
+      children: [
+        Center(
+          child: CustomImage(
+            path: AppImages.logo,
+            height: 180,
           ),
         ),
-      ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25.0),
+            child: CircularProgressIndicator(
+              color: AppColor.white,
+            ),
+          ),
+        )
+      ],
     );
   }
 }

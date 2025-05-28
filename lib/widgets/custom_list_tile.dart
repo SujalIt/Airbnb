@@ -7,7 +7,7 @@ class CustomListTile extends StatelessWidget{
   final IconData? trailingIcon;
   final String title;
   final TextStyle? titleTextStyle;
-  final String? subtitle;
+  final Widget? subtitle;
   final VisualDensity? visualDensity;
   final EdgeInsetsGeometry? contentPadding;
 
@@ -29,7 +29,7 @@ class CustomListTile extends StatelessWidget{
       leading: leadingIcon != null ? Icon(leadingIcon,size: iconSize,) : null,
       trailing: trailingIcon != null ? Icon(trailingIcon) : null,
       title: Text(title,style: titleTextStyle,),
-      subtitle: subtitle != null ? Text(subtitle ?? '',) : null,
+      subtitle: subtitle,
       visualDensity: visualDensity,
       contentPadding: contentPadding,
     );
