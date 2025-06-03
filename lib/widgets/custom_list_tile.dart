@@ -10,6 +10,7 @@ class CustomListTile extends StatelessWidget{
   final Widget? subtitle;
   final VisualDensity? visualDensity;
   final EdgeInsetsGeometry? contentPadding;
+  final VoidCallback onTap;
 
   const CustomListTile({
     super.key,
@@ -17,6 +18,7 @@ class CustomListTile extends StatelessWidget{
     this.iconSize,
     this.trailingIcon,
     required this.title,
+    required this.onTap,
     this.titleTextStyle,
     this.subtitle,
     this.visualDensity,
@@ -26,6 +28,7 @@ class CustomListTile extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: leadingIcon != null ? Icon(leadingIcon,size: iconSize,) : null,
       trailing: trailingIcon != null ? Icon(trailingIcon) : null,
       title: Text(title,style: titleTextStyle,),

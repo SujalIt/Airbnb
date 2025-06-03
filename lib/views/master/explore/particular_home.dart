@@ -234,12 +234,14 @@ class ParticularHomeState extends State<ParticularHome> {
                         ),
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.account_circle_outlined,
                         title: 'Hosted by Denise',
                         subtitle: Text('SuperTest - 6 years hosting'),
                       ),
                       Divider(),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.wine_bar_sharp,
                         title: 'Top 5% of homes',
                         subtitle: Text(
@@ -247,12 +249,14 @@ class ParticularHomeState extends State<ParticularHome> {
                         ),
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.lock_clock,
                         title: 'Amazing outdoor space',
                         subtitle: Text(
                             'Guests mention the garden, outdoor area and grill as highlights.'),
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.place_outlined,
                         title: 'Self check-in',
                         subtitle: Text(
@@ -261,7 +265,8 @@ class ParticularHomeState extends State<ParticularHome> {
                       ),
                       Divider(),
                       Text(
-                          'Immerse We’ve been so immersed in this world of drinking, and a lot of us have felt like there was nowhere to go...'),
+                        'Immerse We’ve been so immersed in this world of drinking, and a lot of us have felt like there was nowhere to go...',
+                      ),
                       SizedBox(
                         height: context.screenHeight * 0.015,
                       ),
@@ -324,30 +329,37 @@ class ParticularHomeState extends State<ParticularHome> {
                         height: context.screenHeight * 0.01,
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.location_city,
                         title: 'Courtyard view',
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.gradient_rounded,
                         title: 'Garden view',
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.leak_add,
                         title: 'Lake access',
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.kitchen,
                         title: 'Kitchen',
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.wifi,
                         title: 'Wifi',
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.alarm,
                         title: 'Carbon monoxide alarm',
                       ),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.smoke_free,
                         title: 'Smoke alarm',
                       ),
@@ -751,6 +763,7 @@ class ParticularHomeState extends State<ParticularHome> {
                         height: context.screenHeight * 0.02,
                       ),
                       CustomListTile(
+                        onTap: (){},
                         title:
                             'To help protect your payment, always use Airbnb to send money and communicate with hosts.',
                         titleTextStyle:
@@ -761,6 +774,7 @@ class ParticularHomeState extends State<ParticularHome> {
                       Divider(),
                       SizedBox(),
                       CustomListTile(
+                        onTap: (){},
                         title: "Availability",
                         titleTextStyle: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -772,6 +786,7 @@ class ParticularHomeState extends State<ParticularHome> {
                       SizedBox(),
                       Divider(),
                       CustomListTile(
+                        onTap: (){},
                         title: 'Cancellation policy',
                         titleTextStyle: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -783,6 +798,7 @@ class ParticularHomeState extends State<ParticularHome> {
                       ),
                       Divider(),
                       CustomListTile(
+                        onTap: (){},
                         title: 'House rules',
                         titleTextStyle: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -809,6 +825,7 @@ class ParticularHomeState extends State<ParticularHome> {
                       ),
                       Divider(),
                       CustomListTile(
+                        onTap: (){},
                         title: 'Safety & property',
                         titleTextStyle: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -836,6 +853,7 @@ class ParticularHomeState extends State<ParticularHome> {
                       Divider(),
                       SizedBox(),
                       CustomListTile(
+                        onTap: (){},
                         leadingIcon: Icons.flag,
                         title: 'Report this listing',
                         titleTextStyle:

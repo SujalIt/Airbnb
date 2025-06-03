@@ -6,7 +6,7 @@ class SmartAlert {
       title,
       desc,
       borderRadius: 0.0,
-      backgroundColor: Colors.pink,
+      backgroundColor: AppColor.pink,
       colorText: AppColor.white,
       snackPosition: SnackPosition.BOTTOM,
     );

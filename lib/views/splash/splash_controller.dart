@@ -3,13 +3,7 @@ import 'package:airbnb/airbnb_global_imports.dart';
 class SplashController extends GetxController with StateMixin<List<dynamic>> {
   @override
   void onReady() {
-    Get.offNamed(Routes.login);
-    print(FirebaseAuth.instance.currentUser);
-    if (FirebaseAuth.instance.currentUser == null) {
-      Get.offNamed(Routes.login);
-    } else {
-      Get.offNamed(Routes.explore);
-    }
+    initFunc();
     super.onReady();
   }
 

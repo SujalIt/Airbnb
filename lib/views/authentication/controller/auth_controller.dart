@@ -1,5 +1,6 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 class AuthController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -54,8 +55,7 @@ class AuthController extends GetxController {
                 .set({
               "first_name": fnameController.text,
               "last_name": lnameController.text,
-              "dob":
-                  "${selectedDate.value!.day}-${selectedDate.value!.month}-${selectedDate.value!.year}",
+              "dob": selectedDate.value.toString(),
               "email": emailController.text,
               "password": passwordController.text,
             });

@@ -45,12 +45,12 @@ class CustomButton extends StatelessWidget {
             ),
             child: isLoading
                 ? SizedBox(
-                  height: 30,
-                  width: 30,
-                  child: CircularProgressIndicator(
+                    height: 30,
+                    width: 30,
+                    child: CircularProgressIndicator(
                       color: AppColor.white,
                     ),
-                )
+                  )
                 : Text(
                     text,
                     style: textStyle,
@@ -59,20 +59,10 @@ class CustomButton extends StatelessWidget {
         : OutlinedButton(
             onPressed: onPressed,
             style: outlineButtonStyle,
-            child: Row(
-              children: [
-                Icon(
-                  leadingIcon,
-                ),
-                SizedBox(
-                  width: context.screenWidth * 0.01,
-                ),
-                Text(
-                  text,
-                  style: textStyle,
-                ),
-              ],
+            child: Text(
+              text,
+              style: textStyle,
             ),
-    );
+          );
   }
 }

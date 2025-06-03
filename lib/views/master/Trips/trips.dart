@@ -20,9 +20,7 @@ class TripsScreen extends StatelessWidget{
                 fontWeight: FontWeight.w500
               ),
             ),
-            SizedBox(height: context.screenHeight * 0.02,),
             Divider(),
-            SizedBox(height: context.screenHeight * 0.033,),
             Text('No trips yet',
               style: TextStyle(
                 fontSize: context.screenWidth * 0.047,
@@ -34,7 +32,6 @@ class TripsScreen extends StatelessWidget{
               fontSize: context.screenWidth * 0.04
             ),
             ),
-            SizedBox(height: context.screenHeight * 0.02,),
             CustomButton(
                 onPressed: (){
                   Get.toNamed(Routes.login,);

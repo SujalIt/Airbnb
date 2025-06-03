@@ -1,5 +1,6 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 import 'package:flutter/gestures.dart';
+import 'package:intl/intl.dart';
 
 class FinishSigningUpScreen extends GetView<AuthController> {
   const FinishSigningUpScreen({super.key});
@@ -7,7 +8,7 @@ class FinishSigningUpScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -69,7 +70,7 @@ class FinishSigningUpScreen extends GetView<AuthController> {
                         controller: TextEditingController(
                           text: controller.selectedDate.value == null
                               ? ''
-                              : "${controller.selectedDate.value!.day}-${controller.selectedDate.value!.month}-${controller.selectedDate.value!.year}",
+                              : DateFormat("dd/MM/yyyy").format(controller.selectedDate.value!),
                         ),
                         decoration: InputDecoration(
                           hintText: "Date of Birth",

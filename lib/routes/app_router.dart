@@ -1,30 +1,27 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
+
 class AppRouter {
   static final routes = [
     GetPage(
       name: Routes.splashScreen,
       page: () => SplashScreen(),
-      transition: Transition.rightToLeft,
       binding: SplashBinding(),
     ),
     GetPage(
       name: Routes.login,
       page: () => LoginSignupScreen(),
       binding: LoginSignupBinding(),
-      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: Routes.signUp,
       page: () => FinishSigningUpScreen(),
       binding: LoginSignupBinding(),
-      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: Routes.forgotPass,
       page: () => ForgotPasswordScreen(),
       binding: LoginSignupBinding(),
-      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: Routes.explore,
@@ -36,7 +33,6 @@ class AppRouter {
       name: Routes.particularScreen,
       page: () => ParticularHome(
       ),
-      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: Routes.wishlists,
@@ -66,5 +62,10 @@ class AppRouter {
       bindings: [ExploreScreenBinding(),ProfileScreenBinding()],
       transition: Transition.noTransition,
     ),
+    GetPage(
+      name: Routes.personalInfo,
+      page: () => PersonalInformationScreen(),
+      binding: ProfileScreenBinding(),
+    )
   ];
 }
