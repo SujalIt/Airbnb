@@ -7,26 +7,27 @@ class MessageScreen extends StatefulWidget {
   State<StatefulWidget> createState() => MessageScreenState();
 }
 
-class MessageScreenState extends State<MessageScreen> with SingleTickerProviderStateMixin {
+class MessageScreenState extends State<MessageScreen>
+    with SingleTickerProviderStateMixin {
   late TabController tabController = TabController(length: 2, vsync: this);
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-        backgroundColor: AppColor.white,
-        body: FirebaseAuth.instance.currentUser != null
-            ? SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0,
-                  ),
-                  child: Column(
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: AppColor.white,
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.screenWidth * 0.05,
+            ),
+            child: FirebaseAuth.instance.currentUser != null
+                ? Column(
                     spacing: 18,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(),
+                      SizedBox(height: context.screenWidth * 0.06,),
                       Text(
                         "Messages",
                         style: TextStyle(
@@ -93,17 +94,13 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                                                 Text(
                                                   'Airbnb Support',
                                                   style: TextStyle(
-                                                    fontSize:
-                                                        context.screenWidth *
-                                                            0.04,
+                                                    fontSize: context.screenWidth * 0.04,
                                                   ),
                                                 ),
                                                 Text(
                                                   "22/02",
                                                   style: TextStyle(
-                                                    fontSize:
-                                                        context.screenWidth *
-                                                            0.04,
+                                                    fontSize: context.screenWidth * 0.04,
                                                   ),
                                                 ),
                                               ],
@@ -111,8 +108,7 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                                             Text(
                                               "Airbnb: This Conversation is close...",
                                               style: TextStyle(
-                                                fontSize:
-                                                    context.screenWidth * 0.035,
+                                                fontSize: context.screenWidth * 0.035,
                                               ),
                                             ),
                                             Text(
@@ -150,17 +146,13 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                                                 Text(
                                                   'Airbnb Support',
                                                   style: TextStyle(
-                                                    fontSize:
-                                                    context.screenWidth *
-                                                        0.04,
+                                                    fontSize: context.screenWidth * 0.04,
                                                   ),
                                                 ),
                                                 Text(
                                                   "22/02",
                                                   style: TextStyle(
-                                                    fontSize:
-                                                    context.screenWidth *
-                                                        0.04,
+                                                    fontSize: context.screenWidth * 0.04,
                                                   ),
                                                 ),
                                               ],
@@ -168,8 +160,7 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                                             Text(
                                               "Airbnb: This Conversation is close...",
                                               style: TextStyle(
-                                                fontSize:
-                                                context.screenWidth * 0.035,
+                                                fontSize: context.screenWidth * 0.035,
                                               ),
                                             ),
                                             Text(
@@ -202,22 +193,18 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment .spaceBetween,
                                               children: [
                                                 Text(
                                                   'Airbnb Support',
                                                   style: TextStyle(
-                                                    fontSize:
-                                                    context.screenWidth *
-                                                        0.04,
+                                                    fontSize: context.screenWidth * 0.04,
                                                   ),
                                                 ),
                                                 Text(
                                                   "22/02",
                                                   style: TextStyle(
-                                                    fontSize:
-                                                    context.screenWidth *
-                                                        0.04,
+                                                    fontSize: context.screenWidth * 0.04,
                                                   ),
                                                 ),
                                               ],
@@ -225,8 +212,7 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                                             Text(
                                               "Airbnb: This Conversation is close...",
                                               style: TextStyle(
-                                                fontSize:
-                                                context.screenWidth * 0.035,
+                                                fontSize: context.screenWidth * 0.035,
                                               ),
                                             ),
                                             Text(
@@ -245,20 +231,14 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                             ),
                             GestureDetector(
                               child: Column(
-                                spacing: 10,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.message_outlined),
+                                  SizedBox(height: context.screenHeight * 0.015,),
                                   Text(
-                                    "You don't have any messages",
+                                    "You are all caught up",
                                     style: TextStyle(
                                       fontSize: context.screenHeight * 0.023,
-                                    ),
-                                  ),
-                                  Text(
-                                    "When you receive a new messages, it will appear here.",
-                                    style: TextStyle(
-                                      fontSize :context.screenHeight * 0.017,
+                                      color: AppColor.grey,
                                     ),
                                   ),
                                 ],
@@ -268,21 +248,18 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                         ),
                       )
                     ],
-                  ),
-                ),
-              )
-            : SafeArea(
-              child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.06),
-                  child: Column(
+                  )
+                : Column(
                     spacing: 18,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(),
+                      SizedBox(
+                        height: context.screenHeight * 0.02,
+                      ),
                       Text(
                         'Messages',
                         style: TextStyle(
-                          fontSize: 0.07 * context.screenWidth,
+                          fontSize: context.screenWidth * 0.08,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -290,14 +267,16 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                       Text(
                         'Log in to read messages',
                         style: TextStyle(
-                            fontSize: 0.047 * context.screenWidth,
-                            fontWeight: FontWeight.w500),
+                          fontSize: 0.047 * context.screenWidth,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       Text(
                         'Once you log in, you\'ll find messages from hosts here.',
                         style: TextStyle(
-                            fontSize: 0.04 * context.screenWidth,
-                            color: Colors.blueGrey),
+                          fontSize: 0.04 * context.screenWidth,
+                          color: Colors.blueGrey,
+                        ),
                       ),
                       CustomButton(
                         onPressed: () {
@@ -312,8 +291,8 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                       )
                     ],
                   ),
-                ),
-            ),
+          ),
+        ),
       ),
     );
   }
