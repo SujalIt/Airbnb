@@ -1,6 +1,5 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-
 class AppRouter {
   static final routes = [
     GetPage(
@@ -41,6 +40,10 @@ class AppRouter {
       transition: Transition.noTransition,
     ),
     GetPage(
+      name: Routes.particularWish,
+      page: () => ParticularWishScreen(),
+    ),
+    GetPage(
       name: Routes.trips,
       page: () => MasterScreen(),
       bindings: [ExploreScreenBinding(),],
@@ -66,6 +69,7 @@ class AppRouter {
       name: Routes.personalInfo,
       page: () => PersonalInformationScreen(),
       binding: ProfileScreenBinding(),
-    )
+    ),
+
   ];
 }

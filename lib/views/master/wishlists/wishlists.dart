@@ -26,33 +26,38 @@ class WishlistsScreen extends StatelessWidget {
                       ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: 3,
+                        itemCount: 2,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
                             padding: EdgeInsets.symmetric(vertical: context.screenHeight * 0.01),
-                            child: Row(
-                              spacing: context.screenWidth * 0.035,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: CustomImage(
-                                    width: context.screenWidth * 0.17,
-                                    height: context.screenHeight * 0.08,
-                                    path: "https://static.vecteezy.com/system/resources/thumbnails/007/950/886/small/small-plant-growing-in-morning-light-at-garden-concept-earth-day-free-photo.jpg",
+                            child: GestureDetector(
+                              onTap: (){
+                                Get.toNamed(Routes.particularWish);
+                              },
+                              child: Row(
+                                spacing: context.screenWidth * 0.035,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: CustomImage(
+                                      width: context.screenWidth * 0.17,
+                                      height: context.screenHeight * 0.08,
+                                      path: "https://static.vecteezy.com/system/resources/thumbnails/007/950/886/small/small-plant-growing-in-morning-light-at-garden-concept-earth-day-free-photo.jpg",
+                                    ),
                                   ),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Nice",
-                                    ),
-                                    Text(
-                                      "May 14-19,2023",
-                                    ),
-                                  ],
-                                )
-                              ],
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Nice",
+                                      ),
+                                      Text(
+                                        "May 14-19,2023",
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         },

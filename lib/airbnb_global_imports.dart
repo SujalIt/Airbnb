@@ -83,6 +83,7 @@ export 'package:airbnb/views/master/Trips/trips.dart';
 
 // wishlists screen
 export 'package:airbnb/views/master/wishlists/wishlists.dart';
+export 'package:airbnb/views/master/wishlists/particular_wish_screen.dart';
 
 
 //
