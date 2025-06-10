@@ -26,8 +26,10 @@ export 'package:share_plus/share_plus.dart';
 
 // bindings
 export 'package:airbnb/views/master/explore/bindings/explore_screen_binding.dart';
+export 'package:airbnb/views/master/wishlists/binding/wishlist_screen_binding.dart';
 export 'package:airbnb/views/authentication/binding/auth_binding.dart';
 export 'package:airbnb/views/master/profile/binding/profile_screen_binding.dart';
+
 
 // controllers
 export 'package:airbnb/views/master/explore/controllers/explore_home_screen_controller.dart';
@@ -36,6 +38,7 @@ export 'package:airbnb/widgets/custom-image/controller/image_picker_controller.d
 export 'package:airbnb/views/authentication/controller/auth_controller.dart';
 export 'package:airbnb/views/master/profile/controller/profile_screen_controller.dart';
 export 'package:airbnb/views/master/messages/controller/push_notification.dart';
+export 'package:airbnb/views/master/wishlists/controller/wishlist_screen_controller.dart';
 
 // utils   extensions
 export 'package:airbnb/utils/extensions.dart';
@@ -84,9 +87,10 @@ export 'package:airbnb/views/master/Trips/trips.dart';
 // wishlists screen
 export 'package:airbnb/views/master/wishlists/wishlists.dart';
 export 'package:airbnb/views/master/wishlists/particular_wish_screen.dart';
+export 'package:airbnb/views/master/wishlists/particular_wish_map_screen.dart';
 
 
-//
+// map
 export 'package:airbnb/views/master/explore/fullscreen_map_dialog.dart';
 
 // msg notification screen

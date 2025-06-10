@@ -402,9 +402,9 @@ class ParticularHomeState extends State<ParticularHome> {
                           heightFactor: context.screenHeight * 0.01,
                           child: TextButton(
                             style: ButtonStyle(
-                                iconColor: WidgetStatePropertyAll(Colors.red),
-                                iconSize: WidgetStatePropertyAll(
-                                    context.screenWidth * 0.1)),
+                              iconColor: WidgetStatePropertyAll(Colors.red,),
+                              iconSize: WidgetStatePropertyAll(context.screenWidth * 0.1,),
+                            ),
                             onPressed: () => openFullScreenMap(context),
                             child: Icon(
                               Icons.home,
@@ -536,8 +536,7 @@ class ParticularHomeState extends State<ParticularHome> {
                   height: context.screenHeight * 0.03,
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
+                  padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

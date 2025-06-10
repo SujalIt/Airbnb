@@ -5,12 +5,12 @@ class ProfileScreen extends GetView<ProfileScreenController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColor.white,
-        body: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: AppColor.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(context.screenWidth * 0.06),
+            padding: EdgeInsets.symmetric(horizontal: 25,vertical: 25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

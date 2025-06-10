@@ -36,12 +36,17 @@ class AppRouter {
     GetPage(
       name: Routes.wishlists,
       page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding()],
+      bindings: [ExploreScreenBinding(),WishlistScreenBinding()],
       transition: Transition.noTransition,
     ),
     GetPage(
       name: Routes.particularWish,
       page: () => ParticularWishScreen(),
+      binding: WishlistScreenBinding(),
+    ),
+    GetPage(
+      name: Routes.particularWishMap,
+      page: () => ParticularWishMapScreen(),
     ),
     GetPage(
       name: Routes.trips,

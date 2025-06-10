@@ -20,18 +20,18 @@ class MessageScreenState extends State<MessageScreen>
           backgroundColor: AppColor.white,
           body: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: context.screenWidth * 0.05,
+              horizontal: 25,
+              vertical: 40,
             ),
             child: FirebaseAuth.instance.currentUser != null
                 ? Column(
                     spacing: 18,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: context.screenWidth * 0.06,),
                       Text(
                         "Messages",
                         style: TextStyle(
-                          fontSize: context.screenWidth * 0.08,
+                          fontSize: 32,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -253,13 +253,10 @@ class MessageScreenState extends State<MessageScreen>
                     spacing: 18,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
                       Text(
                         'Messages',
                         style: TextStyle(
-                          fontSize: context.screenWidth * 0.08,
+                          fontSize: 32,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -267,14 +264,14 @@ class MessageScreenState extends State<MessageScreen>
                       Text(
                         'Log in to read messages',
                         style: TextStyle(
-                          fontSize: 0.047 * context.screenWidth,
+                          fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       Text(
                         'Once you log in, you\'ll find messages from hosts here.',
                         style: TextStyle(
-                          fontSize: 0.04 * context.screenWidth,
+                          fontSize: 16,
                           color: Colors.blueGrey,
                         ),
                       ),
@@ -286,7 +283,7 @@ class MessageScreenState extends State<MessageScreen>
                         },
                         text: 'Log in',
                         textStyle: TextStyle(
-                          fontSize: context.screenWidth * 0.04,
+                          fontSize: 15,
                         ),
                       )
                     ],

@@ -96,8 +96,7 @@ class ProfileScreenController extends GetxController {
     }
   }
 
-  void updateField(
-      String firstName, String lastName, String email, String dob) {
+  void updateField(String firstName, String lastName, String email, String dob) {
     fnameController.text = firstName;
     lnameController.text = lastName;
     emailController.text = email;

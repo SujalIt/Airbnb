@@ -191,12 +191,12 @@ class _ExploreHomeScreenState extends State<ExploreHomeScreen> {
                                       ),
                                       child: SmoothPageIndicator(
                                         controller: PageController(
-                                            initialPage: carouselController.currentIndex.value),
+                                          initialPage: carouselController.currentIndex.value,
+                                        ),
                                         count: documents.length,
                                         effect: SlideEffect(
                                           activeDotColor: Colors.grey,
-                                          dotHeight:
-                                              context.screenHeight * 0.01,
+                                          dotHeight: context.screenHeight * 0.01,
                                           dotWidth: context.screenWidth * 0.02,
                                           dotColor: Colors.white60,
                                         ),
@@ -281,19 +281,30 @@ class _ExploreHomeScreenState extends State<ExploreHomeScreen> {
         ),
       ),
       floatingActionButton: SizedBox(
-        height: context.screenHeight * 0.06,
+        width: 100,
+        height: 45,
         child: FloatingActionButton.extended(
-          onPressed: () {},
-          isExtended: true,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-          extendedIconLabelSpacing: context.screenWidth * 0.01,
-          extendedPadding:
-              EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          label: Icon(Icons.map),
-          icon: Text(
-            'Map',
+          onPressed: (){},
+          backgroundColor: AppColor.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          label: Row(
+            spacing: 5,
+            children: [
+              Text(
+                "Map",
+                style: TextStyle(
+                  color: AppColor.white,
+                  fontSize: 18,
+                ),
+              ),
+              Icon(
+                Icons.map,
+                color: AppColor.white,
+                size: 18,
+              )
+            ],
           ),
         ),
       ),

@@ -22,7 +22,7 @@ class PersonalInformationScreen extends GetView<ProfileScreenController> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: context.screenWidth * 0.05,
+          horizontal: 25,
         ),
         child: FutureBuilder<dynamic>(
           future: controller.fetchUserDetails(),
@@ -59,8 +59,7 @@ class ProfileBody extends StatefulWidget {
   final String? lastName;
   final String? email;
   final String? dob;
-  const ProfileBody(
-      {super.key, this.firstName, this.lastName, this.email, this.dob});
+  const ProfileBody({super.key, this.firstName, this.lastName, this.email, this.dob});
 
   @override
   State<ProfileBody> createState() => _ProfileBodyState();

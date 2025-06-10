@@ -5,9 +5,10 @@ import 'package:http/http.dart' as http;
 
 class BottomNavigationController extends GetxController {
   var currentIndex = 0.obs;
+
   final List<Widget> screens = [
     ExploreHomeScreen(),
-    WishlistsScreen(),
+    WishlistScreen(),
     TripsScreen(),
     MessageScreen(),
     ProfileScreen(),
@@ -25,7 +26,7 @@ class BottomNavigationController extends GetxController {
       case '/explore':
         currentIndex.value = 0;
         break;
-      case '/wishlists':
+      case '/wishlist':
         currentIndex.value = 1;
         break;
       case '/trips':
@@ -47,7 +48,7 @@ class BottomNavigationController extends GetxController {
         Get.offNamed('/explore');
         break;
       case 1:
-        Get.offNamed('/wishlists');
+        Get.offNamed('/wishlist');
         break;
       case 2:
         Get.offNamed('/trips');
