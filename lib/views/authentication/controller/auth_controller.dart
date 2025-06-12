@@ -156,7 +156,7 @@ class AuthController extends GetxController {
           title: 'Successfully signed in!',
           desc: 'Now you are ready to start your journey.',
         );
-        Get.offNamed(Routes.profile);
+        Get.offAllNamed(Routes.explore);
       } on FirebaseAuthException catch (e) {
         SmartAlert.customSnackBar(
           title: 'Invalid username or password!',

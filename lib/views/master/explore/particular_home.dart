@@ -1,15 +1,16 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
 class ParticularHome extends StatefulWidget {
-  const ParticularHome({super.key,});
+  const ParticularHome({
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => ParticularHomeState();
 }
 
 class ParticularHomeState extends State<ParticularHome> {
-
-  Map<String,dynamic>? idData;
+  Map<String, dynamic>? idData;
   var id = Get.parameters['id'];
 
   @override
@@ -17,6 +18,7 @@ class ParticularHomeState extends State<ParticularHome> {
     super.initState();
     loadData();
   }
+
   Future<void> loadData() async {
     final data = await getDocumentById(id!);
     setState(() {
@@ -63,842 +65,976 @@ class ParticularHomeState extends State<ParticularHome> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: FutureBuilder<Map<String,dynamic>?>(
+          child: FutureBuilder<Map<String, dynamic>?>(
             future: getDocumentById(id!),
-            builder: (context,snapshot){
-              if(snapshot.connectionState == ConnectionState.waiting){
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return SizedBox(
-                  height: context.screenHeight * 0.9,
-                  child: Center(child: CircularProgressIndicator(color: Colors.green,)),
+                  height: context.screenHeight / 1,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.green,
+                    ),
+                  ),
                 );
               }
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Center(child: Text('No documents found'));
               }
               if (snapshot.hasError) {
-                return Center(
-                    child: Text('Error: ${snapshot.error}'));
+                return Center(child: Text('Error: ${snapshot.error}'));
               }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    CarouselSlider(
-                      items: idData?['particular_multiple_images'].map<Widget>((url) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(url),
-                              fit: BoxFit.cover,
+              return Column(
+                spacing: 18,
+                children: [
+                  Stack(
+                    children: [
+                      CarouselSlider(
+                        items: idData?['particular_multiple_images']
+                            .map<Widget>((url) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(url),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        options: CarouselOptions(
+                          viewportFraction: 1,
+                          height: 250,
+                        ),
+                      ),
+                      Positioned(
+                        top: 15,
+                        left: 13,
+                        child: IconButton(
+                          style: ButtonStyle(
+                            iconSize: WidgetStatePropertyAll(
+                              10,
                             ),
                           ),
-                        );
-                      }).toList(),
-                      options: CarouselOptions(
-                        viewportFraction: 1,
-                        height: context.screenHeight * 0.335,
-                      ),
-                    ),
-                    Positioned(
-                      top: context.screenHeight * 0.03,
-                      left: context.screenWidth * 0.03,
-                      child: IconButton(
-                        style: ButtonStyle(
-                          iconSize: WidgetStatePropertyAll(context.screenWidth * 0.08),
-                        ),
-                        onPressed: () {
-                          Get.offNamed('/explore');
-                        },
-                        icon: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: context.screenWidth * 0.04,
-                          child: Icon(
-                            Icons.arrow_back_rounded,
-                            color: Colors.black87,
+                          onPressed: () {
+                            Get.offNamed('/explore');
+                          },
+                          icon: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 17,
+                            child: Icon(
+                              Icons.arrow_back_rounded,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: context.screenHeight * 0.03,
-                      left: context.screenWidth * 0.75,
-                      child: IconButton(
-                        style: ButtonStyle(
-                          iconSize: WidgetStatePropertyAll(context.screenWidth * 0.08),
-                        ),
-                        onPressed: () {
-                          SharePlus.instance.share(
-                              ShareParams(uri: Uri.parse("https://airbnb-a667b.web.app/#/explore/particularScreen?id=$id"))
-                          );
-                        },
-                        icon: CircleAvatar(
-                          radius: context.screenWidth * 0.04,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            size: context.screenWidth * 0.05,
-                            Icons.share_outlined,
-                            color: Colors.black87,
+                      Positioned(
+                        top: 15,
+                        left: 285,
+                        child: IconButton(
+                          style: ButtonStyle(
+                            iconSize: WidgetStatePropertyAll(
+                              10,
+                            ),
+                          ),
+                          onPressed: () {
+                            SharePlus.instance.share(
+                              ShareParams(
+                                uri: Uri.parse(
+                                  "https://airbnb-a667b.web.app/#/explore/particularScreen?id=$id",
+                                ),
+                              ),
+                            );
+                          },
+                          icon: CircleAvatar(
+                            radius: 17,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              size: 20,
+                              Icons.share_outlined,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: context.screenHeight * 0.03,
-                      left: context.screenWidth * 0.85,
-                      child: IconButton(
-                        style: ButtonStyle(
-                          iconSize: WidgetStatePropertyAll(context.screenWidth * 0.08),
-                        ),
-                        onPressed: () {},
-                        icon: CircleAvatar(
-                          radius: context.screenWidth * 0.04,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            size: context.screenWidth * 0.05,
-                            Icons.favorite_outline_rounded,
-                            color: Colors.black87,
+                      Positioned(
+                        top: 15,
+                        left: 332,
+                        child: IconButton(
+                          style: ButtonStyle(
+                            iconSize: WidgetStatePropertyAll(
+                              10,
+                            ),
+                          ),
+                          onPressed: () {},
+                          icon: CircleAvatar(
+                            radius: 17,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              size: 20,
+                              Icons.more_vert,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 25,
                     ),
-                  ],
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: context.screenHeight * 0.03,
-                      ),
-                      Text(
-                        'Experience Authentic Peru! Spacious Country House',
-                        style: TextStyle(
-                            fontSize: context.screenWidth * 0.064,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.01,
-                      ),
-                      Text('Entire cottage in Cisco, Peru'),
-                      Text('12 guests - 3 bedrooms - 11 beds - 2.5 bathrooms'),
-                      SizedBox(
-                        height: context.screenHeight * 0.01,
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.12,
-                        child: Card(
-                          color: Colors.white,
-                          child: Padding(
-                            padding: EdgeInsets.all(context.screenWidth * 0.01),
-                            child: Row(
+                    child: Column(
+                      spacing: 10,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // room name and reviews
+                        Column(
+                          spacing: 10,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Experience Authentic Peru! Spacious Country House',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Column(
+                              spacing: 2,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                Row(
+                                  spacing: 3,
                                   children: [
-                                    Text('4.91'),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.star),
-                                        Icon(Icons.star),
-                                        Icon(Icons.star),
-                                      ],
+                                    Icon(
+                                      Icons.star,
+                                      size: 20,
+                                    ),
+                                    Text(
+                                      '5.0 ·',
+                                    ),
+                                    Text(
+                                      '3 reviews',
+                                      style: TextStyle(
+                                        color: AppColor.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ],
                                 ),
-                                VerticalDivider(
-                                  color: Colors.black12,
+                                Text(
+                                  'Yonkers, New York, United States',
                                 ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.local_attraction_outlined),
-                                    Text('Guest favourite'),
-                                    Icon(Icons.local_attraction_outlined)
-                                  ],
+                              ],
+                            )
+                          ],
+                        ),
+                        Divider(),
+
+                        // host and how many rooms $ beds
+                        Column(
+                          spacing: 10,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Private room in home \nhosted by Craig',
+                                  style: TextStyle(
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                                VerticalDivider(
-                                  color: Colors.black12,
+                                CustomImage(
+                                  clipBehaviour: Clip.antiAlias,
+                                  boxDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  width: 50,
+                                  height: 50,
+                                  path: "https://w0.peakpx.com/wallpaper/107/46/HD-wallpaper-best-pose-for-profile-for-men-profile-pose-men-best-glasses.jpg",
+                                ),
+                              ],
+                            ),
+                            Text(
+                              '2 guests - 1 bedrooms - 1 beds - 1 private bath',
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(),
+
+                        // self check in
+                        Column(
+                          spacing: 10,
+                          children: [
+                            Row(
+                              spacing: 10,
+                              children: [
+                                Icon(
+                                  Icons.door_back_door_outlined,
+                                  size: 30,
                                 ),
                                 Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('206'),
-                                    Text('Reviews'),
+                                    Text(
+                                      'Self check-in',
+                                      style: TextStyle(
+                                        color: AppColor.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      'You can check in with the building staff.',
+                                      style: TextStyle(
+                                        color: AppColor.grey,
+                                      ),
+                                    ),
                                   ],
                                 )
                               ],
                             ),
-                          ),
-                        ),
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.account_circle_outlined,
-                        title: 'Hosted by Denise',
-                        subtitle: Text('SuperTest - 6 years hosting'),
-                      ),
-                      Divider(),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.wine_bar_sharp,
-                        title: 'Top 5% of homes',
-                        subtitle: Text(
-                            'This home is highly ranked based on ratings, reviews and reliability.',
-                        ),
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.lock_clock,
-                        title: 'Amazing outdoor space',
-                        subtitle: Text(
-                            'Guests mention the garden, outdoor area and grill as highlights.'),
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.place_outlined,
-                        title: 'Self check-in',
-                        subtitle: Text(
-                          'You can check in with the building staff.',
-                        ),
-                      ),
-                      Divider(),
-                      Text(
-                        'Immerse We’ve been so immersed in this world of drinking, and a lot of us have felt like there was nowhere to go...',
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.015,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Show more',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w600,
-                              fontSize: context.screenWidth * 0.04,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: context.screenWidth * 0.04,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.015,
-                      ),
-                      Divider(),
-                      SizedBox(),
-                      Text(
-                        'Where you\'ll sleep',
-                        style: TextStyle(
-                            fontSize: context.screenWidth * 0.06,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            CustomCliprrectBedroomParticularHome(),
-                            SizedBox(
-                              width: context.screenWidth * 0.05,
-                            ),
-                            CustomCliprrectBedroomParticularHome(),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      Divider(),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      Text(
-                        'What this place offers',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: context.screenWidth * 0.05),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.01,
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.location_city,
-                        title: 'Courtyard view',
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.gradient_rounded,
-                        title: 'Garden view',
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.leak_add,
-                        title: 'Lake access',
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.kitchen,
-                        title: 'Kitchen',
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.wifi,
-                        title: 'Wifi',
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.alarm,
-                        title: 'Carbon monoxide alarm',
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.smoke_free,
-                        title: 'Smoke alarm',
-                      ),
-                      CustomButton(
-                        onPressed: () {},
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                        text: 'Show all 61 amenities',
-                        textStyle: TextStyle(
-                          fontSize: context.screenWidth * 0.04,
-                        ),
-                      ),
-                      Divider(),
-                      SizedBox(),
-                      Text(
-                        'Where you\'ll be',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: context.screenWidth * 0.06),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      Stack(children: [
-                        SizedBox(
-                          height: context.screenHeight * 0.51,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(25),
-                            child: GoogleMap(
-                              myLocationButtonEnabled: false,
-                              zoomControlsEnabled: false,
-                              initialCameraPosition: CameraPosition(
-                                target: LatLng(23.014509, 72.591759),
-                                zoom: 12.5,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Center(
-                          heightFactor: context.screenHeight * 0.01,
-                          child: TextButton(
-                            style: ButtonStyle(
-                              iconColor: WidgetStatePropertyAll(Colors.red,),
-                              iconSize: WidgetStatePropertyAll(context.screenWidth * 0.1,),
-                            ),
-                            onPressed: () => openFullScreenMap(context),
-                            child: Icon(
-                              Icons.home,
-                            ),
-                          ),
-                        ),
-                      ]),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      Text(
-                        'Cisco, Cuzco, Peru',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: context.screenWidth * 0.04),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.015,
-                      ),
-                      Text(
-                        'The house is located very close to the neighborhood of san blas, in a quiet, relaxing area, with enough...',
-                        style: TextStyle(
-                          fontSize: context.screenWidth * 0.04,
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.025,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Show more',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w600,
-                              fontSize: context.screenWidth * 0.04,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: context.screenWidth * 0.04,
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: context.screenHeight * 0.036,
-                ),
-                Container(
-                  color: Colors.black12,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: context.screenWidth * 0.05),
-                    child: Column(children: [
-                      SizedBox(
-                        height: context.screenHeight * 0.025,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.local_play_outlined,
-                            size: context.screenWidth * 0.1,
-                          ),
-                          Text(
-                            idData?['rating'],
-                            style: TextStyle(
-                              fontSize: context.screenWidth * 0.1,
-                            ),
-                          ),
-                          Icon(
-                            Icons.local_play_outlined,
-                            size: context.screenWidth * 0.1,
-                          ),
-                        ],
-                      ),
-                      SizedBox(),
-                      Text(
-                        'Guest favourite',
-                        style: TextStyle(
-                          fontSize: context.screenWidth * 0.04,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(),
-                      Text(
-                          'This home is in the top 10% of eligible listings based on ratings, reviews and reliability'),
-                      SizedBox(),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            CustomCardParticularHome(),
-                            CustomCardParticularHome(),
-                            CustomCardParticularHome(),
-                            CustomCardParticularHome(),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.03,
-                      ),
-                      CustomButton(
-                        onPressed: () {},
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                        width: context.screenWidth * 1,
-                        text: 'Show all 206 reviews',
-                        textStyle: TextStyle(
-                          fontSize: context.screenWidth * 0.04,
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.03,
-                      ),
-                      Text(
-                        'Learn how reviews work',
-                        style: TextStyle(decoration: TextDecoration.underline),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.03,
-                      ),
-                    ]),
-                  ),
-                ),
-                SizedBox(
-                  height: context.screenHeight * 0.03,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Meet your host',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: context.screenWidth * 0.063,
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      SizedBox(
-                          width: context.screenWidth * 0.9,
-                          height: context.screenHeight * 0.35,
-                          child: Card(
-                            elevation: 7,
-                            color: Colors.white,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: context.screenWidth * 0.05,
-                                vertical: context.screenHeight * 0.03,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    children: [
-                                      CircleAvatar(
-                                          radius: context.screenWidth * 0.12,
-                                          child: Icon(
-                                            Icons.account_circle_outlined,
-                                            size: context.screenWidth * 0.15,
-                                          )),
-                                      Text(
-                                        'Sara Saith',
-                                        style: TextStyle(
-                                            fontSize: context.screenWidth * 0.06,
-                                            fontWeight: FontWeight.w800),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.hdr_weak_rounded),
-                                          Text(
-                                            'SuperTest',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ],
-                                      )
-                                    ],
+                            Row(
+                              spacing: 10,
+                              children: [
+                                Icon(
+                                  Icons.date_range_outlined,
+                                  size: 30,
+                                ),
+                                Text(
+                                  'Free cancellation before Feb 12.',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(),
+
+                        // air cover
+                        Column(
+                          spacing: 10,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "air",
+                                  style: TextStyle(
+                                    fontSize: 35,
+                                    color: AppColor.pink,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  "cover",
+                                  style: TextStyle(
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              'Every ,We’ve been so immersed in this world of drinking, and a lot of us have felt like there was nowhere to go...',
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Learn more',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(),
+
+                        // about room
+                        Column(
+                          spacing: 10,
+                          children: [
+                            Text(
+                              'Immerse We’ve been so immersed in this world of drinking, and a lot of us have felt like there was nowhere to go...',
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                            Row(
+                              spacing: 8,
+                              children: [
+                                Text(
+                                  'Show more',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 16,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(),
+
+                        // sleep
+                        Column(
+                          spacing: 15,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Where you\'ll sleep',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsetsGeometry.all(15),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColor.black12,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                spacing: 3,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.bed_outlined,
+                                  ),
+                                  Text('Bedroom'),
+                                  Text('1 queen bed'),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Divider(),
+
+                        // place offers
+                        Column(
+                          spacing: 15,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'What this place offers',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 25,
+                              ),
+                            ),
+                            Row(
+                              spacing: 10,
+                              children: [
+                                Icon(
+                                  Icons.gradient_rounded,
+                                ),
+                                Text(
+                                  'Garden view',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              spacing: 10,
+                              children: [
+                                Icon(
+                                  Icons.leak_add,
+                                ),
+                                Text(
+                                  'Lake access',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              spacing: 10,
+                              children: [
+                                Icon(
+                                  Icons.kitchen,
+                                ),
+                                Text(
+                                  'Kitchen',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              spacing: 10,
+                              children: [
+                                Icon(
+                                  Icons.wifi,
+                                ),
+                                Text(
+                                  'Wifi',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              spacing: 10,
+                              children: [
+                                Icon(
+                                  Icons.alarm,
+                                ),
+                                Text(
+                                  'Carbon monoxide alarm',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            CustomButton(
+                              type: ButtonTypes.outlined,
+                              onPressed: () {},
+                              outlineButtonStyle: OutlinedButton.styleFrom(
+                                minimumSize: Size(Get.width, 50),
+                                foregroundColor: AppColor.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadiusGeometry.circular(8),
+                                ),
+                              ),
+                              text: 'Show all 61 amenities',
+                              textStyle: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(),
+
+                        // map
+                        Column(
+                          spacing: 15,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Where you\'ll be',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 25,
+                              ),
+                            ),
+                            Container(
+                              height: 300,
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColor.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Stack(
                                     children: [
-                                      Text(
-                                        '517',
-                                        style: TextStyle(
-                                          fontSize: context.screenWidth * 0.04,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ),
-                                      Text('Reviews'),
-                                      Divider(
-                                        color: Colors.black,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            '4.93',
-                                            style: TextStyle(
-                                              fontSize: context.screenWidth * 0.04,
-                                              fontWeight: FontWeight.w900,
+                                      SizedBox(
+                                        height: 255,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          child: GoogleMap(
+                                            myLocationButtonEnabled: false,
+                                            zoomControlsEnabled: false,
+                                            initialCameraPosition:
+                                                CameraPosition(
+                                              target:
+                                                  LatLng(23.014509, 72.591759),
+                                              zoom: 12.5,
                                             ),
                                           ),
-                                          Icon(Icons.star),
-                                        ],
-                                      ),
-                                      Text('Rating'),
-                                      Divider(color: Colors.black),
-                                      Text(
-                                        '8',
-                                        style: TextStyle(
-                                          fontSize: context.screenWidth * 0.04,
-                                          fontWeight: FontWeight.w900,
                                         ),
                                       ),
-                                      Text('Years hosting')
+                                      Positioned(
+                                        top: 110,
+                                        left: 140,
+                                        child: TextButton(
+                                          style: ButtonStyle(
+                                            iconColor: WidgetStatePropertyAll(
+                                              Colors.red,
+                                            ),
+                                            iconSize: WidgetStatePropertyAll(
+                                              40,
+                                            ),
+                                          ),
+                                          onPressed: () =>
+                                              openFullScreenMap(context),
+                                          child: Icon(
+                                            Icons.home,
+                                          ),
+                                        ),
+                                      ),
                                     ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 23.0,
+                                      vertical: 10,
+                                    ),
+                                    child: Text(
+                                      'Exact location provided after booking.',
+                                      style: TextStyle(
+                                        color: AppColor.grey,
+                                      ),
+                                    ),
                                   )
                                 ],
                               ),
                             ),
-                          )),
-                      SizedBox(
-                        height: context.screenHeight * 0.03,
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.gesture_rounded),
-                          SizedBox(
-                            width: context.screenWidth * 0.04,
-                          ),
-                          Text(
-                            'Speaks Italian and Spanish',
-                            style: TextStyle(fontSize: context.screenWidth * 0.038),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.01,
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.location_on_outlined),
-                          SizedBox(
-                            width: context.screenWidth * 0.04,
-                          ),
-                          Text(
-                            'Lives in Cisco, Peru',
-                            style: TextStyle(fontSize: context.screenWidth * 0.038),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      Text(
-                        'Born at Lima and raised in the Cisco region, I decided to return to my homely...',
-                        style: TextStyle(
-                          fontSize: context.screenWidth * 0.042,
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Show more',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w600,
-                              fontSize: context.screenWidth * 0.04,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Yonkers, New York, United States',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                Text(
+                                  'Located on a quiet suburban street.',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: context.screenWidth * 0.04,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.04,
-                      ),
-                      Text(
-                        'Sara Saith is a SuperTest',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: context.screenWidth * 0.045,
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      Text(
-                          'Superheros are experienced, highly rated hosts who are committed to providing great stays for guests.'),
-                      SizedBox(
-                        height: context.screenHeight * 0.035,
-                      ),
-                      Text(
-                        'Co-Hosts',
-                        style: TextStyle(
-                            fontSize: context.screenWidth * 0.05,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.account_box,
-                            size: context.screenWidth * 0.15,
-                          ),
-                          SizedBox(
-                            width: context.screenWidth * 0.02,
-                          ),
-                          Text(
-                            'Wilder',
-                            style: TextStyle(fontSize: context.screenWidth * 0.04),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      Text(
-                        'Host Details',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: context.screenWidth * 0.05,
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.015,
-                      ),
-                      Text('Response rate: 100%'),
-                      SizedBox(),
-                      Text('Responds within an hour'),
-                      SizedBox(
-                        height: context.screenHeight * 0.03,
-                      ),
-                      CustomButton(
-                        onPressed: () {},
-                        backgroundColor: Colors.black,
-                        text: 'Message Host',
-                        textStyle: TextStyle(
-                          fontSize: context.screenWidth * 0.04,
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.02,
-                      ),
-                      CustomListTile(
-                        onTap: (){},
-                        title:
-                            'To help protect your payment, always use Airbnb to send money and communicate with hosts.',
-                        titleTextStyle:
-                            TextStyle(fontSize: context.screenWidth * 0.03),
-                        leadingIcon: Icons.pentagon_outlined,
-                      ),
-                      SizedBox(),
-                      Divider(),
-                      SizedBox(),
-                      CustomListTile(
-                        onTap: (){},
-                        title: "Availability",
-                        titleTextStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: context.screenWidth * 0.063,
-                        ),
-                        trailingIcon: Icons.arrow_forward_ios,
-                        subtitle: Text(idData?['available_dates']),
-                      ),
-                      SizedBox(),
-                      Divider(),
-                      CustomListTile(
-                        onTap: (){},
-                        title: 'Cancellation policy',
-                        titleTextStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: context.screenWidth * 0.063,
-                        ),
-                        subtitle: Text(
-                            'Free cancellation before 20 Feb. Cancel before check-in on 25 Feb for a partial refund.\nReview this Host\' full policy for details.'),
-                        trailingIcon: Icons.arrow_forward_ios,
-                      ),
-                      Divider(),
-                      CustomListTile(
-                        onTap: (){},
-                        title: 'House rules',
-                        titleTextStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: context.screenWidth * 0.063,
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Flexible check-in'),
-                            Text('Checkout before 10:00 am'),
-                            Text('4 guests maximum'),
-                            SizedBox(
-                              height: context.screenHeight * 0.01,
+                            Row(
+                              spacing: 8,
+                              children: [
+                                Text(
+                                  'Show more',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 16,
+                                )
+                              ],
                             ),
-                            Text(
-                              'Show more',
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: context.screenWidth * 0.04,
-                                  fontWeight: FontWeight.w600),
-                            )
                           ],
                         ),
-                      ),
-                      Divider(),
-                      CustomListTile(
-                        onTap: (){},
-                        title: 'Safety & property',
-                        titleTextStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: context.screenWidth * 0.063,
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Divider(),
+
+                        // reviews container
+                        Column(
+                          spacing: 15,
                           children: [
-                            Text(
-                                'No carbon monoxide alarm \nNo smoke alarm\nNearby lake, river, other body of water'),
-                            SizedBox(
-                              height: context.screenHeight * 0.01,
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                ),
+                                Text(
+                                  '5.0 · 3 Reviews',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              'Show more',
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: context.screenWidth * 0.04,
-                                  fontWeight: FontWeight.w600),
-                            )
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                spacing: 20,
+                                children: [
+                                  CustomContainerParticularHome(),
+                                  CustomContainerParticularHome(),
+                                  CustomContainerParticularHome(),
+                                  CustomContainerParticularHome(),
+                                ],
+                              ),
+                            ),
+                            CustomButton(
+                              type: ButtonTypes.outlined,
+                              onPressed: () {},
+                              outlineButtonStyle: OutlinedButton.styleFrom(
+                                minimumSize: Size(Get.width, 50),
+                                foregroundColor: AppColor.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadiusGeometry.circular(8),
+                                ),
+                              ),
+                              text: 'Show all 206 reviews',
+                              textStyle: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                      SizedBox(),
-                      Divider(),
-                      SizedBox(),
-                      CustomListTile(
-                        onTap: (){},
-                        leadingIcon: Icons.flag,
-                        title: 'Report this listing',
-                        titleTextStyle:
-                            TextStyle(decoration: TextDecoration.underline),
-                      ),
-                      SizedBox(
-                        height: context.screenHeight * 0.10,
-                      ),
-                    ],
+                        Divider(),
+
+                        // hosted by
+                        Column(
+                          spacing: 20,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Hosted by Craig',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Joined in July 2014',
+                                    )
+                                  ],
+                                ),
+                                CustomImage(
+                                  clipBehaviour: Clip.antiAlias,
+                                  boxDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  width: 50,
+                                  height: 50,
+                                  path: "https://w0.peakpx.com/wallpaper/107/46/HD-wallpaper-best-pose-for-profile-for-men-profile-pose-men-best-glasses.jpg",
+                                ),
+                              ],
+                            ),
+                            Column(
+                              spacing: 5,
+                              children: [
+                                Row(
+                                  spacing: 10,
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                    ),
+                                    Text(
+                                      '3 Reviews',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  spacing: 10,
+                                  children: [
+                                    Icon(
+                                      Icons.security,
+                                    ),
+                                    Text(
+                                      'Identity verified',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Column(
+                              spacing: 7,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Military: US Air Force Reserves',
+                                  style: TextStyle(
+                                    color: AppColor.black87,
+                                  ),
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: AppColor.black87,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            'Civilian: Director of Distribution Operations at a NY Hospital...',
+                                      ),
+                                      TextSpan(
+                                        text: 'Read more',
+                                        style: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        // recognizer: TapGestureRecognizer()
+                                        //   ..onTap = () {
+                                        //     Get.offNamed(Routes.signUp);
+                                        //   },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              spacing: 8,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'During your stay',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                Text(
+                                  'I will be available on site. When I\'m not on site you can reach me via text, phone or through Airbnb.',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              spacing: 5,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Language: English',
+                                ),
+                                Text(
+                                  'Response rate: 100%',
+                                ),
+                                Text(
+                                  'Responds within an hour',
+                                ),
+                              ],
+                            ),
+                            CustomButton(
+                              type: ButtonTypes.outlined,
+                              onPressed: () {},
+                              outlineButtonStyle: OutlinedButton.styleFrom(
+                                minimumSize: Size(Get.width, 50),
+                                foregroundColor: AppColor.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadiusGeometry.circular(8),
+                                ),
+                              ),
+                              text: 'Contact Host',
+                              textStyle: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'To protect your payment, never transfer money or\ncommunicate outside of the Airbnb website or app.',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.pentagon_outlined,
+                                  size: 30,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              spacing: 5,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Availability',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                Text(
+                                  idData?['available_dates'],
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                        Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              spacing: 5,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'House rules',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                Text(
+                                  'Check-in: After 10:00 PM',
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                        Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              spacing: 5,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Health & safety',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                Text(
+                                  'Airbnb\'s COVID-19 safety practices apply \nSecurity camera/recording device',
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                        Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              spacing: 5,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Cancellation policy',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                Text(
+                                  'Free cancellation before 20 Feb.\nCancel before check-in on 25 Feb for a partial \nrefund. Review this Host\' full policy for details.',
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                        Divider(),
+                        Row(
+                          spacing: 10,
+                          children: [
+                            Icon(
+                              Icons.flag,
+                            ),
+                            Text(
+                              'Report this listing',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 80,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          }
+                ],
+              );
+            },
           ),
         ),
       ),
-      bottomSheet: Wrap(children: [
-        Container(
-          height: 1,
-          color: Colors.grey[300],
-        ),
-        ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: context.screenHeight * 0.03),
-          tileColor: Colors.white,
-          title: Text(
-            '₹${idData?['price'] ?? " "} night',
-            style: TextStyle(
-              decoration: TextDecoration.underline,
-              fontWeight: FontWeight.bold,
-              fontSize: context.screenWidth * 0.045,
+      bottomSheet: Wrap(
+        children: [
+          Container(
+            height: 1,
+            color: Colors.grey[300],
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 25,
+            ),
+            tileColor: Colors.white,
+            title: Text(
+              '₹${idData?['price'] ?? " "} night',
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            subtitle: Text('${idData?['available_dates'] ?? " "} '),
+            trailing: CustomButton(
+              onPressed: () {},
+              text: 'Reserve',
+              textStyle: TextStyle(
+                fontSize: 17,
+              ),
             ),
           ),
-          subtitle: Text('${idData?['available_dates'] ?? " " } '),
-          trailing: CustomButton(
-            onPressed: () {},
-            text: 'Reserve',
-            textStyle: TextStyle(
-              fontSize: context.screenWidth * 0.04,
-            ),
-          ),
-        ),
-        // SizedBox(
-        //   height: context.screenHeight * 0.134,
-        // )
-      ]),
+        ],
+      ),
     );
   }
 }

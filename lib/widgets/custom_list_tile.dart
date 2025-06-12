@@ -1,4 +1,5 @@
 import 'package:airbnb/airbnb_global_imports.dart';
+import 'package:flutter/services.dart';
 
 class CustomListTile extends StatelessWidget{
 
@@ -10,7 +11,7 @@ class CustomListTile extends StatelessWidget{
   final Widget? subtitle;
   final VisualDensity? visualDensity;
   final EdgeInsetsGeometry? contentPadding;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const CustomListTile({
     super.key,
@@ -18,7 +19,7 @@ class CustomListTile extends StatelessWidget{
     this.iconSize,
     this.trailingIcon,
     required this.title,
-    required this.onTap,
+    this.onTap,
     this.titleTextStyle,
     this.subtitle,
     this.visualDensity,

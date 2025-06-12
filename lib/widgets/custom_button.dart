@@ -40,15 +40,18 @@ class CustomButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(6),
               ),
-              minimumSize: Size(width ?? context.screenWidth * 0,
-                  height ?? context.screenHeight * 0.065),
+              minimumSize: Size(
+                width ?? context.screenWidth * 0,
+                height ?? context.screenHeight * 0.065,
+              ),
             ),
             child: isLoading
                 ? SizedBox(
-                    height: 30,
-                    width: 30,
+                    height: 20,
+                    width: 20,
                     child: CircularProgressIndicator(
                       color: AppColor.white,
+                      strokeWidth: 3,
                     ),
                   )
                 : Text(

@@ -6,6 +6,8 @@ class CustomImage extends GetView<ImagePickerController> {
   final double? height;
   final double? width;
   final BoxFit fit;
+  final BoxDecoration? boxDecoration;
+  final Clip? clipBehaviour;
 
   const CustomImage({
     super.key,
@@ -13,6 +15,8 @@ class CustomImage extends GetView<ImagePickerController> {
     this.height,
     this.width,
     this.fit = BoxFit.cover,
+    this.boxDecoration,
+    this.clipBehaviour,
   });
 
   ImageTypes identifyImageType(String path) {
@@ -31,36 +35,42 @@ class CustomImage extends GetView<ImagePickerController> {
   Widget build(BuildContext context) {
     switch (identifyImageType(path)) {
       case ImageTypes.network:
-        return path.endsWith('.svg')
-            ? SvgPicture.network(
-                path,
-                height: height,
-                width: width,
-                fit: fit,
-                errorBuilder: (context, error, stacktrace) {
-                  return Icon(
-                    Icons.network_check,
-                  );
-                },
-                placeholderBuilder: (context) => CircularProgressIndicator(),
-              )
-            : Image.network(
-                path,
-                height: height,
-                width: width,
-                fit: fit,
-                errorBuilder: (context, error, stacktrace) {
-                  return Icon(
-                    Icons.network_check,
-                  );
-                },
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              );
+        return Container(
+          clipBehavior: clipBehaviour ?? Clip.none,
+          height: height,
+          width: width,
+          decoration: boxDecoration,
+          child: path.endsWith('.svg')
+              ? SvgPicture.network(
+                  path,
+                  height: height,
+                  width: width,
+                  fit: fit,
+                  errorBuilder: (context, error, stacktrace) {
+                    return Icon(
+                      Icons.network_check,
+                    );
+                  },
+                  placeholderBuilder: (context) => CircularProgressIndicator(),
+                )
+              : Image.network(
+                  path,
+                  height: height,
+                  width: width,
+                  fit: fit,
+                  errorBuilder: (context, error, stacktrace) {
+                    return Icon(
+                      Icons.network_check,
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+        );
       case ImageTypes.asset:
         return (path.endsWith('.svg')
             ? SvgPicture.asset(

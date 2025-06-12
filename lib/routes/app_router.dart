@@ -25,18 +25,17 @@ class AppRouter {
     GetPage(
       name: Routes.explore,
       page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding()],
+      bindings: [ExploreScreenBinding(),],
       transition: Transition.noTransition,
     ),
     GetPage(
       name: Routes.particularScreen,
-      page: () => ParticularHome(
-      ),
+      page: () => ParticularHome(),
     ),
     GetPage(
       name: Routes.wishlists,
       page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding(),WishlistScreenBinding()],
+      bindings: [ExploreScreenBinding(),WishlistScreenBinding(),],
       transition: Transition.noTransition,
     ),
     GetPage(
@@ -67,7 +66,7 @@ class AppRouter {
     GetPage(
       name: Routes.profile,
       page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding(),ProfileScreenBinding()],
+      bindings: [ExploreScreenBinding(),ProfileScreenBinding(),],
       transition: Transition.noTransition,
     ),
     GetPage(
@@ -75,6 +74,5 @@ class AppRouter {
       page: () => PersonalInformationScreen(),
       binding: ProfileScreenBinding(),
     ),
-
   ];
 }

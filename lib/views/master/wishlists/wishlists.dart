@@ -25,48 +25,50 @@ class WishlistScreen extends GetView<WishlistScreenController> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: 2,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsetsGeometry.symmetric(
-                            vertical: 8,
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.toNamed(
-                                Routes.particularWish,
-                              );
-                            },
-                            child: Row(
-                              spacing: 11,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: CustomImage(
-                                    width: 65,
-                                    height: 65,
-                                    path: "https://static.vecteezy.com/system/resources/thumbnails/007/950/886/small/small-plant-growing-in-morning-light-at-garden-concept-earth-day-free-photo.jpg",
-                                  ),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Nice",
-                                    ),
-                                    Text(
-                                      "May 14-19,2023",
-                                    ),
-                                  ],
-                                )
-                              ],
+                    Expanded(
+                      child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: 2,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: EdgeInsetsGeometry.symmetric(
+                              vertical: 8,
                             ),
-                          ),
-                        );
-                      },
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed(
+                                  Routes.particularWish,
+                                );
+                              },
+                              child: Row(
+                                spacing: 11,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: CustomImage(
+                                      width: 65,
+                                      height: 65,
+                                      path: "https://static.vecteezy.com/system/resources/thumbnails/007/950/886/small/small-plant-growing-in-morning-light-at-garden-concept-earth-day-free-photo.jpg",
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Nice",
+                                      ),
+                                      Text(
+                                        "May 14-19,2023",
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     )
                   ],
                 )

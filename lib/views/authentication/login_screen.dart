@@ -1,5 +1,4 @@
 import 'package:airbnb/airbnb_global_imports.dart';
-import 'package:flutter/gestures.dart';
 
 class LoginSignupScreen extends GetView<AuthController> {
   const LoginSignupScreen({super.key});
@@ -55,11 +54,11 @@ class LoginSignupScreen extends GetView<AuthController> {
                     decoration: InputDecoration(
                       hintText: 'Password',
                       border: OutlineInputBorder(),
-                      suffixIcon: TextButton(
+                      suffixIcon: IconButton(
                         onPressed: controller.togglePasswordVisibility,
-                        child: controller.isPasswordVisible.value
-                            ? Text("Hide")
-                            : Text('Show'),
+                        icon: controller.isPasswordVisible.value
+                            ? Icon(Icons.visibility_off_sharp)
+                            : Icon(Icons.visibility),
                       ),
                     ),
                     validator: (value) {
@@ -78,18 +77,22 @@ class LoginSignupScreen extends GetView<AuthController> {
                     },
                     child: Text(
                       'Forgot Password?',
+                      style: TextStyle(
+                        color: AppColor.blue,
+                      ),
                     ),
                   ),
                 ),
                 Obx(() {
                   return CustomButton(
-                      isLoading: controller.isLoading.value,
-                      onPressed: controller.signIn,
-                      width: context.screenWidth * 1,
-                      text: 'Continue',
-                      textStyle: TextStyle(
-                        fontSize: context.screenWidth * 0.04,
-                      ));
+                    isLoading: controller.isLoading.value,
+                    onPressed: controller.signIn,
+                    width: Get.width,
+                    text: 'Continue',
+                    textStyle: TextStyle(
+                      fontSize: context.screenWidth * 0.04,
+                    ),
+                  );
                 }),
                 Row(
                   children: [
@@ -125,8 +128,9 @@ class LoginSignupScreen extends GetView<AuthController> {
                       width: Get.width,
                       height: 50,
                       decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(100)),
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
                       child: controller.isLoadingGoogleSignin.value
                           ? Center(
                               child: SizedBox(
@@ -169,7 +173,7 @@ class LoginSignupScreen extends GetView<AuthController> {
               TextSpan(
                 text: 'Register Now',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: AppColor.blue,
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {

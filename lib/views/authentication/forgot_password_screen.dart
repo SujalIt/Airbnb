@@ -28,8 +28,9 @@ class ForgotPasswordScreen extends GetView<AuthController> {
                 Text(
                   'Forgot Password',
                   style: TextStyle(
-                      fontSize: context.screenWidth * 0.06,
-                      fontWeight: FontWeight.w500),
+                    fontSize: context.screenWidth * 0.06,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 TextFormField(
                   decoration: InputDecoration(

@@ -7,21 +7,21 @@ class MasterScreen extends GetView<BottomNavigationController> {
   Widget build(BuildContext context) {
     controller.updateIndexFromRoute();
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.white,
       body: Obx(() => controller.screens[controller.currentIndex.value]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: controller.currentIndex.value,
         onTap: controller.changeIndex,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColor.white,
         type: BottomNavigationBarType.fixed,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: AppColor.grey,
         showUnselectedLabels: true,
         selectedLabelStyle: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 12,
         ),
         iconSize: 27,
-        selectedItemColor: Colors.pink,
+        selectedItemColor: AppColor.pink,
         items: [
           BottomNavigationBarItem(
             icon: Icon(

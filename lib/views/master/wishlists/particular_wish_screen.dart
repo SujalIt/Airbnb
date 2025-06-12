@@ -391,13 +391,13 @@ class ParticularWishScreen extends GetView<WishlistScreenController>{
                 "Map",
                 style: TextStyle(
                   color: AppColor.white,
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
               ),
               Icon(
                 Icons.map,
                 color: AppColor.white,
-                size: 18,
+                size: 16,
               ),
             ],
           ),

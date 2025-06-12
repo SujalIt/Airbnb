@@ -1,5 +1,4 @@
 import 'package:airbnb/airbnb_global_imports.dart';
-import 'package:flutter/gestures.dart';
 import 'package:intl/intl.dart';
 
 class FinishSigningUpScreen extends GetView<AuthController> {
@@ -107,15 +106,15 @@ class FinishSigningUpScreen extends GetView<AuthController> {
                         controller: controller.passwordController,
                         obscureText: !controller.isPasswordVisible.value,
                         decoration: InputDecoration(
-                            hintText: 'Password',
-                            border: OutlineInputBorder(),
-                            suffixIcon: TextButton(
-                              onPressed:
-                              controller.togglePasswordVisibility,
-                              child: controller.isPasswordVisible.value
-                                  ? Text("Hide")
-                                  : Text('Show'),
-                            )),
+                          hintText: 'Password',
+                          border: OutlineInputBorder(),
+                          suffixIcon: IconButton(
+                            onPressed: controller.togglePasswordVisibility,
+                              icon: controller.isPasswordVisible.value
+                                  ? Icon(Icons.visibility_off_sharp)
+                                  : Icon(Icons.visibility),
+                            ),
+                        ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password!';
@@ -158,7 +157,7 @@ class FinishSigningUpScreen extends GetView<AuthController> {
               TextSpan(
                 text: 'Login Now',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: AppColor.blue,
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
