@@ -1,20 +1,7 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class ExploreHomeScreen extends StatefulWidget {
-  const ExploreHomeScreen({super.key});
-
-  @override
-  State<StatefulWidget> createState() => _ExploreHomeScreenState();
-}
-
-class _ExploreHomeScreenState extends State<ExploreHomeScreen> {
-  late final ExploreCarouselSliderController carouselController;
-
-  @override
-  void initState() {
-    super.initState();
-    carouselController = Get.find();
-  }
+class ExploreScreen extends GetView<ExploreScreenController> {
+  const ExploreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +133,7 @@ class _ExploreHomeScreenState extends State<ExploreHomeScreen> {
               Expanded(
                 child: SingleChildScrollView(
                   child: FutureBuilder<Map<String, Map<String, dynamic>>>(
-                    future: carouselController.getAllDocuments(),
+                    future: controller.getAllDocuments(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return SizedBox(
@@ -207,7 +194,7 @@ class _ExploreHomeScreenState extends State<ExploreHomeScreen> {
                                           height: context.screenHeight * 0.4,
                                           viewportFraction: 1,
                                           onPageChanged: (index, reason) {
-                                            carouselController.currentIndex.value = index;
+                                            controller.currentIndexCarousel.value = index;
                                           },
                                         ),
                                       ),
@@ -233,7 +220,7 @@ class _ExploreHomeScreenState extends State<ExploreHomeScreen> {
                                         ),
                                         child: SmoothPageIndicator(
                                           controller: PageController(
-                                            initialPage: carouselController.currentIndex.value,
+                                            initialPage: controller.currentIndexCarousel.value,
                                           ),
                                           count: documents.length,
                                           effect: SlideEffect(

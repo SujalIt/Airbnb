@@ -9,7 +9,7 @@ class FinishSigningUpScreen extends GetView<AuthController> {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColor.white,
         leading: IconButton(
           onPressed: () {
             Get.offNamed(Routes.login);
@@ -18,10 +18,10 @@ class FinishSigningUpScreen extends GetView<AuthController> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
+        padding: EdgeInsets.symmetric(horizontal: 25),
         child: SingleChildScrollView(
           child: Form(
-            key: controller.authFormKey,
+            key: controller.authFormKeySignup,
             child: Column(
               spacing: 18,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +29,7 @@ class FinishSigningUpScreen extends GetView<AuthController> {
                 Text(
                   'Hello! Register to get started',
                   style: TextStyle(
-                    fontSize: context.screenWidth * 0.08,
+                    fontSize: 27,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

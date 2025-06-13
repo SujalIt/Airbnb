@@ -7,7 +7,9 @@ class AuthController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController fnameController = TextEditingController();
   final TextEditingController lnameController = TextEditingController();
-  final authFormKey = GlobalKey<FormState>();
+  final authFormKeySignup = GlobalKey<FormState>();
+  final authFormKeyLogin = GlobalKey<FormState>();
+  final authFormKeyForgotPass = GlobalKey<FormState>();
   var isLoading = false.obs;
   var isLoadingGoogleSignin = false.obs;
 
@@ -40,7 +42,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signUp() async {
-    if (authFormKey.currentState!.validate()) {
+    if (authFormKeySignup.currentState!.validate()) {
       try {
         isLoading.value = true;
         final res = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -63,7 +65,7 @@ class AuthController extends GetxController {
               title: 'Success',
               desc: 'Now you are ready to start your journey',
             );
-            Get.offNamed(Routes.profile);
+            Get.offAllNamed(Routes.explore);
           } on FirebaseException catch (e) {
             res.user!.delete();
             FirebaseFirestore.instance
@@ -93,19 +95,16 @@ class AuthController extends GetxController {
       UserCredential userCredential;
       if (kIsWeb) {
         GoogleAuthProvider authProvider = GoogleAuthProvider();
-        userCredential =
-            await FirebaseAuth.instance.signInWithPopup(authProvider);
+        userCredential = await FirebaseAuth.instance.signInWithPopup(authProvider);
       } else {
         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
         if (googleUser == null) return;
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
-        userCredential =
-            await FirebaseAuth.instance.signInWithCredential(credential);
+        userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
       }
       final user = userCredential.user;
       if (user != null) {
@@ -124,7 +123,7 @@ class AuthController extends GetxController {
             title: 'Successfully signed in!',
             desc: 'Now you are ready to start your journey.',
           );
-          Get.offNamed(Routes.profile);
+          Get.offAllNamed(Routes.explore);
         } on FirebaseException catch (e) {
           user.delete();
           FirebaseFirestore.instance.collection("users").doc(user.uid).delete();
@@ -145,7 +144,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signIn() async {
-    if (authFormKey.currentState!.validate()) {
+    if (authFormKeyLogin.currentState!.validate()) {
       try {
         isLoading.value = true;
         await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -169,11 +168,10 @@ class AuthController extends GetxController {
   }
 
   Future<void> resetPassword() async {
-    if (authFormKey.currentState!.validate()) {
+    if (authFormKeyForgotPass.currentState!.validate()) {
       try {
         isLoading.value = true;
-        await FirebaseAuth.instance
-            .sendPasswordResetEmail(email: emailController.text);
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
         SmartAlert.customSnackBar(
           title: "Success",
           desc: "Password reset link sent to your email.",

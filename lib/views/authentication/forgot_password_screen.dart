@@ -6,9 +6,9 @@ class ForgotPasswordScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.white,
       appBar: AppBar(
-        backgroundColor: Colors.white10,
+        backgroundColor: AppColor.white,
         leading: IconButton(
           onPressed: () {
             Get.offNamed(Routes.login);
@@ -17,9 +17,9 @@ class ForgotPasswordScreen extends GetView<AuthController> {
         ),
       ),
       body: Form(
-        key: controller.authFormKey,
+        key: controller.authFormKeyForgotPass,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.06),
+          padding: EdgeInsets.symmetric(horizontal: 25,),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +28,7 @@ class ForgotPasswordScreen extends GetView<AuthController> {
                 Text(
                   'Forgot Password',
                   style: TextStyle(
-                    fontSize: context.screenWidth * 0.06,
+                    fontSize: 25,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -50,10 +50,10 @@ class ForgotPasswordScreen extends GetView<AuthController> {
                   return CustomButton(
                     isLoading: controller.isLoading.value,
                     onPressed: controller.resetPassword,
-                    width: context.screenWidth * 1,
+                    width: Get.width,
                     text: 'Forgot Password',
                     textStyle: TextStyle(
-                      fontSize: context.screenWidth * 0.04,
+                      fontSize: 16,
                     ),
                   );
                 }),

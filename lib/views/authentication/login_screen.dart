@@ -6,22 +6,22 @@ class LoginSignupScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.white,
       appBar: AppBar(
-        backgroundColor: Colors.white10,
+        backgroundColor: AppColor.white,
         leading: IconButton(
-            onPressed: () {
-              Get.offNamed('/profile');
-            },
-            icon: Icon(
-              Icons.arrow_back,
-              size: context.screenWidth * 0.069,
-            )),
+          onPressed: () {
+            Get.offNamed(Routes.profile);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+          ),
+        ),
       ),
       body: Form(
-        key: controller.authFormKey,
+        key: controller.authFormKeyLogin,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.06),
+          padding: EdgeInsets.symmetric(horizontal: 25),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,8 +30,9 @@ class LoginSignupScreen extends GetView<AuthController> {
                 Text(
                   'Welcome back to Airbnb!',
                   style: TextStyle(
-                      fontSize: context.screenWidth * 0.06,
-                      fontWeight: FontWeight.w500),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 TextFormField(
                   decoration: InputDecoration(
@@ -73,7 +74,7 @@ class LoginSignupScreen extends GetView<AuthController> {
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
                     onTap: () {
-                      Get.offNamed(Routes.forgotPass);
+                      Get.toNamed(Routes.forgotPassword);
                     },
                     child: Text(
                       'Forgot Password?',
@@ -90,35 +91,31 @@ class LoginSignupScreen extends GetView<AuthController> {
                     width: Get.width,
                     text: 'Continue',
                     textStyle: TextStyle(
-                      fontSize: context.screenWidth * 0.04,
+                      fontSize: 16,
                     ),
                   );
                 }),
                 Row(
+                  spacing: 6,
                   children: [
                     Expanded(
                       child: Divider(
                         thickness: 1,
-                        color: Colors.grey,
+                        color: AppColor.grey,
                       ),
-                    ),
-                    SizedBox(
-                      width: context.screenWidth * 0.02,
                     ),
                     Text(
                       'or',
                       style: TextStyle(
-                        fontSize: context.screenWidth * 0.05,
+                        fontSize: 18,
                       ),
                     ),
-                    SizedBox(
-                      width: context.screenWidth * 0.02,
-                    ),
                     Expanded(
-                        child: Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                    )),
+                      child: Divider(
+                        thickness: 1,
+                        color: AppColor.grey,
+                      ),
+                    ),
                   ],
                 ),
                 Obx(() {

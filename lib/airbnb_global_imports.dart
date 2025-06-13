@@ -26,15 +26,14 @@ export 'dart:convert';
 export 'package:share_plus/share_plus.dart';
 
 // bindings
-export 'package:airbnb/views/master/explore/bindings/explore_screen_binding.dart';
+export 'package:airbnb/views/master/explore/binding/explore_screen_binding.dart';
 export 'package:airbnb/views/master/wishlists/binding/wishlist_screen_binding.dart';
 export 'package:airbnb/views/authentication/binding/auth_binding.dart';
 export 'package:airbnb/views/master/profile/binding/profile_screen_binding.dart';
 
 
 // controllers
-export 'package:airbnb/views/master/explore/controllers/explore_home_screen_controller.dart';
-export 'package:airbnb/views/master/explore/controllers/explore_expansion_tile_controller.dart';
+export 'package:airbnb/views/master/explore/controller/explore_screen_controller.dart';
 export 'package:airbnb/widgets/custom-image/controller/image_picker_controller.dart';
 export 'package:airbnb/views/authentication/controller/auth_controller.dart';
 export 'package:airbnb/views/master/profile/controller/profile_screen_controller.dart';
@@ -71,8 +70,8 @@ export 'package:airbnb/views/authentication/signup_screen.dart';
 
 // explore screen
 export 'package:airbnb/views/master_screen.dart';
-export 'package:airbnb/views/master/explore/explore_home_screen.dart';
-export 'package:airbnb/views/master/explore/particular_home.dart';
+export 'package:airbnb/views/master/explore/explore.dart';
+export 'package:airbnb/views/master/explore/property_detail_screen.dart';
 
 // message screen
 export 'package:airbnb/views/master/messages/messages.dart';

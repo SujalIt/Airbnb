@@ -1,15 +1,13 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class ParticularHome extends StatefulWidget {
-  const ParticularHome({
-    super.key,
-  });
+class PropertyDetailScreen extends StatefulWidget {
+  const PropertyDetailScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => ParticularHomeState();
+  State<StatefulWidget> createState() => PropertyDetailScreenState();
 }
 
-class ParticularHomeState extends State<ParticularHome> {
+class PropertyDetailScreenState extends State<PropertyDetailScreen> {
   Map<String, dynamic>? idData;
   var id = Get.parameters['id'];
 
@@ -62,7 +60,7 @@ class ParticularHomeState extends State<ParticularHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: FutureBuilder<Map<String, dynamic>?>(

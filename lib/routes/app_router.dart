@@ -18,7 +18,7 @@ class AppRouter {
       binding: LoginSignupBinding(),
     ),
     GetPage(
-      name: Routes.forgotPass,
+      name: Routes.forgotPassword,
       page: () => ForgotPasswordScreen(),
       binding: LoginSignupBinding(),
     ),
@@ -29,8 +29,8 @@ class AppRouter {
       transition: Transition.noTransition,
     ),
     GetPage(
-      name: Routes.particularScreen,
-      page: () => ParticularHome(),
+      name: Routes.propertyDetail,
+      page: () => PropertyDetailScreen(),
     ),
     GetPage(
       name: Routes.wishlists,
