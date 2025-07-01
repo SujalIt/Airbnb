@@ -42,7 +42,7 @@ class AppRouter {
     ),
     GetPage(
       name: Routes.wishDetailMap,
-      page: () => ParticularWishMapScreen(),
+      page: () => WishDetailMapScreen(),
     ),
     // GetPage(
     //   name: Routes.messageNotification,

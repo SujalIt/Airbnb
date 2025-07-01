@@ -1,7 +1,7 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class ParticularWishMapScreen extends StatelessWidget {
-  const ParticularWishMapScreen({super.key});
+class WishDetailMapScreen extends StatelessWidget {
+  const WishDetailMapScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
