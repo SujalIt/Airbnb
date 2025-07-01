@@ -11,7 +11,7 @@ class LoginSignupScreen extends GetView<AuthController> {
         backgroundColor: AppColor.white,
         leading: IconButton(
           onPressed: () {
-            Get.offNamed(Routes.profile);
+            Get.offAllNamed(Routes.master);
           },
           icon: Icon(
             Icons.arrow_back,

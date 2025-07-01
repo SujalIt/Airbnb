@@ -1,6 +1,6 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class ProfileScreenController extends GetxController {
+class ProfileController extends GetxController {
   final TextEditingController fnameController = TextEditingController();
   final TextEditingController lnameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -84,7 +84,7 @@ class ProfileScreenController extends GetxController {
             'email': emailController.text,
           },
         );
-        Get.offNamed(Routes.profile);
+        Get.back();
       } on FirebaseFirestore catch (e) {
         SmartAlert.customSnackBar(
           title: 'Error!',

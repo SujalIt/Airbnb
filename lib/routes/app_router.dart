@@ -10,69 +10,48 @@ class AppRouter {
     GetPage(
       name: Routes.login,
       page: () => LoginSignupScreen(),
-      binding: LoginSignupBinding(),
+      binding: AuthBinding(),
     ),
     GetPage(
       name: Routes.signUp,
       page: () => FinishSigningUpScreen(),
-      binding: LoginSignupBinding(),
+      binding: AuthBinding(),
     ),
     GetPage(
       name: Routes.forgotPassword,
       page: () => ForgotPasswordScreen(),
-      binding: LoginSignupBinding(),
+      binding: AuthBinding(),
     ),
     GetPage(
-      name: Routes.explore,
+      name: Routes.master,
       page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding(),],
+      bindings: [ExploreScreenBinding(), WishlistBinding(), ProfileBinding(),],
       transition: Transition.noTransition,
     ),
     GetPage(
       name: Routes.propertyDetail,
-      page: () => PropertyDetailScreen(),
+      page: () {
+        return PropertyDetailScreen(propertyId: Get.parameters['id']!);
+      },
+      binding: ExploreScreenBinding(),
     ),
     GetPage(
-      name: Routes.wishlists,
-      page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding(),WishlistScreenBinding(),],
-      transition: Transition.noTransition,
+      name: Routes.wishDetail,
+      page: () => WishDetail(),
+      binding: WishlistBinding(),
     ),
     GetPage(
-      name: Routes.particularWish,
-      page: () => ParticularWishScreen(),
-      binding: WishlistScreenBinding(),
-    ),
-    GetPage(
-      name: Routes.particularWishMap,
+      name: Routes.wishDetailMap,
       page: () => ParticularWishMapScreen(),
-    ),
-    GetPage(
-      name: Routes.trips,
-      page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding(),],
-      transition: Transition.noTransition,
-    ),
-    GetPage(
-      name: Routes.messages,
-      page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding(),],
-      transition: Transition.noTransition,
     ),
     // GetPage(
     //   name: Routes.messageNotification,
     //   page: () => MessageNotificationScreen(),
     // ),
     GetPage(
-      name: Routes.profile,
-      page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding(),ProfileScreenBinding(),],
-      transition: Transition.noTransition,
-    ),
-    GetPage(
       name: Routes.personalInfo,
       page: () => PersonalInformationScreen(),
-      binding: ProfileScreenBinding(),
+      binding: ProfileBinding(),
     ),
   ];
 }

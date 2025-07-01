@@ -1,6 +1,5 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 
 class AuthController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -65,7 +64,7 @@ class AuthController extends GetxController {
               title: 'Success',
               desc: 'Now you are ready to start your journey',
             );
-            Get.offAllNamed(Routes.explore);
+            Get.offAllNamed(Routes.master);
           } on FirebaseException catch (e) {
             res.user!.delete();
             FirebaseFirestore.instance
@@ -123,7 +122,7 @@ class AuthController extends GetxController {
             title: 'Successfully signed in!',
             desc: 'Now you are ready to start your journey.',
           );
-          Get.offAllNamed(Routes.explore);
+          Get.offAllNamed(Routes.master);
         } on FirebaseException catch (e) {
           user.delete();
           FirebaseFirestore.instance.collection("users").doc(user.uid).delete();
@@ -155,7 +154,7 @@ class AuthController extends GetxController {
           title: 'Successfully signed in!',
           desc: 'Now you are ready to start your journey.',
         );
-        Get.offAllNamed(Routes.explore);
+        Get.offAllNamed(Routes.master);
       } on FirebaseAuthException catch (e) {
         SmartAlert.customSnackBar(
           title: 'Invalid username or password!',

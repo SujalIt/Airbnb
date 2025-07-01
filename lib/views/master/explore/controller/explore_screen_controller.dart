@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class ExploreScreenController extends GetxController {
   var currentIndex = 0.obs;
 
-  final List screens = [
+  final List<Widget> screens = [
     ExploreScreen(),
     WishlistScreen(),
     TripsScreen(),
@@ -14,52 +14,8 @@ class ExploreScreenController extends GetxController {
     ProfileScreen(),
   ];
 
-  @override
-  void onInit() {
-    super.onInit();
-    updateIndexFromRoute();
-  }
-
-  void updateIndexFromRoute() {
-    String currentRoute = Get.currentRoute;
-    switch (currentRoute) {
-      case '/explore':
-        currentIndex.value = 0;
-        break;
-      case '/wishlist':
-        currentIndex.value = 1;
-        break;
-      case '/trips':
-        currentIndex.value = 2;
-        break;
-      case '/messages':
-        currentIndex.value = 3;
-        break;
-      case '/profile':
-        currentIndex.value = 4;
-        break;
-    }
-  }
-
   void changeIndex(int index) {
     currentIndex.value = index;
-    switch (index) {
-      case 0:
-        Get.offNamed('/explore');
-        break;
-      case 1:
-        Get.offNamed('/wishlist');
-        break;
-      case 2:
-        Get.offNamed('/trips');
-        break;
-      case 3:
-        Get.offNamed('/messages');
-        break;
-      case 4:
-        Get.offNamed('/profile');
-        break;
-    }
   }
 
   var currentIndexCarousel = 0.obs;
@@ -90,6 +46,39 @@ class ExploreScreenController extends GetxController {
       documents[doc.id] = doc.data() as Map<String, dynamic>;
     }
     return documents;
+  }
+
+  void openFullScreenMap(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Close full-screen map",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withValues(alpha: 0.5),
+      transitionDuration: Duration(milliseconds: 300),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return FullScreenMapDialog();
+      },
+    );
+  }
+
+  Future<dynamic> getDocumentById(String documentId) async {
+    try {
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('places')
+          .doc(documentId)
+          .get();
+      if (documentSnapshot.exists) {
+        final documentData = {
+          'id': documentSnapshot.id,
+          ...documentSnapshot.data() as Map<String, dynamic>
+        };
+        return documentData;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
   }
 
 // imagekit.io website for image(places)

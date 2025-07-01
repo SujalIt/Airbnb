@@ -23,7 +23,9 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                 height: 65,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  border: Border.all(color: AppColor.white,),
+                  border: Border.all(
+                    color: AppColor.white,
+                  ),
                   color: AppColor.white,
                   boxShadow: [
                     BoxShadow(
@@ -73,7 +75,7 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                           shape: BoxShape.circle,
                         ),
                         child: IconButton(
-                          onPressed: (){},
+                          onPressed: () {},
                           icon: Icon(
                             Icons.tune,
                             size: 20,
@@ -89,10 +91,10 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                 length: 8,
                 child: TabBar(
                   tabAlignment: TabAlignment.start,
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.grey,
+                  labelColor: AppColor.black,
+                  unselectedLabelColor: AppColor.grey,
                   isScrollable: true,
-                  indicatorColor: Colors.black,
+                  indicatorColor: AppColor.black,
                   tabs: [
                     Tab(
                       icon: Icon(Icons.beach_access_outlined),
@@ -137,7 +139,7 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return SizedBox(
-                          height: context.screenHeight * 0.3,
+                          height: 350,
                           child: Center(
                             child: CircularProgressIndicator(),
                           ),
@@ -149,14 +151,16 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                       if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return Center(child: Text('No documents found'));
                       }
-                      Map<String, Map<String, dynamic>> documents = snapshot.data!;
+                      Map<String, Map<String, dynamic>> documents =
+                          snapshot.data!;
                       return ListView.builder(
                         itemCount: documents.length,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           String documentId = documents.keys.elementAt(index);
-                          Map<String, dynamic> documentData = documents[documentId]!;
+                          Map<String, dynamic> documentData =
+                              documents[documentId]!;
                           List<String> imageUrls = [];
                           for (String i in documentData['pictureurls']) {
                             imageUrls.add(i);
@@ -169,7 +173,7 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                   InkWell(
                                     onTap: () {
                                       Get.toNamed(
-                                        '/explore/particular-screen?id=$documentId',
+                                        '/property-detail?id=$documentId',
                                       );
                                       // uploadImageToImageKit();
                                     },
@@ -178,23 +182,26 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                         Radius.circular(10),
                                       ),
                                       child: CarouselSlider(
-                                        items: imageUrls.map((url) {
-                                          return Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10.0),
-                                              image: DecorationImage(
-                                                image: NetworkImage(url),
-                                                fit: BoxFit.cover,
+                                        items: imageUrls.map(
+                                          (url) {
+                                            return Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                image: DecorationImage(
+                                                  image: NetworkImage(url),
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
+                                            );
+                                          },
                                         ).toList(),
                                         options: CarouselOptions(
-                                          height: context.screenHeight * 0.4,
+                                          height: 328,
                                           viewportFraction: 1,
                                           onPageChanged: (index, reason) {
-                                            controller.currentIndexCarousel.value = index;
+                                            controller.currentIndexCarousel
+                                                .value = index;
                                           },
                                         ),
                                       ),
@@ -207,32 +214,31 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                       icon: Icon(
                                         Icons.favorite_outline_rounded,
                                         size: 30,
-                                        color: Colors.white60,
+                                        color: AppColor.white60,
                                       ),
                                     ),
                                   ),
-                                  Obx(
-                                    () {
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                          top: 300,
-                                          left: 150,
+                                  Obx(() {
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        top: 300,
+                                        left: 150,
+                                      ),
+                                      child: SmoothPageIndicator(
+                                        controller: PageController(
+                                          initialPage: controller
+                                              .currentIndexCarousel.value,
                                         ),
-                                        child: SmoothPageIndicator(
-                                          controller: PageController(
-                                            initialPage: controller.currentIndexCarousel.value,
-                                          ),
-                                          count: documents.length,
-                                          effect: SlideEffect(
-                                            activeDotColor: Colors.grey,
-                                            dotHeight: 8,
-                                            dotWidth: 8,
-                                            dotColor: Colors.white60,
-                                          ),
+                                        count: documents.length,
+                                        effect: SlideEffect(
+                                          activeDotColor: AppColor.grey,
+                                          dotHeight: 8,
+                                          dotWidth: 8,
+                                          dotColor: AppColor.white60,
                                         ),
-                                      );
-                                    },
-                                  )
+                                      ),
+                                    );
+                                  })
                                 ],
                               ),
                               Column(
@@ -240,7 +246,8 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         documentData["name"],
@@ -268,14 +275,14 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                   Text(
                                     documentData["distance"],
                                     style: TextStyle(
-                                      color: Colors.blueGrey,
+                                      color: AppColor.blueGrey,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                   Text(
                                     documentData["available_dates"],
                                     style: TextStyle(
-                                      color: Colors.blueGrey,
+                                      color: AppColor.blueGrey,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -285,8 +292,8 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                       Text(
                                         '₹${documentData["price"]}',
                                         style: TextStyle(
-                                          fontSize: context.screenWidth * 0.04,
-                                          color: Colors.black,
+                                          fontSize: 15,
+                                          color: AppColor.black,
                                           fontWeight: FontWeight.w900,
                                         ),
                                       ),
@@ -297,7 +304,9 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                             ],
                           );
                         },

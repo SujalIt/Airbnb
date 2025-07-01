@@ -1,6 +1,6 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class ProfileScreen extends GetView<ProfileScreenController> {
+class ProfileScreen extends GetView<ProfileController> {
   const ProfileScreen({super.key});
 
   @override
@@ -31,8 +31,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                               spacing: 2,
                               children: [
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     SizedBox(
                                       width: 65,
@@ -43,8 +42,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                                           userData['first_name'][0],
                                           style: TextStyle(
                                             color: AppColor.white,
-                                            fontSize:
-                                                context.screenWidth * 0.06,
+                                            fontSize: context.screenWidth * 0.06,
                                           ),
                                         ),
                                       ),
@@ -99,7 +97,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                             Text(
                               'Your Profile',
                               style: TextStyle(
-                                fontSize: context.screenWidth * 0.1,
+                                fontSize: 35,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -109,10 +107,10 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                                   Routes.login,
                                 );
                               },
-                              width: context.screenWidth * 1,
+                              width: Get.width,
                               text: 'Log in or sign up',
                               textStyle: TextStyle(
-                                fontSize: context.screenWidth * 0.04,
+                                fontSize: 16,
                               ),
                             ),
                           ],
@@ -133,9 +131,8 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                         fontSize: 22,
                       ),
                     ),
-                    Obx(
-                      () => controller.user.value != null
-                          ? Column(
+                    Obx(() => controller.user.value != null
+                        ? Column(
                               children: [
                                 GestureDetector(
                                   onTap: (){
@@ -155,7 +152,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                                 Divider()
                               ],
                             )
-                          : Column(),
+                        : Column()
                     ),
                   ],
                 ),

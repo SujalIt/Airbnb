@@ -7,7 +7,7 @@ class TripsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColor.white,
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 25,
@@ -40,7 +40,7 @@ class TripsScreen extends StatelessWidget {
                           height: 373,
                           width: Get.width,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColor.white,
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
@@ -118,7 +118,7 @@ class TripsScreen extends StatelessWidget {
                                             ],
                                           ),
                                           VerticalDivider(
-                                            color: Colors.grey,
+                                            color: AppColor.grey,
                                             thickness: 1,
                                           ),
                                           Column(
@@ -293,7 +293,7 @@ class TripsScreen extends StatelessWidget {
                     Text(
                       'When you\'re ready to plan your next trip, we\'re here to help.',
                       style: TextStyle(
-                        color: Colors.blueGrey,
+                        color: AppColor.blueGrey,
                         fontSize: 16,
                       ),
                     ),

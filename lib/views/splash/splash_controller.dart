@@ -14,7 +14,7 @@ class SplashController extends GetxController with StateMixin<List<dynamic>> {
       User? user = FirebaseAuth.instance.currentUser;
       final bool isLoggedIn = user != null;
       if (isLoggedIn) {
-        Get.offAllNamed(Routes.explore);
+        Get.offAllNamed(Routes.master);
       } else {
         Get.offAllNamed(Routes.login);
       }

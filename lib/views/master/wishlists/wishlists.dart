@@ -1,6 +1,6 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class WishlistScreen extends GetView<WishlistScreenController> {
+class WishlistScreen extends GetView<WishlistController> {
   const WishlistScreen({super.key});
 
   @override
@@ -38,7 +38,7 @@ class WishlistScreen extends GetView<WishlistScreenController> {
                             child: GestureDetector(
                               onTap: () {
                                 Get.toNamed(
-                                  Routes.particularWish,
+                                  Routes.wishDetail,
                                 );
                               },
                               child: Row(
@@ -93,7 +93,7 @@ class WishlistScreen extends GetView<WishlistScreenController> {
                     Text(
                       'You can create, view, or edit Wishlists once you\'ve logged in.',
                       style: TextStyle(
-                        color: Colors.blueGrey,
+                        color: AppColor.blueGrey,
                       ),
                     ),
                     CustomButton(

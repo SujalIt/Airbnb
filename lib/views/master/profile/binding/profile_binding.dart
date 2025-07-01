@@ -1,8 +1,8 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class AuthBinding implements Bindings{
+class ProfileBinding implements Bindings{
   @override
   void dependencies() {
-    Get.lazyPut(()=> AuthController());
+    Get.lazyPut(()=> ProfileController());
   }
 }

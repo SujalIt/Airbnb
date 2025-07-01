@@ -1,7 +1,7 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class ParticularWishScreen extends GetView<WishlistScreenController>{
-  const ParticularWishScreen({super.key});
+class WishDetail extends GetView<WishlistController>{
+  const WishDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class ParticularWishScreen extends GetView<WishlistScreenController>{
         backgroundColor: AppColor.white,
         leading: IconButton(
           onPressed: (){
-            Get.back(result: Routes.wishlists);
+            Get.back();
           },
           icon: Icon(Icons.arrow_back,),
         ),
@@ -157,7 +157,7 @@ class ParticularWishScreen extends GetView<WishlistScreenController>{
                                   activeDotColor: AppColor.white,
                                   dotHeight: 9,
                                   dotWidth: 9,
-                                  dotColor: Colors.white60,
+                                  dotColor: AppColor.white60,
                                 ),
                               ),
                             ),
@@ -301,7 +301,7 @@ class ParticularWishScreen extends GetView<WishlistScreenController>{
                                   activeDotColor: AppColor.white,
                                   dotHeight: 9,
                                   dotWidth: 9,
-                                  dotColor: Colors.white60,
+                                  dotColor: AppColor.white60,
                                 ),
                               ),
                             ),
@@ -378,7 +378,7 @@ class ParticularWishScreen extends GetView<WishlistScreenController>{
         height: 45,
         child: FloatingActionButton.extended(
           onPressed: (){
-            Get.toNamed(Routes.particularWishMap);
+            Get.toNamed(Routes.wishDetailMap);
           },
           backgroundColor: AppColor.black,
           shape: RoundedRectangleBorder(

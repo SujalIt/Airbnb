@@ -1,7 +1,7 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 import 'package:intl/intl.dart';
 
-class PersonalInformationScreen extends GetView<ProfileScreenController> {
+class PersonalInformationScreen extends GetView<ProfileController> {
   const PersonalInformationScreen({super.key});
 
   @override
@@ -15,7 +15,7 @@ class PersonalInformationScreen extends GetView<ProfileScreenController> {
         ),
         leading: IconButton(
           onPressed: () {
-            Get.offNamed(Routes.profile);
+            Get.back();
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -66,11 +66,11 @@ class ProfileBody extends StatefulWidget {
 }
 
 class _ProfileBodyState extends State<ProfileBody> {
-  final ProfileScreenController controller = Get.find<ProfileScreenController>();
+  final ProfileController controller = Get.find<ProfileController>();
   @override
   void initState() {
     super.initState();
-    Get.find<ProfileScreenController>().updateField(
+    Get.find<ProfileController>().updateField(
       widget.firstName.toString(),
       widget.lastName.toString(),
       widget.email.toString(),

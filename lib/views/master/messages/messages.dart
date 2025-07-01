@@ -7,8 +7,8 @@ class MessageScreen extends StatefulWidget {
   State<StatefulWidget> createState() => MessageScreenState();
 }
 
-class MessageScreenState extends State<MessageScreen>
-    with SingleTickerProviderStateMixin {
+class MessageScreenState extends State<MessageScreen> with SingleTickerProviderStateMixin {
+
   late TabController tabController = TabController(length: 2, vsync: this);
 
   @override
@@ -48,7 +48,7 @@ class MessageScreenState extends State<MessageScreen>
                             child: Text(
                               "Messages",
                               style: TextStyle(
-                                fontSize: context.screenWidth * 0.04,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -56,7 +56,7 @@ class MessageScreenState extends State<MessageScreen>
                             child: Text(
                               "Notifications",
                               style: TextStyle(
-                                fontSize: context.screenWidth * 0.04,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -94,13 +94,13 @@ class MessageScreenState extends State<MessageScreen>
                                                 Text(
                                                   'Airbnb Support',
                                                   style: TextStyle(
-                                                    fontSize: context.screenWidth * 0.04,
+                                                    fontSize: 15.5,
                                                   ),
                                                 ),
                                                 Text(
                                                   "22/02",
                                                   style: TextStyle(
-                                                    fontSize: context.screenWidth * 0.04,
+                                                    fontSize: 15.5,
                                                   ),
                                                 ),
                                               ],
@@ -108,13 +108,13 @@ class MessageScreenState extends State<MessageScreen>
                                             Text(
                                               "Airbnb: This Conversation is close...",
                                               style: TextStyle(
-                                                fontSize: context.screenWidth * 0.035,
+                                                fontSize: 13.5,
                                               ),
                                             ),
                                             Text(
                                               "Closed",
                                               style: TextStyle(
-                                                fontSize: context.screenWidth * 0.032,
+                                                fontSize: 12.5,
                                               ),
                                             ),
                                           ],
@@ -146,13 +146,13 @@ class MessageScreenState extends State<MessageScreen>
                                                 Text(
                                                   'Airbnb Support',
                                                   style: TextStyle(
-                                                    fontSize: context.screenWidth * 0.04,
+                                                    fontSize: 15.5,
                                                   ),
                                                 ),
                                                 Text(
                                                   "22/02",
                                                   style: TextStyle(
-                                                    fontSize: context.screenWidth * 0.04,
+                                                    fontSize: 15.5,
                                                   ),
                                                 ),
                                               ],
@@ -160,13 +160,13 @@ class MessageScreenState extends State<MessageScreen>
                                             Text(
                                               "Airbnb: This Conversation is close...",
                                               style: TextStyle(
-                                                fontSize: context.screenWidth * 0.035,
+                                                fontSize: 13.5,
                                               ),
                                             ),
                                             Text(
                                               "Closed",
                                               style: TextStyle(
-                                                fontSize: context.screenWidth * 0.032,
+                                                fontSize: 12.5,
                                               ),
                                             ),
                                           ],
@@ -193,18 +193,18 @@ class MessageScreenState extends State<MessageScreen>
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment .spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
                                                   'Airbnb Support',
                                                   style: TextStyle(
-                                                    fontSize: context.screenWidth * 0.04,
+                                                    fontSize: 15.5,
                                                   ),
                                                 ),
                                                 Text(
                                                   "22/02",
                                                   style: TextStyle(
-                                                    fontSize: context.screenWidth * 0.04,
+                                                    fontSize: 15.5,
                                                   ),
                                                 ),
                                               ],
@@ -212,13 +212,13 @@ class MessageScreenState extends State<MessageScreen>
                                             Text(
                                               "Airbnb: This Conversation is close...",
                                               style: TextStyle(
-                                                fontSize: context.screenWidth * 0.035,
+                                                fontSize: 13.5,
                                               ),
                                             ),
                                             Text(
                                               "Closed",
                                               style: TextStyle(
-                                                fontSize: context.screenWidth * 0.032,
+                                                fontSize: 12.5,
                                               ),
                                             ),
                                           ],
@@ -233,11 +233,11 @@ class MessageScreenState extends State<MessageScreen>
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: context.screenHeight * 0.015,),
+                                  SizedBox(height: 10,),
                                   Text(
                                     "You are all caught up",
                                     style: TextStyle(
-                                      fontSize: context.screenHeight * 0.023,
+                                      fontSize: 20,
                                       color: AppColor.grey,
                                     ),
                                   ),
@@ -272,7 +272,7 @@ class MessageScreenState extends State<MessageScreen>
                         'Once you log in, you\'ll find messages from hosts here.',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.blueGrey,
+                          color: AppColor.blueGrey,
                         ),
                       ),
                       CustomButton(

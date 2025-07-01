@@ -11,7 +11,7 @@ class ForgotPasswordScreen extends GetView<AuthController> {
         backgroundColor: AppColor.white,
         leading: IconButton(
           onPressed: () {
-            Get.offNamed(Routes.login);
+            Get.back();
           },
           icon: Icon(Icons.arrow_back),
         ),
