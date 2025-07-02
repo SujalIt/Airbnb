@@ -1,6 +1,6 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class MasterScreen extends GetView<ExploreScreenController> {
+class MasterScreen extends GetView<MasterController> {
   const MasterScreen({super.key});
 
   @override

@@ -25,7 +25,9 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                   ),
                 ),
               );
-            } else if (snapshot.hasData) {
+            }
+            else if (snapshot.hasData) {
+              controller.currentIndexPropertyDetail.value = 0;
               return Column(
                 children: [
                   Expanded(
@@ -36,13 +38,17 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                           Stack(
                             children: [
                               CarouselSlider(
-                                items: snapshot.data['particular_multiple_images']
-                                    .map<Widget>((url) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: NetworkImage(url),
+                                items: snapshot.data['particular_multiple_images'].map<Widget>((url) {
+                                  return InkWell(
+                                    onTap: (){
+                                      controller.heroAnimation(context, url);
+                                    },
+                                    child: Hero(
+                                      tag: 'hero',
+                                      child: CustomImage(
+                                        path: url,
                                         fit: BoxFit.cover,
+                                        width: Get.width,
                                       ),
                                     ),
                                   );
@@ -50,6 +56,12 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                 options: CarouselOptions(
                                   viewportFraction: 1,
                                   height: 250,
+                                  initialPage: 0,
+                                  enableInfiniteScroll: false,
+                                  onPageChanged: (index, reason) {
+                                    controller.currentIndexPropertyDetail
+                                        .value = index;
+                                  },
                                 ),
                               ),
                               Positioned(
@@ -122,6 +134,26 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                   ),
                                 ),
                               ),
+                              Positioned(
+                                top: 215,
+                                left: 330,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadiusGeometry.circular(5),
+                                    color: AppColor.white60,
+                                  ),
+                                  height: 20,
+                                  width: 40,
+                                  child: Center(
+                                    child: Obx(
+                                      () => Text(
+                                        "${controller.currentIndexPropertyDetail.value + 1}/${snapshot.data["particular_multiple_images"].length}",
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           Padding(
@@ -146,7 +178,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     ),
                                     Column(
                                       spacing: 2,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Row(
                                           spacing: 3,
@@ -195,12 +228,12 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                         CustomImage(
                                           clipBehaviour: Clip.antiAlias,
                                           boxDecoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(30),
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
                                           width: 50,
                                           height: 50,
-                                          path:
-                                              "https://w0.peakpx.com/wallpaper/107/46/HD-wallpaper-best-pose-for-profile-for-men-profile-pose-men-best-glasses.jpg",
+                                          path: "https://w0.peakpx.com/wallpaper/107/46/HD-wallpaper-best-pose-for-profile-for-men-profile-pose-men-best-glasses.jpg",
                                         ),
                                       ],
                                     ),
@@ -302,7 +335,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                         Text(
                                           'Learn more',
                                           style: TextStyle(
-                                            decoration: TextDecoration.underline,
+                                            decoration:
+                                                TextDecoration.underline,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 15,
                                           ),
@@ -329,7 +363,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                         Text(
                                           'Show more',
                                           style: TextStyle(
-                                            decoration: TextDecoration.underline,
+                                            decoration:
+                                                TextDecoration.underline,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 16,
                                           ),
@@ -366,7 +401,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                       ),
                                       child: Column(
                                         spacing: 3,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Icon(
                                             Icons.bed_outlined,
@@ -465,7 +501,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     CustomButton(
                                       type: ButtonTypes.outlined,
                                       onPressed: () {},
-                                      outlineButtonStyle: OutlinedButton.styleFrom(
+                                      outlineButtonStyle:
+                                          OutlinedButton.styleFrom(
                                         minimumSize: Size(Get.width, 50),
                                         foregroundColor: AppColor.black,
                                         shape: RoundedRectangleBorder(
@@ -498,10 +535,11 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                       height: 300,
                                       width: Get.width,
                                       decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: AppColor.black12,
-                                          ),
-                                          borderRadius: BorderRadius.circular(25)),
+                                        border: Border.all(
+                                          color: AppColor.black12,
+                                        ),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -513,7 +551,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                                   borderRadius:
                                                       BorderRadius.circular(25),
                                                   child: GoogleMap(
-                                                    myLocationButtonEnabled: false,
+                                                    myLocationButtonEnabled:
+                                                        false,
                                                     zoomControlsEnabled: false,
                                                     initialCameraPosition:
                                                         CameraPosition(
@@ -529,15 +568,10 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                                 left: 140,
                                                 child: TextButton(
                                                   style: ButtonStyle(
-                                                    iconColor: WidgetStatePropertyAll(
-                                                      AppColor.red,
-                                                    ),
-                                                    iconSize: WidgetStatePropertyAll(
-                                                      40,
-                                                    ),
+                                                    iconColor: WidgetStatePropertyAll(AppColor.red),
+                                                    iconSize: WidgetStatePropertyAll(40),
                                                   ),
-                                                  onPressed: () => controller
-                                                      .openFullScreenMap(context),
+                                                  onPressed: () => controller.openFullScreenMap(context),
                                                   child: Icon(
                                                     Icons.home,
                                                   ),
@@ -561,7 +595,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                       ),
                                     ),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Yonkers, New York, United States',
@@ -584,7 +619,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                         Text(
                                           'Show more',
                                           style: TextStyle(
-                                            decoration: TextDecoration.underline,
+                                            decoration:
+                                                TextDecoration.underline,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 16,
                                           ),
@@ -632,7 +668,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     CustomButton(
                                       type: ButtonTypes.outlined,
                                       onPressed: () {},
-                                      outlineButtonStyle: OutlinedButton.styleFrom(
+                                      outlineButtonStyle:
+                                          OutlinedButton.styleFrom(
                                         minimumSize: Size(Get.width, 50),
                                         foregroundColor: AppColor.black,
                                         shape: RoundedRectangleBorder(
@@ -677,7 +714,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                         CustomImage(
                                           clipBehaviour: Clip.antiAlias,
                                           boxDecoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(30),
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
                                           width: 50,
                                           height: 50,
@@ -721,7 +759,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     ),
                                     Column(
                                       spacing: 7,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Military: US Air Force Reserves',
@@ -737,12 +776,14 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                             ),
                                             children: [
                                               TextSpan(
-                                                text: 'Civilian: Director of Distribution Operations at a NY Hospital...',
+                                                text:
+                                                    'Civilian: Director of Distribution Operations at a NY Hospital...',
                                               ),
                                               TextSpan(
                                                 text: 'Read more',
                                                 style: TextStyle(
-                                                  decoration: TextDecoration.underline,
+                                                  decoration:
+                                                      TextDecoration.underline,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -753,7 +794,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     ),
                                     Column(
                                       spacing: 8,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'During your stay',
@@ -772,7 +814,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     ),
                                     Column(
                                       spacing: 5,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Language: English',
@@ -788,11 +831,13 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     CustomButton(
                                       type: ButtonTypes.outlined,
                                       onPressed: () {},
-                                      outlineButtonStyle: OutlinedButton.styleFrom(
+                                      outlineButtonStyle:
+                                          OutlinedButton.styleFrom(
                                         minimumSize: Size(Get.width, 50),
                                         foregroundColor: AppColor.black,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadiusGeometry.circular(8),
+                                          borderRadius:
+                                              BorderRadiusGeometry.circular(8),
                                         ),
                                       ),
                                       text: 'Contact Host',
@@ -801,7 +846,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                       ),
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'To protect your payment, never transfer money or\ncommunicate outside of the Airbnb website or app.',
@@ -820,11 +866,13 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                 Divider(),
 
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       spacing: 5,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Availability',
@@ -846,11 +894,13 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                 ),
                                 Divider(),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       spacing: 5,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'House rules',
@@ -872,11 +922,13 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                 ),
                                 Divider(),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       spacing: 5,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Health & safety',
@@ -898,11 +950,13 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                 ),
                                 Divider(),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       spacing: 5,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Cancellation policy',
@@ -952,10 +1006,13 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                       Container(
                         decoration: BoxDecoration(
                           color: AppColor.white,
-                          border: Border(top: BorderSide(color: AppColor.black12),),
+                          border: Border(
+                            top: BorderSide(color: AppColor.black12),
+                          ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 15),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

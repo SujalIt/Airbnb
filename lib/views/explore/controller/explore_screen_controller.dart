@@ -4,28 +4,16 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class ExploreScreenController extends GetxController {
-  var currentIndex = 0.obs;
+  var currentIndexCarousel = 0.obs; // explore screen
 
-  final List<Widget> screens = [
-    ExploreScreen(),
-    WishlistScreen(),
-    TripsScreen(),
-    MessageScreen(),
-    ProfileScreen(),
-  ];
-
-  void changeIndex(int index) {
-    currentIndex.value = index;
-  }
-
-  var currentIndexCarousel = 0.obs;
-
-  Future<void> addPlace(String name,
-      String rating,
-      // String imageUrl,
-      String distance,
-      String availableDates,
-      String price,) async {
+  Future<void> addPlace(
+    String name,
+    String rating,
+    // String imageUrl,
+    String distance,
+    String availableDates,
+    String price,
+  ) async {
     await FirebaseFirestore.instance.collection("places").add({
       "name": name,
       "price": price,
@@ -37,9 +25,8 @@ class ExploreScreenController extends GetxController {
   }
 
   Future<Map<String, Map<String, dynamic>>> getAllDocuments() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('places')
-        .get();
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('places').get();
 
     Map<String, Map<String, dynamic>> documents = {};
     for (var doc in querySnapshot.docs) {
@@ -48,19 +35,7 @@ class ExploreScreenController extends GetxController {
     return documents;
   }
 
-  void openFullScreenMap(BuildContext context) {
-    showGeneralDialog(
-      context: context,
-      barrierLabel: "Close full-screen map",
-      barrierDismissible: true,
-      barrierColor: Colors.black.withValues(alpha: 0.5),
-      transitionDuration: Duration(milliseconds: 300),
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return FullScreenMapDialog();
-      },
-    );
-  }
-
+  // property detail screen
   Future<dynamic> getDocumentById(String documentId) async {
     try {
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
@@ -79,6 +54,73 @@ class ExploreScreenController extends GetxController {
     } catch (e) {
       return null;
     }
+  }
+
+  var currentIndexPropertyDetail = 0.obs;
+
+  void heroAnimation(BuildContext context, String image) {
+    showDialog(
+      context: context,
+        builder: (BuildContext context) {
+        return Scaffold(
+          backgroundColor: AppColor.black,
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: (){
+                Get.back();
+              },
+              icon: Icon(Icons.arrow_back,color: AppColor.white,),
+            ),
+            backgroundColor: AppColor.black,
+          ),
+          body: Stack(children: [
+            Center(
+              child: Hero(
+                tag: 'hero',
+                child: CustomImage(
+                  path: image,
+                ),
+              ),
+            ),
+          ]),
+        );
+      },
+    );
+  }
+
+  void openFullScreenMap(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Close full-screen map",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withValues(alpha: 0.5),
+      transitionDuration: Duration(milliseconds: 300),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return Scaffold(
+          backgroundColor: AppColor.transparent,
+          body: Stack(
+            children: [
+              GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(23.014509, 72.591759),
+                  zoom: 12,
+                ),
+                zoomControlsEnabled: false,
+              ),
+              Positioned(
+                top:  context.screenHeight * 0.055  ,
+                right: context.screenWidth * 0.043,
+                child: IconButton(
+                  iconSize: context.screenWidth * 0.08,
+                  icon: Icon(Icons.close, color: AppColor.black,),
+                  onPressed: () => Get.back(),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
 // imagekit.io website for image(places)
@@ -105,8 +147,8 @@ class ExploreScreenController extends GetxController {
       // ImageKit API details
       String apiUrl = "https://upload.imagekit.io/api/v1/files/upload";
       String privateApiKey = "private_FanKyRKRVNogDW4OhBxa8L6e6/s=:";
-      String authHeader = "Basic ${base64Encode(
-          utf8.encode('$privateApiKey:'))}";
+      String authHeader =
+          "Basic ${base64Encode(utf8.encode('$privateApiKey:'))}";
 
       var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
       request.headers["Authorization"] = authHeader;
@@ -141,5 +183,4 @@ class ExploreScreenController extends GetxController {
       Get.snackbar('Error', '$e');
     }
   }
-
 }

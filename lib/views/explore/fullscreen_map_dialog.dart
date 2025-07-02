@@ -6,7 +6,7 @@ class FullScreenMapDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColor.transparent,
       body: Stack(
         children: [
           GoogleMap(
@@ -21,8 +21,8 @@ class FullScreenMapDialog extends StatelessWidget {
             right: context.screenWidth * 0.043,
             child: IconButton(
               iconSize: context.screenWidth * 0.08,
-              icon: Icon(Icons.close, color: Colors.black,),
-              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.close, color: AppColor.black,),
+              onPressed: () => Get.back(),
             ),
           ),
         ],

@@ -25,14 +25,12 @@ class AppRouter {
     GetPage(
       name: Routes.master,
       page: () => MasterScreen(),
-      bindings: [ExploreScreenBinding(), WishlistBinding(), ProfileBinding(),],
+      bindings: [MasterBinding(),ExploreScreenBinding(), WishlistBinding(), ProfileBinding(),],
       transition: Transition.noTransition,
     ),
     GetPage(
       name: Routes.propertyDetail,
-      page: () {
-        return PropertyDetailScreen(propertyId: Get.parameters['id']!);
-      },
+      page: () => PropertyDetailScreen(propertyId: Get.parameters['id']!),
       binding: ExploreScreenBinding(),
     ),
     GetPage(

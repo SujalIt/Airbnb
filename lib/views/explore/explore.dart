@@ -151,16 +151,14 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                       if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return Center(child: Text('No documents found'));
                       }
-                      Map<String, Map<String, dynamic>> documents =
-                          snapshot.data!;
+                      Map<String, Map<String, dynamic>> documents = snapshot.data!;
                       return ListView.builder(
                         itemCount: documents.length,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           String documentId = documents.keys.elementAt(index);
-                          Map<String, dynamic> documentData =
-                              documents[documentId]!;
+                          Map<String, dynamic> documentData = documents[documentId]!;
                           List<String> imageUrls = [];
                           for (String i in documentData['pictureurls']) {
                             imageUrls.add(i);
@@ -173,7 +171,7 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                   InkWell(
                                     onTap: () {
                                       Get.toNamed(
-                                        '/property-detail?id=$documentId',
+                                        '${Routes.propertyDetail}?id=$documentId',
                                       );
                                       // uploadImageToImageKit();
                                     },
@@ -182,17 +180,11 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                         Radius.circular(10),
                                       ),
                                       child: CarouselSlider(
-                                        items: imageUrls.map(
-                                          (url) {
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                image: DecorationImage(
-                                                  image: NetworkImage(url),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                        items: imageUrls.map((url) {
+                                            return CustomImage(
+                                              path: url,
+                                              fit: BoxFit.cover,
+                                              width: Get.width,
                                             );
                                           },
                                         ).toList(),
@@ -200,8 +192,7 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                           height: 328,
                                           viewportFraction: 1,
                                           onPageChanged: (index, reason) {
-                                            controller.currentIndexCarousel
-                                                .value = index;
+                                            controller.currentIndexCarousel.value = index;
                                           },
                                         ),
                                       ),
@@ -226,8 +217,7 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                       ),
                                       child: SmoothPageIndicator(
                                         controller: PageController(
-                                          initialPage: controller
-                                              .currentIndexCarousel.value,
+                                          initialPage: controller.currentIndexCarousel.value,
                                         ),
                                         count: documents.length,
                                         effect: SlideEffect(
