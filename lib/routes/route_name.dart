@@ -8,5 +8,5 @@ class Routes{
   static const wishDetail = '/wish-detail';
   static const wishDetailMap = '/wish-detail/map';
   static const messageNotification = '/message-notification';
-  static const personalInfo = '/personal-information';
+  static const personalInformation = '/personal-information';
 }

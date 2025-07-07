@@ -47,7 +47,7 @@ class AppRouter {
     //   page: () => MessageNotificationScreen(),
     // ),
     GetPage(
-      name: Routes.personalInfo,
+      name: Routes.personalInformation,
       page: () => PersonalInformationScreen(),
       binding: ProfileBinding(),
     ),

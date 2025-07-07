@@ -131,10 +131,10 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                   ],
                 ),
               ),
-              // display price and image container
+              // image container
               Expanded(
                 child: SingleChildScrollView(
-                  child: FutureBuilder<Map<String, Map<String, dynamic>>>(
+                  child: FutureBuilder<dynamic>(
                     future: controller.getAllDocuments(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -173,7 +173,6 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                       Get.toNamed(
                                         '${Routes.propertyDetail}?id=$documentId',
                                       );
-                                      // uploadImageToImageKit();
                                     },
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.all(
@@ -191,8 +190,8 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                         options: CarouselOptions(
                                           height: 328,
                                           viewportFraction: 1,
-                                          onPageChanged: (index, reason) {
-                                            controller.currentIndexCarousel.value = index;
+                                          onPageChanged: (imageIndex, reason) {
+                                            controller.updateActiveDots(index, imageIndex);
                                           },
                                         ),
                                       ),
@@ -217,9 +216,9 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                       ),
                                       child: SmoothPageIndicator(
                                         controller: PageController(
-                                          initialPage: controller.currentIndexCarousel.value,
+                                          initialPage: controller.activeDots[index],
                                         ),
-                                        count: documents.length,
+                                        count: imageUrls.length,
                                         effect: SlideEffect(
                                           activeDotColor: AppColor.grey,
                                           dotHeight: 8,

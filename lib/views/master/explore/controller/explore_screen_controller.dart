@@ -4,7 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class ExploreScreenController extends GetxController {
-  var currentIndexCarousel = 0.obs; // explore screen
+  var activeDots = [].obs;
+  void updateActiveDots(int homeI, int imageI){
+    activeDots[homeI] = imageI;
+  }
 
   Future<void> addPlace(
     String name,
@@ -24,14 +27,16 @@ class ExploreScreenController extends GetxController {
     });
   }
 
-  Future<Map<String, Map<String, dynamic>>> getAllDocuments() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('places').get();
+  Future<dynamic> getAllDocuments() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('places').get();
 
     Map<String, Map<String, dynamic>> documents = {};
     for (var doc in querySnapshot.docs) {
       documents[doc.id] = doc.data() as Map<String, dynamic>;
     }
+    activeDots.value = List.generate(documents.length, (index){
+      return 0;
+    });
     return documents;
   }
 

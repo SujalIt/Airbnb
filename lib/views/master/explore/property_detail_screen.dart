@@ -548,16 +548,12 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                               SizedBox(
                                                 height: 255,
                                                 child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
+                                                  borderRadius: BorderRadius.circular(25),
                                                   child: GoogleMap(
-                                                    myLocationButtonEnabled:
-                                                        false,
+                                                    myLocationButtonEnabled: false,
                                                     zoomControlsEnabled: false,
-                                                    initialCameraPosition:
-                                                        CameraPosition(
-                                                      target: LatLng(
-                                                          23.014509, 72.591759),
+                                                    initialCameraPosition: CameraPosition(
+                                                      target: LatLng(23.014509, 72.591759),
                                                       zoom: 12.5,
                                                     ),
                                                   ),

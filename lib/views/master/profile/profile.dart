@@ -136,7 +136,7 @@ class ProfileScreen extends GetView<ProfileController> {
                               children: [
                                 GestureDetector(
                                   onTap: (){
-                                    Get.toNamed(Routes.personalInfo);
+                                    Get.toNamed(Routes.personalInformation);
                                   },
                                   child: CustomListTile(
                                     title: 'Personal information',
