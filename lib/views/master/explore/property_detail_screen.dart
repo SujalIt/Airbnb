@@ -360,19 +360,26 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     Row(
                                       spacing: 8,
                                       children: [
-                                        Text(
-                                          'Show more',
-                                          style: TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16,
+                                        RichText(
+                                          text: TextSpan(
+                                              style: TextStyle(
+                                                decoration: TextDecoration.underline,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: AppColor.black,
+                                              ),
+                                              text: 'Show more',
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  controller.bottomSheetShowMore(context);
+                                                }
+
                                           ),
                                         ),
                                         Icon(
                                           Icons.arrow_forward_ios,
                                           size: 16,
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -500,9 +507,10 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     ),
                                     CustomButton(
                                       type: ButtonTypes.outlined,
-                                      onPressed: () {},
-                                      outlineButtonStyle:
-                                          OutlinedButton.styleFrom(
+                                      onPressed: () {
+                                        controller.bottomSheetAmenities(context);
+                                      },
+                                      outlineButtonStyle: OutlinedButton.styleFrom(
                                         minimumSize: Size(Get.width, 50),
                                         foregroundColor: AppColor.black,
                                         shape: RoundedRectangleBorder(
@@ -772,14 +780,12 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                             ),
                                             children: [
                                               TextSpan(
-                                                text:
-                                                    'Civilian: Director of Distribution Operations at a NY Hospital...',
+                                                text: 'Civilian: Director of Distribution Operations at a NY Hospital...',
                                               ),
                                               TextSpan(
                                                 text: 'Read more',
                                                 style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.underline,
+                                                  decoration: TextDecoration.underline,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
