@@ -276,6 +276,7 @@ class MessageScreenState extends State<MessageScreen> with SingleTickerProviderS
                         ),
                       ),
                       CustomButton(
+                        type: ButtonTypes.elevated,
                         onPressed: () {
                           Get.toNamed(
                             Routes.login,

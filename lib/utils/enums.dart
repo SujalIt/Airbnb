@@ -1,6 +1,6 @@
 // custom buttons
 enum ButtonTypes{
-  elevated, outlined
+  elevated, outlined, icon
 }
 
 // dynamic images

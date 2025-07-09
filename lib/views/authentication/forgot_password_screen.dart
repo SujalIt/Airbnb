@@ -48,6 +48,7 @@ class ForgotPasswordScreen extends GetView<AuthController> {
                 ),
                 Obx((){
                   return CustomButton(
+                    type: ButtonTypes.elevated,
                     isLoading: controller.isLoading.value,
                     onPressed: controller.resetPassword,
                     width: Get.width,

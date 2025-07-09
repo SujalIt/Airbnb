@@ -130,6 +130,7 @@ class _ProfileBodyState extends State<ProfileBody> {
           ),
           Obx(() =>
             CustomButton(
+              type: ButtonTypes.elevated,
               isLoading: controller.isLoading.value,
               onPressed: controller.updateUserDetails,
               text: 'Save',

@@ -97,6 +97,7 @@ class WishlistScreen extends GetView<WishlistController> {
                       ),
                     ),
                     CustomButton(
+                      type: ButtonTypes.elevated,
                       onPressed: () {
                         Get.toNamed(
                           Routes.login,

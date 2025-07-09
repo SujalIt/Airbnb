@@ -69,9 +69,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                 left: 13,
                                 child: IconButton(
                                   style: ButtonStyle(
-                                    iconSize: WidgetStatePropertyAll(
-                                      10,
-                                    ),
+                                    iconSize: WidgetStatePropertyAll(10),
                                   ),
                                   onPressed: () {
                                     Get.back();
@@ -370,10 +368,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                               ),
                                               text: 'Show more',
                                               recognizer: TapGestureRecognizer()
-                                                ..onTap = () {
-                                                  controller.bottomSheetShowMore(context);
-                                                }
-
+                                                ..onTap = controller.bottomSheetShowMore,
                                           ),
                                         ),
                                         Icon(
@@ -507,15 +502,12 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     ),
                                     CustomButton(
                                       type: ButtonTypes.outlined,
-                                      onPressed: () {
-                                        controller.bottomSheetAmenities(context);
-                                      },
+                                      onPressed: controller.bottomSheetAmenities,
                                       outlineButtonStyle: OutlinedButton.styleFrom(
                                         minimumSize: Size(Get.width, 50),
                                         foregroundColor: AppColor.black,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadiusGeometry.circular(8),
+                                          borderRadius: BorderRadiusGeometry.circular(8),
                                         ),
                                       ),
                                       text: 'Show all 61 amenities',
@@ -575,7 +567,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                                     iconColor: WidgetStatePropertyAll(AppColor.red),
                                                     iconSize: WidgetStatePropertyAll(40),
                                                   ),
-                                                  onPressed: () => controller.openFullScreenMap(context),
+                                                  onPressed: controller.openFullScreenMap,
                                                   child: Icon(
                                                     Icons.home,
                                                   ),
@@ -1033,6 +1025,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                 ],
                               ),
                               CustomButton(
+                                type: ButtonTypes.elevated,
                                 onPressed: () {},
                                 text: 'Reserve',
                                 height: 48,

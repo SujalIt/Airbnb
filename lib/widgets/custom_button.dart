@@ -3,7 +3,7 @@ import 'package:airbnb/airbnb_global_imports.dart';
 class CustomButton extends StatelessWidget {
   final ButtonTypes type;
   final VoidCallback onPressed;
-  final String text;
+  final String? text;
   final Color? backgroundColor;
   final Color? foregroundColor;
   final double? height;
@@ -11,14 +11,19 @@ class CustomButton extends StatelessWidget {
   final TextStyle? textStyle;
   final bool isLoading;
 
+  // outline button
   final IconData? leadingIcon;
   final ButtonStyle? outlineButtonStyle;
+  // icon button
+  final EdgeInsetsGeometry? padding;
+  final double? iconSize;
+
 
   const CustomButton({
     super.key,
-    this.type = ButtonTypes.elevated,
+    required this.type,
     required this.onPressed,
-    required this.text,
+    this.text,
     this.backgroundColor,
     this.foregroundColor,
     this.height,
@@ -27,45 +32,59 @@ class CustomButton extends StatelessWidget {
     this.leadingIcon,
     this.outlineButtonStyle,
     this.isLoading = false,
+    this.padding,
+    this.iconSize,
   });
 
   @override
   Widget build(BuildContext context) {
-    return type == ButtonTypes.elevated
-        ? ElevatedButton(
-            onPressed: onPressed,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: backgroundColor ?? AppColor.pink,
-              foregroundColor: foregroundColor ?? AppColor.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-              minimumSize: Size(
-                width ?? context.screenWidth * 0,
-                height ?? context.screenHeight * 0.065,
-              ),
+    switch(type){
+      case ButtonTypes.elevated:
+        return ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: backgroundColor ?? AppColor.pink,
+            foregroundColor: foregroundColor ?? AppColor.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6),
             ),
-            child: isLoading
-                ? SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      color: AppColor.white,
-                      strokeWidth: 3,
-                    ),
-                  )
-                : Text(
-                    text,
-                    style: textStyle,
+            minimumSize: Size(
+              width ?? context.screenWidth * 0,
+              height ?? context.screenHeight * 0.065,
+            ),
+          ),
+          child: isLoading
+              ? SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    color: AppColor.white,
+                    strokeWidth: 3,
                   ),
-          )
-        : OutlinedButton(
-            onPressed: onPressed,
-            style: outlineButtonStyle,
-            child: Text(
-              text,
-              style: textStyle,
-            ),
-          );
+                )
+              : Text(
+                  text ?? "",
+                  style: textStyle,
+                ),
+        );
+      case ButtonTypes.outlined:
+        return OutlinedButton(
+          onPressed: onPressed,
+          style: outlineButtonStyle,
+          child: Text(
+            text ?? "",
+            style: textStyle,
+          ),
+        );
+      case ButtonTypes.icon:
+        return IconButton(
+          onPressed: onPressed,
+          padding: padding,
+          icon: Icon(
+            leadingIcon,
+            size: iconSize,
+          ),
+        );
+    }
   }
 }

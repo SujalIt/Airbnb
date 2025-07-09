@@ -97,9 +97,8 @@ class ExploreScreenController extends GetxController {
     );
   }
 
-  void openFullScreenMap(BuildContext context) {
-    showGeneralDialog(
-      context: context,
+  void openFullScreenMap() {
+    Get.generalDialog(
       barrierLabel: "Close full-screen map",
       barrierDismissible: true,
       barrierColor: Colors.black.withValues(alpha: 0.5),
@@ -135,255 +134,227 @@ class ExploreScreenController extends GetxController {
     );
   }
 
-  void bottomSheetShowMore(BuildContext context) {
-    showBottomSheet(
-      backgroundColor: AppColor.grey,
-      elevation: 20,
-      enableDrag: true,
-      context: context,
-      builder: (context) {
-        return SizedBox(
-          height: 750,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  IconButton(
-                    padding: EdgeInsetsGeometry.only(right: 28),
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      size: 30,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  // About this place
-                  Text(
-                    "About this place",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "Enjoy an elegant private room of 20 m2 in a renovated apartment of 160 m2 in the heart of the city center of Nantes in the Graslin district.",
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "The charm of the old renovated: ceiling height of 3.60 m, period parquet, black marble fireplace, comfortable bathroom.",
-                  ),
-                  SizedBox(
-                    height: 18,
-                  ),
-                  // The Space
-                  Text(
-                    "The space",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Column(
-                    spacing: 10,
-                    children: [
-                      Text(
-                        "Push the door of this 1793 Haussmanian building. You will access a majestic hall and climb a wide stone staircase to the 3rd floor (no elevator).",
-                      ),
-                      Text(
-                        "The bedroom sleeps 2. If you’re traveling with 1 adult, the La Graslin room in the same unit can possibly accommodate it depending on the availability of this room. See the listing “La Graslin” on my profile.",
-                      ),
-                      Text(
-                        "You will be close to all the amenities of the city center: restaurants, cafes, the Graslin theater, grocery stores and all shops.",
-                      ),
-                      Text(
-                        "The central point of public transport in Nantes (tram, bus, busway) is a 2-minute walk from the building.",
-                      ),
-                      Text(
-                        "The train station is within 10 minutes by tram without change (3 stops to Commerce)For our friends who love soft mobility, a \"bicloo\" rental bike station is available at the foot of the building.",
-                      ),
-                      Text(
-                        "The apartment is ideally located for your sightseeing tours: it is located 10 minutes from Machines de l 'Ile et des nefs, 2 minutes from Pommeray passage, Place Royale, a 10-minute walk from the Château des Ducs.You'll get to the Beaujoire Exhibition Center in 20 minutes by tram.",
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void bottomSheetAmenities(BuildContext context) {
-    showBottomSheet(
-      context: context,
+  void bottomSheetShowMore() {
+    Get.bottomSheet(
+      isScrollControlled: true,
       backgroundColor: AppColor.white,
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: SingleChildScrollView(
+      SizedBox(
+        height: 750,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 45,),
-                IconButton(
+                CustomButton(
+                  type: ButtonTypes.icon,
                   padding: EdgeInsetsGeometry.only(right: 28),
                   onPressed: () {
                     Get.back();
                   },
-                  icon: Icon(
-                    Icons.arrow_back_ios_new,
-                    size: 20,
+                  leadingIcon: Icons.cancel_outlined,
+                  iconSize: 27,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                // About this place
+                Text(
+                  "About this place",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                Divider(),
+                SizedBox(
+                  height: 15,
+                ),
+                _buildTextShowMore(
+                  "Enjoy an elegant private room of 20 m2 in a renovated apartment of 160 m2 in the heart of the city center of Nantes in the Graslin district.",
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                _buildTextShowMore(
+                  "The charm of the old renovated: ceiling height of 3.60 m, period parquet, black marble fireplace, comfortable bathroom.",
+                ),
+                SizedBox(
+                  height: 18,
+                ),
+                // The Space
+                Text(
+                  "The space",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 15,
+                  spacing: 10,
                   children: [
-                    Text(
-                      "Amenities",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 27,
-                      ),
+                    _buildTextShowMore(
+                      "Push the door of this 1793 Haussmanian building. You will access a majestic hall and climb a wide stone staircase to the 3rd floor (no elevator).",
                     ),
-
-                    // Scenic views
-                    _buildAmenity(
-                      "Scenic views",
-                      [
-                        _buildAmenityRow(Icons.location_city, "City skyline view",),
-                      ],
+                    _buildTextShowMore(
+                      "The bedroom sleeps 2. If you’re traveling with 1 adult, the La Graslin room in the same unit can possibly accommodate it depending on the availability of this room. See the listing “La Graslin” on my profile.",
                     ),
-
-                    // Bathroom
-                    _buildAmenity(
-                      "Bathroom",
-                      [
-                        _buildAmenityRow(Icons.hail_rounded, "Hair dryer",),
-                        _buildAmenityRow(Icons.local_drink_outlined, "Shampoo",),
-                        _buildAmenityRow(Icons.water_drop_outlined, "Hot water",),
-                        _buildAmenityRow(Icons.local_drink_outlined, "Shower gel",),
-                      ],
+                    _buildTextShowMore(
+                      "You will be close to all the amenities of the city center: restaurants, cafes, the Graslin theater, grocery stores and all shops.",
                     ),
-
-                    // Bedroom and laundry
-                    _buildAmenity(
-                      "Bedroom and laundry",
-                      [
-                        _buildAmenityRow(Icons.wash_outlined, "Free washer – In unit",),
-                      ],
+                    _buildTextShowMore(
+                      "The central point of public transport in Nantes (tram, bus, busway) is a 2-minute walk from the building.",
                     ),
-
-                    // Parking and facilities
-                    _buildAmenity(
-                      "Parking and facilities",
-                      [
-                        _buildAmenityRow(Icons.directions_car, "Paid parking garage off premises",),
-                        Row(
-                          spacing: 10,
-                          children: [
-                            Icon(
-                              Icons.stairs_outlined,
-                              size: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Single level home",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Text(
-                                  'No stairs in home',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        Divider(),
-                      ],
+                    _buildTextShowMore(
+                      "The train station is within 10 minutes by tram without change (3 stops to Commerce)For our friends who love soft mobility, a \"bicloo\" rental bike station is available at the foot of the building.",
                     ),
-
-
-                    // Services
-                    _buildAmenity(
-                      "Services",
-                      [
-                        _buildAmenityRow(Icons.key, "Host greets you",),
-                      ],
-                    ),
-
-
-                    // Not included
-                    _buildAmenity(
-                      "Not included",
-                      [
-                        _buildAmenityRow(Icons.kitchen, "Kitchen",),
-                        _buildAmenityRow(Icons.air, "Air conditioning",),
-                        Row(
-                          spacing: 10,
-                          children: [
-                            Icon(
-                              Icons.alarm_off_sharp,
-                              size: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Carbon monoxide alarm",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Text(
-                                  "There is no carbon monoxide detector on the property.",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        _buildAmenityRow(Icons.privacy_tip_outlined, "Private entrance",),
-                      ],
+                    _buildTextShowMore(
+                      "The apartment is ideally located for your sightseeing tours: it is located 10 minutes from Machines de l 'Ile et des nefs, 2 minutes from Pommeray passage, Place Royale, a 10-minute walk from the Château des Ducs.You'll get to the Beaujoire Exhibition Center in 20 minutes by tram.",
                     ),
                   ],
-                ),
+                )
               ],
             ),
           ),
-        );
-      },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextShowMore(String text){
+    return Text(text);
+  }
+
+  void bottomSheetAmenities() {
+    Get.bottomSheet(
+      isScrollControlled: true,
+      backgroundColor: AppColor.white,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 35),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomButton(
+                type: ButtonTypes.icon,
+                padding: EdgeInsetsGeometry.only(right: 28),
+                onPressed: () {
+                  Get.back();
+                },
+                leadingIcon: Icons.arrow_back_ios_new,
+                iconSize: 20,
+              ),
+              Divider(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 25,
+                children: [
+                  Text(
+                    "Amenities",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 27,
+                    ),
+                  ),
+
+                  // Scenic views
+                  _buildAmenity(
+                    "Scenic views",
+                    [
+                      _buildAmenityRow(
+                        Icons.location_city,
+                        "City skyline view",
+                      ),
+                    ],
+                  ),
+
+                  // Bathroom
+                  _buildAmenity(
+                    "Bathroom",
+                    [
+                      _buildAmenityRow(
+                        Icons.hail_rounded,
+                        "Hair dryer",
+                      ),
+                      _buildAmenityRow(
+                        Icons.local_drink_outlined,
+                        "Shampoo",
+                      ),
+                      _buildAmenityRow(
+                        Icons.water_drop_outlined,
+                        "Hot water",
+                      ),
+                      _buildAmenityRow(
+                        Icons.local_drink_outlined,
+                        "Shower gel",
+                      ),
+                    ],
+                  ),
+
+                  // Bedroom and laundry
+                  _buildAmenity(
+                    "Bedroom and laundry",
+                    [
+                      _buildAmenityRow(
+                        Icons.wash_outlined,
+                        "Free washer – In unit",
+                      ),
+                    ],
+                  ),
+
+                  // Parking and facilities
+                  _buildAmenity(
+                    "Parking and facilities",
+                    [
+                      _buildAmenityRow(
+                        Icons.directions_car,
+                        "Paid parking garage off premises",
+                      ),
+                      _buildAmenityRow(
+                        Icons.stairs_outlined,
+                        "Single level home",
+                        subAmenityName: "No stairs in home",
+                      ),
+                    ],
+                  ),
+
+                  // Services
+                  _buildAmenity(
+                    "Services",
+                    [
+                      _buildAmenityRow(
+                        Icons.key,
+                        "Host greets you",
+                      ),
+                    ],
+                  ),
+
+                  // Not included
+                  _buildAmenity(
+                    "Not included",
+                    [
+                      _buildAmenityRow(Icons.kitchen, "Kitchen",
+                          isStrikethrough: true),
+                      _buildAmenityRow(Icons.air, "Air conditioning",
+                          isStrikethrough: true),
+                      _buildAmenityRow(
+                          Icons.alarm_off_sharp, "Carbon monoxide alarm",
+                          subAmenityName:
+                              "There is no carbon monoxide detector on the property.",
+                          isStrikethrough: true),
+                      _buildAmenityRow(
+                          Icons.privacy_tip_outlined, "Private entrance",
+                          isStrikethrough: true),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -404,7 +375,12 @@ class ExploreScreenController extends GetxController {
     );
   }
 
-  Widget _buildAmenityRow(IconData amenityIcon, String amenityName, {String? subAmenityName}) {
+  Widget _buildAmenityRow(
+    IconData amenityIcon,
+    String amenityName, {
+    String? subAmenityName,
+    bool isStrikethrough = false,
+  }) {
     return Column(
       spacing: 15,
       children: [
@@ -415,13 +391,27 @@ class ExploreScreenController extends GetxController {
               amenityIcon,
               size: 20,
             ),
-            Text(
-              amenityName,
-              style: TextStyle(
-                // add condition
-                // decoration: TextDecoration.lineThrough,
-                fontSize: 16,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  amenityName,
+                  style: TextStyle(
+                    decoration:
+                        isStrikethrough ? TextDecoration.lineThrough : null,
+                    fontSize: 16,
+                  ),
+                ),
+                if (subAmenityName != null)
+                  Text(
+                    subAmenityName,
+                    style: TextStyle(
+                      decoration:
+                          isStrikethrough ? TextDecoration.lineThrough : null,
+                      fontSize: 12,
+                    ),
+                  ),
+              ],
             ),
           ],
         ),

@@ -131,6 +131,7 @@ class FinishSigningUpScreen extends GetView<AuthController> {
                 ),
                 Obx((){
                   return CustomButton(
+                    type: ButtonTypes.elevated,
                     isLoading: controller.isLoading.value,
                     height: 45,
                     width: Get.width,

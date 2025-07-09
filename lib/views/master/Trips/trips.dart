@@ -298,6 +298,7 @@ class TripsScreen extends StatelessWidget {
                       ),
                     ),
                     CustomButton(
+                      type: ButtonTypes.elevated,
                       onPressed: () {
                         Get.toNamed(
                           Routes.login,

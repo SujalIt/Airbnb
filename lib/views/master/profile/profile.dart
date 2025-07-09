@@ -102,6 +102,7 @@ class ProfileScreen extends GetView<ProfileController> {
                               ),
                             ),
                             CustomButton(
+                              type: ButtonTypes.elevated,
                               onPressed: () {
                                 Get.toNamed(
                                   Routes.login,
