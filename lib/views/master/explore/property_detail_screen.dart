@@ -663,7 +663,9 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     ),
                                     CustomButton(
                                       type: ButtonTypes.outlined,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Get.toNamed(Routes.propertyDetailReview);
+                                      },
                                       outlineButtonStyle:
                                           OutlinedButton.styleFrom(
                                         minimumSize: Size(Get.width, 50),
@@ -710,13 +712,11 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                         CustomImage(
                                           clipBehaviour: Clip.antiAlias,
                                           boxDecoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
+                                            borderRadius: BorderRadius.circular(30),
                                           ),
                                           width: 50,
                                           height: 50,
-                                          path:
-                                              "https://w0.peakpx.com/wallpaper/107/46/HD-wallpaper-best-pose-for-profile-for-men-profile-pose-men-best-glasses.jpg",
+                                          path: "https://w0.peakpx.com/wallpaper/107/46/HD-wallpaper-best-pose-for-profile-for-men-profile-pose-men-best-glasses.jpg",
                                         ),
                                       ],
                                     ),
@@ -1005,8 +1005,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 15),
+                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

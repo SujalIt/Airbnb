@@ -5,6 +5,7 @@ class Routes{
   static const forgotPassword = '/login/forgot-password';
   static const master = '/master';
   static const propertyDetail = '/property-detail';
+  static const propertyDetailReview = '/property-detail/reviews';
   static const wishDetail = '/wish-detail';
   static const wishDetailMap = '/wish-detail/map';
   static const messageNotification = '/message-notification';

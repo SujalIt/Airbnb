@@ -169,13 +169,13 @@ class ExploreScreenController extends GetxController {
                 SizedBox(
                   height: 15,
                 ),
-                _buildTextShowMore(
+                _textShowMore(
                   "Enjoy an elegant private room of 20 m2 in a renovated apartment of 160 m2 in the heart of the city center of Nantes in the Graslin district.",
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                _buildTextShowMore(
+                _textShowMore(
                   "The charm of the old renovated: ceiling height of 3.60 m, period parquet, black marble fireplace, comfortable bathroom.",
                 ),
                 SizedBox(
@@ -195,22 +195,22 @@ class ExploreScreenController extends GetxController {
                 Column(
                   spacing: 10,
                   children: [
-                    _buildTextShowMore(
+                    _textShowMore(
                       "Push the door of this 1793 Haussmanian building. You will access a majestic hall and climb a wide stone staircase to the 3rd floor (no elevator).",
                     ),
-                    _buildTextShowMore(
+                    _textShowMore(
                       "The bedroom sleeps 2. If you’re traveling with 1 adult, the La Graslin room in the same unit can possibly accommodate it depending on the availability of this room. See the listing “La Graslin” on my profile.",
                     ),
-                    _buildTextShowMore(
+                    _textShowMore(
                       "You will be close to all the amenities of the city center: restaurants, cafes, the Graslin theater, grocery stores and all shops.",
                     ),
-                    _buildTextShowMore(
+                    _textShowMore(
                       "The central point of public transport in Nantes (tram, bus, busway) is a 2-minute walk from the building.",
                     ),
-                    _buildTextShowMore(
+                    _textShowMore(
                       "The train station is within 10 minutes by tram without change (3 stops to Commerce)For our friends who love soft mobility, a \"bicloo\" rental bike station is available at the foot of the building.",
                     ),
-                    _buildTextShowMore(
+                    _textShowMore(
                       "The apartment is ideally located for your sightseeing tours: it is located 10 minutes from Machines de l 'Ile et des nefs, 2 minutes from Pommeray passage, Place Royale, a 10-minute walk from the Château des Ducs.You'll get to the Beaujoire Exhibition Center in 20 minutes by tram.",
                     ),
                   ],
@@ -223,7 +223,7 @@ class ExploreScreenController extends GetxController {
     );
   }
 
-  Widget _buildTextShowMore(String text){
+  Widget _textShowMore(String text){
     return Text(text);
   }
 
@@ -260,10 +260,10 @@ class ExploreScreenController extends GetxController {
                   ),
 
                   // Scenic views
-                  _buildAmenity(
+                  _amenity(
                     "Scenic views",
                     [
-                      _buildAmenityRow(
+                      _amenityRow(
                         Icons.location_city,
                         "City skyline view",
                       ),
@@ -271,22 +271,22 @@ class ExploreScreenController extends GetxController {
                   ),
 
                   // Bathroom
-                  _buildAmenity(
+                  _amenity(
                     "Bathroom",
                     [
-                      _buildAmenityRow(
+                      _amenityRow(
                         Icons.hail_rounded,
                         "Hair dryer",
                       ),
-                      _buildAmenityRow(
+                      _amenityRow(
                         Icons.local_drink_outlined,
                         "Shampoo",
                       ),
-                      _buildAmenityRow(
+                      _amenityRow(
                         Icons.water_drop_outlined,
                         "Hot water",
                       ),
-                      _buildAmenityRow(
+                      _amenityRow(
                         Icons.local_drink_outlined,
                         "Shower gel",
                       ),
@@ -294,10 +294,10 @@ class ExploreScreenController extends GetxController {
                   ),
 
                   // Bedroom and laundry
-                  _buildAmenity(
+                  _amenity(
                     "Bedroom and laundry",
                     [
-                      _buildAmenityRow(
+                      _amenityRow(
                         Icons.wash_outlined,
                         "Free washer – In unit",
                       ),
@@ -305,14 +305,14 @@ class ExploreScreenController extends GetxController {
                   ),
 
                   // Parking and facilities
-                  _buildAmenity(
+                  _amenity(
                     "Parking and facilities",
                     [
-                      _buildAmenityRow(
+                      _amenityRow(
                         Icons.directions_car,
                         "Paid parking garage off premises",
                       ),
-                      _buildAmenityRow(
+                      _amenityRow(
                         Icons.stairs_outlined,
                         "Single level home",
                         subAmenityName: "No stairs in home",
@@ -321,10 +321,10 @@ class ExploreScreenController extends GetxController {
                   ),
 
                   // Services
-                  _buildAmenity(
+                  _amenity(
                     "Services",
                     [
-                      _buildAmenityRow(
+                      _amenityRow(
                         Icons.key,
                         "Host greets you",
                       ),
@@ -332,21 +332,13 @@ class ExploreScreenController extends GetxController {
                   ),
 
                   // Not included
-                  _buildAmenity(
+                  _amenity(
                     "Not included",
                     [
-                      _buildAmenityRow(Icons.kitchen, "Kitchen",
-                          isStrikethrough: true),
-                      _buildAmenityRow(Icons.air, "Air conditioning",
-                          isStrikethrough: true),
-                      _buildAmenityRow(
-                          Icons.alarm_off_sharp, "Carbon monoxide alarm",
-                          subAmenityName:
-                              "There is no carbon monoxide detector on the property.",
-                          isStrikethrough: true),
-                      _buildAmenityRow(
-                          Icons.privacy_tip_outlined, "Private entrance",
-                          isStrikethrough: true),
+                      _amenityRow(Icons.kitchen, "Kitchen", isStrikethrough: true,),
+                      _amenityRow(Icons.air, "Air conditioning", isStrikethrough: true,),
+                      _amenityRow(Icons.alarm_off_sharp, "Carbon monoxide alarm", subAmenityName: "There is no carbon monoxide detector on the property.", isStrikethrough: true,),
+                      _amenityRow(Icons.privacy_tip_outlined, "Private entrance", isStrikethrough: true,),
                     ],
                   ),
                 ],
@@ -358,7 +350,7 @@ class ExploreScreenController extends GetxController {
     );
   }
 
-  Widget _buildAmenity(String amenityTitle, List<Widget> rows) {
+  Widget _amenity(String amenityTitle, List<Widget> rows) {
     return Column(
       spacing: 15,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -375,7 +367,7 @@ class ExploreScreenController extends GetxController {
     );
   }
 
-  Widget _buildAmenityRow(
+  Widget _amenityRow(
     IconData amenityIcon,
     String amenityName, {
     String? subAmenityName,
@@ -419,6 +411,9 @@ class ExploreScreenController extends GetxController {
       ],
     );
   }
+
+  // review screen
+  TextEditingController searchController = TextEditingController();
 
 // imagekit.io website for image(places)
   Future<void> uploadImageToImageKit() async {
