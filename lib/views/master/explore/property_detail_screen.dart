@@ -176,8 +176,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     ),
                                     Column(
                                       spacing: 2,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Row(
                                           spacing: 3,
@@ -664,7 +663,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     CustomButton(
                                       type: ButtonTypes.outlined,
                                       onPressed: () {
-                                        Get.toNamed(Routes.propertyDetailReview);
+                                        Get.toNamed(Routes.review);
                                       },
                                       outlineButtonStyle:
                                           OutlinedButton.styleFrom(
@@ -977,12 +976,19 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     Icon(
                                       Icons.flag,
                                     ),
-                                    Text(
-                                      'Report this listing',
-                                      style: TextStyle(
-                                        decoration: TextDecoration.underline,
+                                    RichText(
+                                      text: TextSpan(
+                                        recognizer: TapGestureRecognizer()..onTap = (){
+                                          Get.toNamed(Routes.reportListing);
+                                        },
+                                        text: 'Report this listing',
+                                        style: TextStyle(
+                                          color: AppColor.black,
+                                          decoration: TextDecoration.underline, // Underlines the text
+                                        ),
                                       ),
-                                    ),
+                                    )
+
                                   ],
                                 ),
                                 SizedBox(

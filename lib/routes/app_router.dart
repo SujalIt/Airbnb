@@ -1,5 +1,4 @@
 import 'package:airbnb/airbnb_global_imports.dart';
-import 'package:airbnb/views/master/explore/property_detail_review_screen.dart';
 
 class AppRouter {
   static final routes = [
@@ -35,8 +34,13 @@ class AppRouter {
       binding: ExploreScreenBinding(),
     ),
     GetPage(
-      name: Routes.propertyDetailReview,
-      page: () => PropertyDetailReviewScreen(),
+      name: Routes.review,
+      page: () => ReviewScreen(),
+      binding: ExploreScreenBinding(),
+    ),
+    GetPage(
+      name: Routes.reportListing,
+      page: () => ReportListingScreen(),
       binding: ExploreScreenBinding(),
     ),
     GetPage(

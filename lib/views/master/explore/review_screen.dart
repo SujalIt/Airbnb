@@ -1,7 +1,7 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class PropertyDetailReviewScreen extends GetView<ExploreScreenController> {
-  const PropertyDetailReviewScreen({super.key});
+class ReviewScreen extends GetView<ExploreScreenController> {
+  const ReviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
