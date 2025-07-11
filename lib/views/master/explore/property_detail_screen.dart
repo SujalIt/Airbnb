@@ -429,76 +429,11 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                         fontSize: 25,
                                       ),
                                     ),
-                                    Row(
-                                      spacing: 10,
-                                      children: [
-                                        Icon(
-                                          Icons.gradient_rounded,
-                                        ),
-                                        Text(
-                                          'Garden view',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      spacing: 10,
-                                      children: [
-                                        Icon(
-                                          Icons.leak_add,
-                                        ),
-                                        Text(
-                                          'Lake access',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      spacing: 10,
-                                      children: [
-                                        Icon(
-                                          Icons.kitchen,
-                                        ),
-                                        Text(
-                                          'Kitchen',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      spacing: 10,
-                                      children: [
-                                        Icon(
-                                          Icons.wifi,
-                                        ),
-                                        Text(
-                                          'Wifi',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      spacing: 10,
-                                      children: [
-                                        Icon(
-                                          Icons.alarm,
-                                        ),
-                                        Text(
-                                          'Carbon monoxide alarm',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    _dynamicIconTextRow(Icons.gradient_rounded,'Garden view',),
+                                    _dynamicIconTextRow(Icons.leak_add,'Lake access',),
+                                    _dynamicIconTextRow(Icons.kitchen,'Kitchen',),
+                                    _dynamicIconTextRow(Icons.wifi,'Wifi',),
+                                    _dynamicIconTextRow(Icons.alarm,'Carbon monoxide alarm',),
                                     CustomButton(
                                       type: ButtonTypes.outlined,
                                       onPressed: controller.bottomSheetAmenities,
@@ -722,34 +657,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     Column(
                                       spacing: 5,
                                       children: [
-                                        Row(
-                                          spacing: 10,
-                                          children: [
-                                            Icon(
-                                              Icons.star,
-                                            ),
-                                            Text(
-                                              '3 Reviews',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          spacing: 10,
-                                          children: [
-                                            Icon(
-                                              Icons.security,
-                                            ),
-                                            Text(
-                                              'Identity verified',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                        _dynamicIconTextRow(Icons.star,'3 Reviews',),
+                                        _dynamicIconTextRow(Icons.security,'Identity verified',),
                                       ],
                                     ),
                                     Column(
@@ -979,7 +888,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                     RichText(
                                       text: TextSpan(
                                         recognizer: TapGestureRecognizer()..onTap = (){
-                                          Get.toNamed(Routes.reportListing);
+                                          controller.bottomSheetReportListing();
                                         },
                                         text: 'Report this listing',
                                         style: TextStyle(
@@ -1001,49 +910,46 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                       ),
                     ),
                   ),
-                  Wrap(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColor.white,
-                          border: Border(
-                            top: BorderSide(color: AppColor.black12),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // bottom reserve button
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColor.white,
+                      border: Border(
+                        top: BorderSide(color: AppColor.black12),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '₹${snapshot.data['price']} night',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  Text(snapshot.data['available_dates']),
-                                ],
-                              ),
-                              CustomButton(
-                                type: ButtonTypes.elevated,
-                                onPressed: () {},
-                                text: 'Reserve',
-                                height: 48,
-                                textStyle: TextStyle(
-                                  fontSize: 17,
+                              Text(
+                                '₹${snapshot.data['price']} night',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
                                 ),
                               ),
+                              Text(snapshot.data['available_dates']),
                             ],
                           ),
-                        ),
+                          CustomButton(
+                            type: ButtonTypes.elevated,
+                            onPressed: () {},
+                            text: 'Reserve',
+                            height: 48,
+                            textStyle: TextStyle(
+                              fontSize: 17,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  )
+                    ),
+                  ),
                 ],
               );
             }
@@ -1059,4 +965,21 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
       ),
     );
   }
+}
+
+Widget _dynamicIconTextRow(IconData icon,String text,){
+  return Row(
+    spacing: 10,
+    children: [
+      Icon(
+        icon,
+      ),
+      Text(
+        text,
+        style: TextStyle(
+          fontSize: 15,
+        ),
+      ),
+    ],
+  );
 }

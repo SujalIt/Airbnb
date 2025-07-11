@@ -411,11 +411,162 @@ class ExploreScreenController extends GetxController {
       ],
     );
   }
-
   // review screen
   TextEditingController searchController = TextEditingController();
 
-// imagekit.io website for image(places)
+  void bottomSheetReportListing(){
+    Get.bottomSheet(
+      isScrollControlled: true,
+      backgroundColor: AppColor.white,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20,),
+            CustomButton(
+              type: ButtonTypes.icon,
+              padding: EdgeInsetsGeometry.only(right: 28),
+              onPressed: () {
+                Get.back();
+              },
+              leadingIcon: Icons.arrow_back_ios_new,
+              iconSize: 20,
+            ),
+            SizedBox(height: 15,),
+            Text(
+              "Why are you reporting this listing?",
+              style: TextStyle(
+                fontSize: 33,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8,),
+            Expanded(
+              child: ListView.separated(
+                itemCount: 11,
+                itemBuilder: (context, index){
+                  if(index == 0) {
+                    return Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.lock,),
+                            Text("This won’t be shared with the Host.")
+                          ],
+                        ),
+                        SizedBox(height: 6,),
+                        Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "It’s inaccurate or incorrect",
+                            ),
+                            Radio(
+                              activeColor: AppColor.black,
+                              value: true,
+                              groupValue: true,
+                              onChanged: (value){},
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                  return Column(
+                    children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "It’s inaccurate or incorrect",
+                        ),
+                        Radio(
+                          activeColor: AppColor.black,
+                          value: true,
+                          groupValue: true,
+                          onChanged: (value){},
+                        ),
+                      ],
+                    ),
+                    ],
+                  );
+                },
+                separatorBuilder: (context,index){
+                  return Divider();
+                },
+              )
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: AppColor.white,
+                border: Border(
+                  top: BorderSide(color: AppColor.black12),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: CustomButton(
+                  type: ButtonTypes.elevated,
+                  onPressed: (){
+                    successDialog();
+                  },
+                  width: Get.width,
+                  text: 'Next',
+                  textStyle: TextStyle(
+                    fontSize: 17,
+                  ),
+                  backgroundColor: AppColor.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // success dialog => report listing
+  void successDialog(){
+    Get.defaultDialog(
+      title: "Help us improve",
+      titleStyle: TextStyle(
+        color: AppColor.black,
+        fontWeight: FontWeight.w500,
+        fontSize: 25,
+      ),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 10,),
+            _text("We want to hear what you think we can do better. We won’t be able to respond to every piece of feedback individually."),
+            SizedBox(height: 10,),
+            _text("If you have a question or need help resolving an issue, search our Help Center."),
+            SizedBox(height: 20,),
+            CustomButton(
+              type: ButtonTypes.elevated,
+              onPressed: (){},
+              width: Get.width,
+              text: 'Ok',
+              textStyle: TextStyle(
+                fontSize: 17,
+              ),
+              backgroundColor: AppColor.black,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _text(String text){
+    return Text(text);
+  }
+
+  // imagekit.io website for image(places)
   Future<void> uploadImageToImageKit() async {
     try {
       final picker = ImagePicker();

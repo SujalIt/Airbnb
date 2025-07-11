@@ -39,11 +39,6 @@ class AppRouter {
       binding: ExploreScreenBinding(),
     ),
     GetPage(
-      name: Routes.reportListing,
-      page: () => ReportListingScreen(),
-      binding: ExploreScreenBinding(),
-    ),
-    GetPage(
       name: Routes.wishDetail,
       page: () => WishDetail(),
       binding: WishlistBinding(),

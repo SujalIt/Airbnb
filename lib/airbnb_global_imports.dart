@@ -77,7 +77,6 @@ export 'package:airbnb/views//master/master_binding.dart';
 export 'package:airbnb/views/master/explore/explore.dart';
 export 'package:airbnb/views/master/explore/property_detail_screen.dart';
 export 'package:airbnb/views/master/explore/review_screen.dart';
-export 'package:airbnb/views/master/explore/report_listing_screen.dart';
 
 // message screen
 export 'package:airbnb/views/master/messages/messages.dart';
