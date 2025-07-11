@@ -25,20 +25,22 @@ export 'package:file_picker/file_picker.dart';
 export 'dart:convert';
 export 'package:share_plus/share_plus.dart';
 
+// user role
+
 // bindings
-export 'package:airbnb/views/master/explore/binding/explore_screen_binding.dart';
-export 'package:airbnb/views/master/wishlists/binding/wishlist_binding.dart';
+export 'package:airbnb/views/user/explore/binding/explore_screen_binding.dart';
+export 'package:airbnb/views/user/wishlists/binding/wishlist_binding.dart';
 export 'package:airbnb/views/authentication/binding/auth_binding.dart';
-export 'package:airbnb/views/master/profile/binding/profile_binding.dart';
+export 'package:airbnb/views/user/profile/binding/profile_binding.dart';
 
 
 // controllers
-export 'package:airbnb/views/master/explore/controller/explore_screen_controller.dart';
+export 'package:airbnb/views/user/explore/controller/explore_screen_controller.dart';
 export 'package:airbnb/widgets/custom-image/controller/image_picker_controller.dart';
 export 'package:airbnb/views/authentication/controller/auth_controller.dart';
-export 'package:airbnb/views/master/profile/controller/profile_controller.dart';
-export 'package:airbnb/views/master/messages/controller/push_notification.dart';
-export 'package:airbnb/views/master/wishlists/controller/wishlist_controller.dart';
+export 'package:airbnb/views/user/profile/controller/profile_controller.dart';
+export 'package:airbnb/views/user/messages/controller/push_notification.dart';
+export 'package:airbnb/views/user/wishlists/controller/wishlist_controller.dart';
 
 // utils   extensions
 export 'package:airbnb/utils/extensions.dart';
@@ -69,33 +71,56 @@ export 'package:airbnb/views/authentication/forgot_password_screen.dart';
 export 'package:airbnb/views/authentication/signup_screen.dart';
 
 // master
-export 'package:airbnb/views//master/master_screen.dart';
-export 'package:airbnb/views/master/master_controller.dart';
-export 'package:airbnb/views//master/master_binding.dart';
+export 'package:airbnb/views/user/master_screen.dart';
+export 'package:airbnb/views/user/master_controller.dart';
+export 'package:airbnb/views/user/master_binding.dart';
 
 // explore screen
-export 'package:airbnb/views/master/explore/explore.dart';
-export 'package:airbnb/views/master/explore/property_detail_screen.dart';
-export 'package:airbnb/views/master/explore/review_screen.dart';
+export 'package:airbnb/views/user/explore/explore.dart';
+export 'package:airbnb/views/user/explore/property_detail_screen.dart';
+export 'package:airbnb/views/user/explore/review_screen.dart';
 
 // message screen
-export 'package:airbnb/views/master/messages/messages.dart';
+export 'package:airbnb/views/user/messages/messages.dart';
 
 // profile screen
-export 'package:airbnb/views/master/profile/profile.dart';
-export 'package:airbnb/views/master/profile/personal_information_screen.dart';
+export 'package:airbnb/views/user/profile/profile.dart';
+export 'package:airbnb/views/user/profile/personal_information_screen.dart';
 
 // lists screen
-export 'package:airbnb/views/master/Trips/trips.dart';
+export 'package:airbnb/views/user/Trips/trips.dart';
 
 // wishlists screen
-export 'package:airbnb/views/master/wishlists/wishlists.dart';
-export 'package:airbnb/views/master/wishlists/wish_detail.dart';
-export 'package:airbnb/views/master/wishlists/wish_detail_map_screen.dart';
+export 'package:airbnb/views/user/wishlists/wishlists.dart';
+export 'package:airbnb/views/user/wishlists/wish_detail.dart';
+export 'package:airbnb/views/user/wishlists/wish_detail_map_screen.dart';
 
 
 // map
-// export 'package:airbnb/views/master/explore/fullscreen_map_dialog.dart';
+// export 'package:airbnb/views/user/explore/fullscreen_map_dialog.dart';
 
 // msg notification screen
-export 'package:airbnb/views/master/messages/message_notification_screen.dart';
+export 'package:airbnb/views/user/messages/message_notification_screen.dart';
+
+// owner role
+
+export 'package:airbnb/views/owner/owner_screen.dart';
+export 'package:airbnb/views/owner/owner_controller.dart';
+export 'package:airbnb/views/owner/owner_binding.dart';
+
+
+// owner -> dashboard screen
+export 'package:airbnb/views/owner/dashboard/owner_dashboard_screen.dart';
+export 'package:airbnb/views/owner/dashboard/owner_dashboard_controller.dart';
+export 'package:airbnb/views/owner/dashboard/owner_dashboard_binding.dart';
+
+// owner -> property screen
+export 'package:airbnb/views/owner/property/owner_property_screen.dart';
+export 'package:airbnb/views/owner/property/owner_property_binding.dart';
+export 'package:airbnb/views/owner/property/owner_property_controller.dart';
+
+// owner -> profile screen
+export 'package:airbnb/views/owner/profile/owner_profile_screen.dart';
+export 'package:airbnb/views/owner/profile/owner_profile_controller.dart';
+export 'package:airbnb/views/owner/profile/owner_profile_binding.dart';
+

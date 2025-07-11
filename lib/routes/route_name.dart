@@ -1,4 +1,5 @@
 class Routes{
+  // user routes
   static const splashScreen = '/';
   static const login = '/login';
   static const signUp = '/signUp';
@@ -12,4 +13,7 @@ class Routes{
   static const wishDetailMap = '/wish-detail/map';
   static const messageNotification = '/message-notification';
   static const personalInformation = '/personal-information';
+
+ // admin routes
+  static const owner = '/owner';
 }

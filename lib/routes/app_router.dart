@@ -2,6 +2,8 @@ import 'package:airbnb/airbnb_global_imports.dart';
 
 class AppRouter {
   static final routes = [
+
+    // user routes
     GetPage(
       name: Routes.splashScreen,
       page: () => SplashScreen(),
@@ -56,5 +58,13 @@ class AppRouter {
       page: () => PersonalInformationScreen(),
       binding: ProfileBinding(),
     ),
+
+  // admin routes
+    GetPage(
+      name: Routes.owner,
+      page: () => OwnerScreen(),
+      bindings: [OwnerBinding(),OwnerDashboardBinding(),OwnerPropertyBinding(),OwnerProfileBinding()],
+    ),
   ];
 }
+

@@ -16,7 +16,8 @@ class CustomButton extends StatelessWidget {
   final ButtonStyle? outlineButtonStyle;
   // icon button
   final EdgeInsetsGeometry? padding;
-  final double? iconSize;
+  final ButtonStyle? iconButtonStyle;
+  final Widget? icon;
 
 
   const CustomButton({
@@ -33,7 +34,8 @@ class CustomButton extends StatelessWidget {
     this.outlineButtonStyle,
     this.isLoading = false,
     this.padding,
-    this.iconSize,
+    this.icon,
+    this.iconButtonStyle,
   });
 
   @override
@@ -78,12 +80,10 @@ class CustomButton extends StatelessWidget {
         );
       case ButtonTypes.icon:
         return IconButton(
+          style: iconButtonStyle,
           onPressed: onPressed,
           padding: padding,
-          icon: Icon(
-            leadingIcon,
-            size: iconSize,
-          ),
+          icon: icon ?? SizedBox(),
         );
     }
   }

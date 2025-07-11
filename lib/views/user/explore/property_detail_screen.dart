@@ -67,8 +67,9 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                               Positioned(
                                 top: 15,
                                 left: 13,
-                                child: IconButton(
-                                  style: ButtonStyle(
+                                child: CustomButton(
+                                  type: ButtonTypes.icon,
+                                  iconButtonStyle: ButtonStyle(
                                     iconSize: WidgetStatePropertyAll(10),
                                   ),
                                   onPressed: () {
@@ -87,11 +88,10 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                               Positioned(
                                 top: 15,
                                 left: 285,
-                                child: IconButton(
-                                  style: ButtonStyle(
-                                    iconSize: WidgetStatePropertyAll(
-                                      10,
-                                    ),
+                                child: CustomButton(
+                                  type: ButtonTypes.icon,
+                                  iconButtonStyle: ButtonStyle(
+                                    iconSize: WidgetStatePropertyAll(10,),
                                   ),
                                   onPressed: () {
                                     SharePlus.instance.share(
@@ -116,8 +116,9 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                               Positioned(
                                 top: 15,
                                 left: 332,
-                                child: IconButton(
-                                  style: ButtonStyle(
+                                child: CustomButton(
+                                  type: ButtonTypes.icon,
+                                  iconButtonStyle: ButtonStyle(
                                     iconSize: WidgetStatePropertyAll(10),
                                   ),
                                   onPressed: () {},

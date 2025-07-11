@@ -71,7 +71,8 @@ class ExploreScreenController extends GetxController {
         return Scaffold(
           backgroundColor: AppColor.black,
           appBar: AppBar(
-            leading: IconButton(
+            leading: CustomButton(
+              type: ButtonTypes.icon,
               onPressed: () {
                 Get.back();
               },
@@ -118,11 +119,12 @@ class ExploreScreenController extends GetxController {
               Positioned(
                 top: context.screenHeight * 0.055,
                 right: context.screenWidth * 0.043,
-                child: IconButton(
-                  iconSize: context.screenWidth * 0.08,
+                child: CustomButton(
+                  type: ButtonTypes.icon,
                   icon: Icon(
                     Icons.close,
                     color: AppColor.black,
+                    size: context.screenWidth * 0.08,
                   ),
                   onPressed: () => Get.back(),
                 ),
@@ -152,8 +154,7 @@ class ExploreScreenController extends GetxController {
                   onPressed: () {
                     Get.back();
                   },
-                  leadingIcon: Icons.cancel_outlined,
-                  iconSize: 27,
+                  icon: Icon(Icons.cancel_outlined,size: 27,),
                 ),
                 SizedBox(
                   height: 15,
@@ -243,8 +244,7 @@ class ExploreScreenController extends GetxController {
                 onPressed: () {
                   Get.back();
                 },
-                leadingIcon: Icons.arrow_back_ios_new,
-                iconSize: 20,
+                icon: Icon(Icons.arrow_back_ios_new,size: 20,),
               ),
               Divider(),
               Column(
@@ -430,8 +430,7 @@ class ExploreScreenController extends GetxController {
               onPressed: () {
                 Get.back();
               },
-              leadingIcon: Icons.arrow_back_ios_new,
-              iconSize: 20,
+              icon: Icon(Icons.arrow_back_ios_new,size: 20,),
             ),
             SizedBox(height: 15,),
             Text(

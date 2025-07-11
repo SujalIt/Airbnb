@@ -154,7 +154,9 @@ class AuthController extends GetxController {
           title: 'Successfully signed in!',
           desc: 'Now you are ready to start your journey.',
         );
-        Get.offAllNamed(Routes.master);
+
+        var checkRole = await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get();
+        checkRole['role'] == "owner" ? Get.offAllNamed(Routes.owner) : Get.offAllNamed(Routes.master);
       } on FirebaseAuthException catch (e) {
         SmartAlert.customSnackBar(
           title: 'Invalid username or password!',
