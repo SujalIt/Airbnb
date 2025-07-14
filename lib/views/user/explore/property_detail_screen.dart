@@ -38,7 +38,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                           Stack(
                             children: [
                               CarouselSlider(
-                                items: snapshot.data['particular_multiple_images'].map<Widget>((url) {
+                                items: snapshot.data['images'].map<Widget>((url) {
                                   return InkWell(
                                     onTap: (){
                                       controller.heroAnimation(context, url);
@@ -59,8 +59,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                   initialPage: 0,
                                   enableInfiniteScroll: false,
                                   onPageChanged: (index, reason) {
-                                    controller.currentIndexPropertyDetail
-                                        .value = index;
+                                    controller.currentIndexPropertyDetail.value = index;
                                   },
                                 ),
                               ),
@@ -147,7 +146,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                   child: Center(
                                     child: Obx(
                                       () => Text(
-                                        "${controller.currentIndexPropertyDetail.value + 1}/${snapshot.data["particular_multiple_images"].length}",
+                                        "${controller.currentIndexPropertyDetail.value + 1}/${snapshot.data["images"].length}",
                                       ),
                                     ),
                                   ),

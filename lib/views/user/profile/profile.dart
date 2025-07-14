@@ -25,7 +25,6 @@ class ProfileScreen extends GetView<ProfileController> {
                             if (!snapshot.hasData) {
                               return CircularProgressIndicator();
                             }
-                            var userData = snapshot.data;
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               spacing: 2,
@@ -39,7 +38,7 @@ class ProfileScreen extends GetView<ProfileController> {
                                       child: CircleAvatar(
                                         backgroundColor: AppColor.black,
                                         child: Text(
-                                          userData['first_name'][0],
+                                          snapshot.data['first_name'][0],
                                           style: TextStyle(
                                             color: AppColor.white,
                                             fontSize: context.screenWidth * 0.06,
@@ -71,14 +70,14 @@ class ProfileScreen extends GetView<ProfileController> {
                                   spacing: 9,
                                   children: [
                                     Text(
-                                      userData['first_name'],
+                                      snapshot.data['first_name'],
                                       style: TextStyle(
                                         fontSize: 32,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                     Text(
-                                      userData['last_name'],
+                                      snapshot.data['last_name'],
                                       style: TextStyle(
                                         fontSize: 32,
                                         fontWeight: FontWeight.w500,

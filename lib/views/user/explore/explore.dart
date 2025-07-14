@@ -159,10 +159,6 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                         itemBuilder: (context, index) {
                           String documentId = documents.keys.elementAt(index);
                           Map<String, dynamic> documentData = documents[documentId]!;
-                          List<String> imageUrls = [];
-                          for (String i in documentData['pictureurls']) {
-                            imageUrls.add(i);
-                          }
                           return Column(
                             spacing: 15,
                             children: [
@@ -178,22 +174,10 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(10),
                                       ),
-                                      child: CarouselSlider(
-                                        items: imageUrls.map((url) {
-                                            return CustomImage(
-                                              path: url,
-                                              fit: BoxFit.cover,
-                                              width: Get.width,
-                                            );
-                                          },
-                                        ).toList(),
-                                        options: CarouselOptions(
-                                          height: 328,
-                                          viewportFraction: 1,
-                                          onPageChanged: (imageIndex, reason) {
-                                            controller.updateActiveDots(index, imageIndex);
-                                          },
-                                        ),
+                                      child: CustomImage(
+                                        path: documentData['images'][0],
+                                        fit: BoxFit.cover,
+                                        width: Get.width,
                                       ),
                                     ),
                                   ),
@@ -208,26 +192,6 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                       ),
                                     ),
                                   ),
-                                  Obx(() {
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                        top: 300,
-                                        left: 150,
-                                      ),
-                                      child: SmoothPageIndicator(
-                                        controller: PageController(
-                                          initialPage: controller.activeDots[index],
-                                        ),
-                                        count: imageUrls.length,
-                                        effect: SlideEffect(
-                                          activeDotColor: AppColor.grey,
-                                          dotHeight: 8,
-                                          dotWidth: 8,
-                                          dotColor: AppColor.white60,
-                                        ),
-                                      ),
-                                    );
-                                  })
                                 ],
                               ),
                               Column(

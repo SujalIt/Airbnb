@@ -1,5 +1,4 @@
 import 'package:airbnb/airbnb_global_imports.dart';
-import 'package:intl/intl.dart';
 
 class OwnerProfileScreen extends GetView<OwnerProfileController> {
   const OwnerProfileScreen({super.key});
@@ -10,109 +9,127 @@ class OwnerProfileScreen extends GetView<OwnerProfileController> {
       backgroundColor: AppColor.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        child: Form(
-          key: controller.authFormKey,
-          child: FutureBuilder<dynamic>(
-            future: controller.fetchOwnerDetails(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  spacing: 15,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Personal Info",
-                      style: TextStyle(
-                        fontSize: 27,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextFormField(
-                      controller: controller.fnameController,
-                      decoration: InputDecoration(
-                        hint: Text("Enter fname"),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    TextFormField(
-                      controller: controller.fnameController,
-                      decoration: InputDecoration(
-                        hint: Text("Enter lname"),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    Obx(() => TextFormField(
-                      readOnly: true,
-                      controller: TextEditingController(
-                        text: controller.selectedDate.value != null ? DateFormat("dd/MM/yyyy").format(controller.selectedDate.value!) : "",
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'Please Enter Your DOB',
-                        border: OutlineInputBorder(),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.calendar_today,
+        child: FutureBuilder<dynamic>(
+          future: controller.fetchOwnerDetails(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData) {
+              controller.fnameController.text = snapshot.data['first_name'];
+              controller.lnameController.text = snapshot.data['last_name'];
+              controller.emailController.text = snapshot.data['email'];
+              controller.selectedDate.value = DateTime.parse(snapshot.data['dob']);
+              return Column(
+                spacing: 15,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  StreamBuilder(
+                    stream: controller.ownerDetailsStream(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+                      if (!snapshot.hasData) {
+                        return CircularProgressIndicator();
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 2,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 65,
+                                height: 65,
+                                child: CircleAvatar(
+                                  backgroundColor: AppColor.black,
+                                  child: Text(
+                                    snapshot.data['first_name'][0],
+                                    style: TextStyle(
+                                      color: AppColor.white,
+                                      fontSize: context.screenWidth * 0.06,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              CustomButton(
+                                type: ButtonTypes.outlined,
+                                onPressed: () {
+                                  Get.offAllNamed(Routes.master);
+                                  GoogleSignIn().signOut();
+                                  FirebaseAuth.instance.signOut();
+                                },
+                                outlineButtonStyle:
+                                OutlinedButton.styleFrom(
+                                  side: BorderSide(
+                                    color: AppColor.pink,
+                                    style: BorderStyle.solid,
+                                  ),
+                                ),
+                                text: "Logout",
+                                textStyle: TextStyle(
+                                  color: AppColor.pink,
+                                ),
+                              ),
+                            ],
                           ),
-                          onPressed: () => controller.pickDate(context),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please Select Your date of birth!';
-                        }
-                        return null;
-                      },
+                          Row(
+                            spacing: 9,
+                            children: [
+                              Text(
+                                snapshot.data['first_name'],
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                snapshot.data['last_name'],
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  Divider(),
+                  Text(
+                    'Account Settings',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 22,
                     ),
+                  ),
+                  CustomListTile(
+                    onTap: (){
+                      controller.editPersonalInfo(context);
+                    },
+                    title: 'Personal information',
+                    titleTextStyle: TextStyle(
+                      fontSize: 16,
                     ),
-                    TextFormField(
-                      readOnly: true,
-                      controller: controller.emailController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    CustomButton(
-                      type: ButtonTypes.outlined,
-                      onPressed: () {
-                        Get.offAllNamed(Routes.master);
-                        GoogleSignIn().signOut();
-                        FirebaseAuth.instance.signOut();
-                      },
-                      outlineButtonStyle:
-                      OutlinedButton.styleFrom(
-                        side: BorderSide(
-                          color: AppColor.pink,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
-                      text: "Logout",
-                      textStyle: TextStyle(
-                        color: AppColor.pink,
-                      ),
-                    ),
-                  ],
-                );
-                //   SingleChildScrollView(
-                //   child: ProfileBody(
-                //     firstName: snapshot.data['first_name'],
-                //     lastName: snapshot.data['last_name'],
-                //     email: snapshot.data['email'],
-                //     dob: snapshot.data['dob'],
-                //   ),
-                // );
-              } else if (snapshot.hasError) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Center(child: Text('Error: ${snapshot.error}')),
-                );
-              } else {
-                return Padding(
-                  padding: EdgeInsets.only(top: 16),
-                  child: Text('Awaiting result...'),
-                );
-              }
-            },
-          ),
+                    leadingIcon: Icons.account_circle_outlined,
+                    trailingIcon: Icons.arrow_forward_ios,
+                    visualDensity: VisualDensity(vertical: -3),
+                    contentPadding: EdgeInsets.all(1),
+                  ),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Center(child: Text('Error: ${snapshot.error}')),
+              );
+            } else {
+              return Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Center(child: Text('Awaiting result...')),
+              );
+            }
+          },
         ),
       ),
     );
