@@ -581,8 +581,7 @@ class ExploreScreenController extends GetxController {
       // ImageKit API details
       String apiUrl = "https://upload.imagekit.io/api/v1/files/upload";
       String privateApiKey = "private_FanKyRKRVNogDW4OhBxa8L6e6/s=:";
-      String authHeader =
-          "Basic ${base64Encode(utf8.encode('$privateApiKey:'))}";
+      String authHeader = "Basic ${base64Encode(utf8.encode('$privateApiKey:'))}";
 
       var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
       request.headers["Authorization"] = authHeader;

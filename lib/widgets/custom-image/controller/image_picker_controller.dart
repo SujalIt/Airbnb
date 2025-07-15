@@ -7,10 +7,32 @@ class ImagePickerController extends GetxController {
   var imageBytes = Rx<Uint8List?>(null);
   var svgString = Rx<String?>(null);
 
+  // for multiple images
+  var multipleImages = [].obs;
+  var svgStrings = [].obs;
+  //
+
   Future<void> pickImage() async {
     if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      // multiple images code
+      final multiplePickedFiles = await picker.pickMultiImage();
+
+      if(multiplePickedFiles != null && multiplePickedFiles.isNotEmpty){
+        multipleImages.clear();
+        svgStrings.clear();
+        for(var file in multiplePickedFiles){
+          if(file.path.toLowerCase().endsWith('.svg')){
+            svgStrings.add(await File(file.path).readAsString());
+          }else{
+            multipleImages.add(File(file.path));
+          }
+        }
+      }
+
+      //
 
       if (pickedFile != null) {
         if (pickedFile.path.toLowerCase().endsWith('.svg')) {

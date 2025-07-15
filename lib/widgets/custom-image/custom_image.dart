@@ -144,9 +144,10 @@ class CustomImage extends GetView<ImagePickerController> {
               }
             }),
             SizedBox(height: 20),
-            ElevatedButton(
+            CustomButton(
+              type: ButtonTypes.elevated,
               onPressed: () => controller.pickImage(),
-              child: Text('Pick Image'),
+              text: 'Pick Image',
             ),
           ],
         );

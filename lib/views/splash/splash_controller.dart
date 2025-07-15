@@ -7,14 +7,15 @@ class SplashController extends GetxController with StateMixin<List<dynamic>> {
     super.onReady();
   }
 
-  void initFunc() {
+  Future<void> initFunc() async {
     try {
       change(null, status: RxStatus.loading());
       change([], status: RxStatus.success());
       User? user = FirebaseAuth.instance.currentUser;
       final bool isLoggedIn = user != null;
       if (isLoggedIn) {
-        Get.offAllNamed(Routes.master);
+        var checkRole = await FirebaseFirestore.instance.collection("users").doc(user.uid).get();
+        checkRole['role'] == "owner" ? Get.offAllNamed(Routes.owner) : Get.offAllNamed(Routes.master);
       } else {
         Get.offAllNamed(Routes.login);
       }

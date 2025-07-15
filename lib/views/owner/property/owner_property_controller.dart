@@ -1,16 +1,9 @@
+import 'dart:io';
 import 'package:airbnb/airbnb_global_imports.dart';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
-class OwnerPropertyController extends GetxController{
-
-  // Get.put(ImagePickerController());
-  // Get.lazyPut(()=>ImagePickerController());
-
-  // Get.put(ImagePickerController());
-  // final imageController = Get.find<ImagePickerController>();
-  // print("p");
-  // print(imageController);
-
-
+class OwnerPropertyController extends GetxController {
   GlobalKey<FormState> fieldFormKey = GlobalKey<FormState>();
   TextEditingController propertyName = TextEditingController();
   TextEditingController propertyDistance = TextEditingController();
@@ -18,12 +11,39 @@ class OwnerPropertyController extends GetxController{
   TextEditingController propertyPrice = TextEditingController();
   TextEditingController propertyRatings = TextEditingController();
 
-  void addNewPropertyForm(){
+  var isLoading = false.obs;
+
+  // for multiple images
+  var multipleImages = [].obs;
+  var svgStrings = [].obs;
+  var multiplePickedFiles = [];
+
+  Future<void> pickImages() async {
+    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)){
+      final picker = ImagePicker();
+
+      multiplePickedFiles = await picker.pickMultiImage();
+
+      if(multiplePickedFiles.isNotEmpty){
+        multipleImages.clear();
+        svgStrings.clear();
+        for(var file in multiplePickedFiles){
+          if(file.path.toLowerCase().endsWith('.svg')){
+            svgStrings.add(await File(file.path).readAsString());
+          }else{
+            multipleImages.add(File(file.path));
+          }
+        }
+      }
+    }
+  }
+
+  void addNewPropertyForm() {
     Get.bottomSheet(
       isScrollControlled: true,
       backgroundColor: AppColor.white,
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
         child: Form(
           key: fieldFormKey,
           child: SingleChildScrollView(
@@ -118,15 +138,78 @@ class OwnerPropertyController extends GetxController{
                 //   },
                 // ),
 
-                CustomImage(
-                  path: 'https://images.unsplash.com/photo-1575361204480-aadea25e6e68?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmFsbHxlbnwwfHwwfHx8MA%3D%3D',
+                // CustomImage(
+                //   path: '',
+                //   width: 100,
+                //   height: 100,
+                //   fit: BoxFit.cover,
+                // ),
+
+                // multi
+                Column(
+                  children: [
+                    Obx(() {
+                      if (multipleImages.isNotEmpty) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: multipleImages.map((file) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 15.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadiusGeometry.circular(10),
+                                  child: Image.file(
+                                    file,
+                                    height: 150,
+                                    width: 150,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stacktrace) {
+                                      return Icon(Icons.broken_image);
+                                    },
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      } else if (svgStrings.isNotEmpty) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: svgStrings.map((svg) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 15.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadiusGeometry.circular(10),
+                                  child: SvgPicture.string(
+                                    svg,
+                                    height: 150,
+                                    width: 150,
+                                    fit: BoxFit.cover,
+                                    placeholderBuilder: (context) => CircularProgressIndicator(),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      } else {
+                        return Text(
+                          'No images selected.',
+                          style: TextStyle(fontSize: 16,),
+                        );
+                      }
+                    }),
+                    SizedBox(height: 20),
+                    CustomButton(
+                      type: ButtonTypes.elevated,
+                      onPressed: () => pickImages(),
+                      text: 'Pick Images',
+                    ),
+                  ],
                 ),
 
-                // SizedBox(height: 20),
-                // ElevatedButton(
-                //   onPressed: () => controller.pickImage(),
-                //   child: Text('Pick Image'),
-                // ),
+                //
 
                 // ratings
                 TextFormField(
@@ -146,15 +229,19 @@ class OwnerPropertyController extends GetxController{
                 ),
 
                 // add button
-                CustomButton(
-                  type: ButtonTypes.elevated,
-                  onPressed: () {
-                    if (fieldFormKey.currentState!.validate()) {}
-                  },
-                  width: Get.width,
-                  text: "Add",
-                  textStyle: TextStyle(
-                    fontSize: 18,
+                Obx(()=> CustomButton(
+                    type: ButtonTypes.elevated,
+                    isLoading: isLoading.value,
+                    onPressed: () {
+                      if (fieldFormKey.currentState!.validate()) {
+                        uploadImagesToImageKit();
+                      }
+                    },
+                    width: Get.width,
+                    text: "Add",
+                    textStyle: TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
                 )
               ],
@@ -164,24 +251,85 @@ class OwnerPropertyController extends GetxController{
       ),
     );
   }
+  var firebaseUrls = [].obs;
 
+  // upload image to imagekit and add property in firebase
+  Future<void> uploadImagesToImageKit() async {
+    try {
+      isLoading.value = true;
+      firebaseUrls.clear();
+      if (multiplePickedFiles.isEmpty) {
+        Get.snackbar("No images selected", 'Please select at least one image',backgroundColor: AppColor.pink,);
+        return;
+      }
+      // ImageKit API details
+      String apiUrl = "https://upload.imagekit.io/api/v1/files/upload";
+      String privateApiKey = "private_FanKyRKRVNogDW4OhBxa8L6e6/s=:"; // Replace with your private key
+      String authHeader = "Basic ${base64Encode(utf8.encode('$privateApiKey:'))}";
 
-  Future<void> addPlace(
-      String name,
-      String rating,
-      // String imageUrl,
-      String distance,
-      String availableDates,
-      String price,
-      ) async {
-    await FirebaseFirestore.instance.collection("places").add({
-      "name": name,
-      "price": price,
-      // "image": imageUrl,
-      "distance": distance,
-      "available_dates": availableDates,
-      "created_at": FieldValue.serverTimestamp(),
-    });
+      var response;
+      for (var pickedFile in multiplePickedFiles) {
+        Uint8List? imageBytes;
+        String fileName = pickedFile.name;
+
+        if (kIsWeb) {
+          imageBytes = await pickedFile.readAsBytes();
+        } else {
+          File imageFile = File(pickedFile.path);
+          imageBytes = await imageFile.readAsBytes();
+        }
+
+        var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
+        request.headers["Authorization"] = authHeader;
+
+        request.fields["fileName"] = fileName;
+        request.fields["useUniqueFilename"] = "false";
+        request.fields["folder"] = "/dummy/test/";
+        request.fields["tags"] = "nice,copy,books";
+
+        request.files.add(http.MultipartFile.fromBytes(
+          "file",
+          imageBytes!,
+          filename: fileName,
+        ));
+
+        response = await request.send();
+        String responseData = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseData);
+        firebaseUrls.add(jsonResponse['url']);
+      }
+
+      if (response.statusCode == 200) {
+        addPlace();
+        // Get.snackbar("Successfully uploaded",'great',backgroundColor: AppColor.pink);
+      } else {
+        Get.snackbar("Something went wrong",'Error...Try again!');
+      }
+      isLoading.value = false;
+      Get.back();
+    } catch (e) {
+      Get.snackbar('Error', '$e');
+    }
+  }
+
+  Future<void> addPlace() async {
+    try{
+      isLoading.value = true;
+      await FirebaseFirestore.instance.collection("places").doc(FirebaseAuth.instance.currentUser!.uid).set({
+        "name": propertyName.text,
+        "price": propertyPrice.text,
+        "images": firebaseUrls,
+        "distance": propertyDistance.text,
+        "available_dates": availableDate.text,
+        "uuid": FirebaseAuth.instance.currentUser!.uid.toString(),
+        "created_at": FieldValue.serverTimestamp(),
+      });
+      isLoading.value = false;
+      Get.back();
+      SmartAlert.customSnackBar(title: 'Done', desc: "Saved");
+    }catch (e){
+      SmartAlert.customSnackBar(title: "Failed", desc: '$e');
+    }
   }
 
   Future<dynamic> getDocumentById(String documentId) async {
