@@ -29,8 +29,8 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: FutureBuilder<dynamic>(
-                  future: controller.getDocumentById(FirebaseAuth.instance.currentUser!.uid.toString()),
+                child: StreamBuilder<dynamic>(
+                  stream: controller.getAllDocumentById(FirebaseAuth.instance.currentUser!.uid.toString()),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return SizedBox(
@@ -53,9 +53,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                           children: [
                             InkWell(
                               onTap: () {
-                                // Get.toNamed(
-                                //   '${Routes.propertyDetail}?id=$documentId',
-                                // );
+                                controller.editPropertyForm();
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.all(
@@ -63,7 +61,8 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                 ),
                                 child: CustomImage(
                                   height: 330,
-                                  path: snapshot.data['images'][0],
+                                  // path: snapshot.data['images'][0],
+                                  path: snapshot.data['images']?.isNotEmpty ? snapshot.data['images'][0] : "https://icrier.org/wp-content/uploads/2022/09/Event-Image-Not-Found.jpg",
                                   fit: BoxFit.cover,
                                   width: Get.width,
                                 ),

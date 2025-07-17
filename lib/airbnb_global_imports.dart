@@ -111,16 +111,16 @@ export 'package:airbnb/views/owner/owner_binding.dart';
 
 // owner -> dashboard screen
 export 'package:airbnb/views/owner/dashboard/owner_dashboard_screen.dart';
-export 'package:airbnb/views/owner/dashboard/owner_dashboard_controller.dart';
-export 'package:airbnb/views/owner/dashboard/owner_dashboard_binding.dart';
+export 'package:airbnb/views/owner/dashboard/controller/owner_dashboard_controller.dart';
+export 'package:airbnb/views/owner/dashboard/binding/owner_dashboard_binding.dart';
 
 // owner -> property screen
 export 'package:airbnb/views/owner/property/owner_property_screen.dart';
-export 'package:airbnb/views/owner/property/owner_property_binding.dart';
-export 'package:airbnb/views/owner/property/owner_property_controller.dart';
+export 'package:airbnb/views/owner/property/binding/owner_property_binding.dart';
+export 'package:airbnb/views/owner/property/controller/owner_property_controller.dart';
 
 // owner -> profile screen
 export 'package:airbnb/views/owner/profile/owner_profile_screen.dart';
-export 'package:airbnb/views/owner/profile/owner_profile_controller.dart';
-export 'package:airbnb/views/owner/profile/owner_profile_binding.dart';
+export 'package:airbnb/views/owner/profile/controller/owner_profile_controller.dart';
+export 'package:airbnb/views/owner/profile/binding/owner_profile_binding.dart';
 

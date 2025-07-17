@@ -8,8 +8,8 @@ class ImagePickerController extends GetxController {
   var svgString = Rx<String?>(null);
 
   // for multiple images
-  var multipleImages = [].obs;
-  var svgStrings = [].obs;
+  // var multipleImages = [].obs;
+  // var svgStrings = [].obs;
   //
 
   Future<void> pickImage() async {
@@ -18,19 +18,19 @@ class ImagePickerController extends GetxController {
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
       // multiple images code
-      final multiplePickedFiles = await picker.pickMultiImage();
-
-      if(multiplePickedFiles != null && multiplePickedFiles.isNotEmpty){
-        multipleImages.clear();
-        svgStrings.clear();
-        for(var file in multiplePickedFiles){
-          if(file.path.toLowerCase().endsWith('.svg')){
-            svgStrings.add(await File(file.path).readAsString());
-          }else{
-            multipleImages.add(File(file.path));
-          }
-        }
-      }
+      // final multiplePickedFiles = await picker.pickMultiImage();
+      //
+      // if(multiplePickedFiles != null && multiplePickedFiles.isNotEmpty){
+      //   multipleImages.clear();
+      //   svgStrings.clear();
+      //   for(var file in multiplePickedFiles){
+      //     if(file.path.toLowerCase().endsWith('.svg')){
+      //       svgStrings.add(await File(file.path).readAsString());
+      //     }else{
+      //       multipleImages.add(File(file.path));
+      //     }
+      //   }
+      // }
 
       //
 

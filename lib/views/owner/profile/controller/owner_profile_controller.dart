@@ -36,6 +36,7 @@ class OwnerProfileController extends GetxController {
     }
   }
 
+  // for edit form
   Future<dynamic> fetchOwnerDetails() async {
     try {
       var userId = await FirebaseFirestore.instance
@@ -51,6 +52,7 @@ class OwnerProfileController extends GetxController {
     }
   }
 
+  // to show latest data
   Stream<dynamic> ownerDetailsStream() {
     try {
       return FirebaseFirestore.instance
@@ -65,6 +67,7 @@ class OwnerProfileController extends GetxController {
     }
   }
 
+  // update details method
   Future<void> updateOwnerDetails() async {
     if (editFormKey.currentState!.validate()) {
       try {
