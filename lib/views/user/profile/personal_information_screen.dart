@@ -85,48 +85,35 @@ class _ProfileBodyState extends State<ProfileBody> {
       child: Column(
         spacing: 20,
         children: [
-          TextFormField(
+          CustomTextFormField(
             controller: controller.fnameController,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            hintText: "Enter first name",
+            validatorText: "Please enter first name",
           ),
-          TextFormField(
+          CustomTextFormField(
             controller: controller.lnameController,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            hintText: "Enter last name",
+            validatorText: "Please enter last name",
           ),
           Obx(
-            () => TextFormField(
+            () => CustomTextFormField(
               readOnly: true,
               controller: TextEditingController(
                 text: controller.selectedDate.value != null ? DateFormat("dd/MM/yyyy").format(controller.selectedDate.value!) : "",
               ),
-              decoration: InputDecoration(
-                hintText: 'Please Enter Your DOB',
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    Icons.calendar_today,
-                  ),
-                  onPressed: () => controller.pickDate(context),
+              hintText: 'Please Enter Your DOB',
+              suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.calendar_today,
                 ),
+                onPressed: () => controller.pickDate(context),
               ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please Select Your date of birth!';
-                  }
-                  return null;
-                },
+              validatorText: 'Please Select Your date of birth!',
             ),
           ),
-          TextFormField(
+          CustomTextFormField(
             readOnly: true,
             controller: controller.emailController,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-            ),
           ),
           Obx(() =>
             CustomButton(

@@ -176,7 +176,9 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                       ),
                                       child: CustomImage(
                                         height: 330,
-                                        path: documentData['images'][0],
+                                        path: documentData['images'].isNotEmpty
+                                            ? documentData['images'][0]
+                                            : "assets/images/Image-Not-Found.jpg",
                                         fit: BoxFit.cover,
                                         width: Get.width,
                                       ),

@@ -57,6 +57,7 @@ export 'package:airbnb/widgets/custom_list_tile.dart';
 export 'package:airbnb/widgets/custom_container_particular_home.dart';
 export 'package:airbnb/widgets/custom-image/custom_image.dart';
 export 'package:airbnb/widgets/alert/smart_alert.dart';
+export 'package:airbnb/widgets/custom_text_form_field.dart';
 
 // Screens
 

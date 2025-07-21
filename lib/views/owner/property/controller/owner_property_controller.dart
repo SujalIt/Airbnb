@@ -47,12 +47,11 @@ class OwnerPropertyController extends GetxController {
     }
   }
 
-
   // selected images url ..to upload in firebase
   var imageUrlsToUpload = [].obs;
 
   // upload image to imagekit , add property in firebase and edit property update in firebase
-  Future<void> uploadImagesToImageKit({required bool isAdd}) async {
+  Future<void> uploadImagesToImageKit({required bool isAdd,String? propertyId}) async {
     try {
       isLoading.value = true;
       imageUrlsToUpload.clear();
@@ -103,7 +102,7 @@ class OwnerPropertyController extends GetxController {
         if (isAdd == true) {
           addProperty();
         }
-        updateOwnerPropertyDetails();
+        updateOwnerPropertyDetails(propertyId!);
       } else {
         SmartAlert.customSnackBar(
           title: "Something went wrong",
@@ -118,217 +117,12 @@ class OwnerPropertyController extends GetxController {
     }
   }
 
-  // add new property
-  void addNewPropertyForm() {
-    propertyName.clear();
-    propertyDistance.clear();
-    availableDate.clear();
-    propertyPrice.clear();
-    propertyRatings.clear();
-    pickedImagesForUI.clear();
-    Get.bottomSheet(
-      isScrollControlled: true,
-      backgroundColor: AppColor.white,
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
-        child: Form(
-          key: addPropertyFormKey,
-          child: SingleChildScrollView(
-            child: Column(
-              spacing: 15,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // title
-                Text(
-                  "Add Property Details",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 27,
-                  ),
-                ),
-                // name
-                TextFormField(
-                  controller: propertyName,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hint: Text(
-                      'Enter name',
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter name';
-                    }
-                    return null;
-                  },
-                ),
-                // distance
-                TextFormField(
-                  controller: propertyDistance,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hint: Text(
-                      'Enter distance',
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter distance';
-                    }
-                    return null;
-                  },
-                ),
-                // available dates
-                TextFormField(
-                  controller: availableDate,
-                  decoration: InputDecoration(
-                    hintText: 'Enter available dates eg. 14-20 Dec',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter available dates!';
-                    }
-                    return null;
-                  },
-                ),
-                // price
-                TextFormField(
-                  controller: propertyPrice,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hint: Text(
-                      'Enter price',
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter price';
-                    }
-                    return null;
-                  },
-                ),
-                // ratings
-                TextFormField(
-                  controller: propertyRatings,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hint: Text(
-                      'Enter ratings',
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter ratings';
-                    }
-                    return null;
-                  },
-                ),
-
-
-                // image selection
-                Column(
-                  children: [
-                    Obx(() {
-                      if (pickedImagesForUI.isNotEmpty) {
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: pickedImagesForUI.map((file) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 15.0),
-                                child: ClipRRect(
-                                  borderRadius:
-                                  BorderRadiusGeometry.circular(10),
-                                  child: Image.file(
-                                    file,
-                                    height: 150,
-                                    width: 150,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stacktrace) {
-                                      return Icon(Icons.broken_image);
-                                    },
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      } else if (pickedSvgImagesForUI.isNotEmpty) {
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: pickedSvgImagesForUI.map((svg) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 15.0),
-                                child: ClipRRect(
-                                  borderRadius:
-                                  BorderRadiusGeometry.circular(10),
-                                  child: SvgPicture.string(
-                                    svg,
-                                    height: 150,
-                                    width: 150,
-                                    fit: BoxFit.cover,
-                                    placeholderBuilder: (context) =>
-                                        CircularProgressIndicator(),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      } else {
-                        return Text(
-                          'No images selected.',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        );
-                      }
-                    }),
-                    SizedBox(height: 20),
-                    CustomButton(
-                      type: ButtonTypes.elevated,
-                      onPressed: () => pickImages(),
-                      text: 'Pick Images',
-                    ),
-                  ],
-                ),
-
-                //
-
-                // add button
-                Obx(
-                      () => CustomButton(
-                    type: ButtonTypes.elevated,
-                    isLoading: isLoading.value,
-                    onPressed: () {
-                      if (addPropertyFormKey.currentState!.validate()) {
-                        uploadImagesToImageKit(isAdd: true);
-                      }
-                    },
-                    width: Get.width,
-                    text: "Add",
-                    textStyle: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Future<void> addProperty() async {
     try {
       isLoading.value = true;
       await FirebaseFirestore.instance
           .collection("places")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set({
+          .add({
         "name": propertyName.text,
         "price": propertyPrice.text,
         "images": imageUrlsToUpload,
@@ -340,8 +134,9 @@ class OwnerPropertyController extends GetxController {
       });
       Get.back();
       SmartAlert.customSnackBar(
-          title: 'Property added Successfully',
-          desc: "Now you can see your properties.");
+        title: 'Property added Successfully',
+        desc: "Now you can see your properties.",
+      );
     } catch (e) {
       SmartAlert.customSnackBar(title: "Failed..Try again", desc: '$e');
     } finally {
@@ -350,288 +145,29 @@ class OwnerPropertyController extends GetxController {
   }
 
   // edit property
-  Future<dynamic> fetchOwnerPropertyDetails() async {
+  Future<dynamic> fetchOwnerPropertyDetails(String propertyId) async {
     try {
       try {
         var userId = await FirebaseFirestore.instance
             .collection('places')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .doc(propertyId)
             .get();
         return userId.data();
       } on FirebaseFirestore catch (e) {
         SmartAlert.customSnackBar(
           title: 'Error!',
-          desc: 'Something went wrong.',
+          desc: 'Something went wrong. $e',
         );
       }
     } on FirebaseFirestore catch (e) {
       SmartAlert.customSnackBar(
         title: 'Error!',
-        desc: 'Something went wrong.',
+        desc: 'Something went wrong. $e',
       );
     }
   }
 
   var ownerPropertyImagesFromFirebase = [].obs;
-
-  void editPropertyForm() {
-    Get.bottomSheet(
-      isScrollControlled: true,
-      backgroundColor: AppColor.white,
-      Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Form(
-          key: editPropertyFormKey,
-          child: SingleChildScrollView(
-            child: FutureBuilder(
-              future: fetchOwnerPropertyDetails(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text("Error"),
-                  );
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.hasData) {
-                  editPropertyName.text = snapshot.data['name'] ?? "name";
-                  editPropertyDistance.text = snapshot.data['distance'] ?? "distance";
-                  editAvailableDate.text = snapshot.data['available_dates'] ?? "availableDate";
-                  editPropertyPrice.text = snapshot.data['price'] ?? "price";
-                  editPropertyRatings.text = snapshot.data['rating'] ?? "rating";
-                  ownerPropertyImagesFromFirebase.clear();
-                  ownerPropertyImagesFromFirebase.addAll(List.from(snapshot.data['images'])); // ensuring list<dynamic>
-
-                  pickedImagesForUI.clear();
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 15,
-                    children: [
-                      // title
-                      Text(
-                        "Edit Property Details",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 27,
-                        ),
-                      ),
-                      // name
-                      TextFormField(
-                        controller: editPropertyName,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hint: Text(
-                            'Enter name',
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter name';
-                          }
-                          return null;
-                        },
-                      ),
-                      // distance
-                      TextFormField(
-                        controller: editPropertyDistance,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hint: Text(
-                            'Enter distance',
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter distance';
-                          }
-                          return null;
-                        },
-                      ),
-                      // available dates
-                      TextFormField(
-                        controller: editAvailableDate,
-                        decoration: InputDecoration(
-                          hintText: 'Enter available dates eg. 14-20 Dec',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter available dates!';
-                          }
-                          return null;
-                        },
-                      ),
-                      // price
-                      TextFormField(
-                        controller: editPropertyPrice,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hint: Text(
-                            'Enter price',
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter price';
-                          }
-                          return null;
-                        },
-                      ),
-                      // ratings
-                      TextFormField(
-                        controller: editPropertyRatings,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hint: Text(
-                            'Enter ratings',
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter ratings';
-                          }
-                          return null;
-                        },
-                      ),
-
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Obx(()=> Row(
-                                children: ownerPropertyImagesFromFirebase.map((file) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 15.0),
-                                    child: Stack(children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadiusGeometry.circular(10),
-                                        child: CustomImage(
-                                          path: '$file',
-                                          height: 150,
-                                          width: 150,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: 55,
-                                        left: 50,
-                                        child: CustomButton(
-                                          type: ButtonTypes.icon,
-                                          onPressed: () {
-                                            deleteConfirmDialog(file);
-                                          },
-                                          icon: Icon(
-                                            Icons.delete_outline,
-                                          ),
-                                        ),
-                                      ),
-                                    ]),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-
-                            Obx(() {
-                              if (pickedImagesForUI.isNotEmpty) {
-                                return SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: pickedImagesForUI.map((file) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 15.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                          BorderRadiusGeometry
-                                              .circular(10),
-                                          child: Image.file(
-                                            file,
-                                            height: 150,
-                                            width: 150,
-                                            fit: BoxFit.cover,
-                                            errorBuilder: (context, error,
-                                                stacktrace) {
-                                              return Icon(
-                                                  Icons.broken_image);
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                );
-                              } else if (pickedSvgImagesForUI.isNotEmpty) {
-                                return SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: pickedSvgImagesForUI.map((svg) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 15.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                          BorderRadiusGeometry
-                                              .circular(10),
-                                          child: SvgPicture.string(
-                                            svg,
-                                            height: 150,
-                                            width: 150,
-                                            fit: BoxFit.cover,
-                                            placeholderBuilder: (context) =>
-                                                CircularProgressIndicator(),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                );
-                              } else {
-                                return Text('',);
-                              }
-                            }),
-                          ],
-                        ),
-                      ),
-
-                      CustomButton(
-                        type: ButtonTypes.elevated,
-                        onPressed: () => pickImages(),
-                        text: 'Add new Images',
-                      ),
-                      Obx(
-                        () => CustomButton(
-                          type: ButtonTypes.elevated,
-                          isLoading: isLoading.value,
-                          onPressed: () {
-                            if (editPropertyFormKey.currentState!.validate()) {
-                              if (pickedImagesForUI.isNotEmpty) {
-                                uploadImagesToImageKit(isAdd: false);
-                              }
-                            }
-                          },
-                          width: Get.width,
-                          text: "Save",
-                          textStyle: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                }
-                return Center(
-                  child: Text("No data found."),
-                );
-              },
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
   void deleteImageFromFirebase(String fileUrl) async {
     try {
@@ -645,52 +181,20 @@ class OwnerPropertyController extends GetxController {
         },
       );
     } on FirebaseFirestore catch (e) {
-      SmartAlert.customSnackBar(title: 'Failed..Please try again', desc: 'Delete again');
+      SmartAlert.customSnackBar(title: 'Failed..Please try again', desc: 'Delete again. $e');
     } finally {
       isLoading.value = false;
       Get.back();
     }
   }
 
-  void deleteConfirmDialog(String fileUrl) {
-    Get.defaultDialog(
-        title: "Are you sure you want to delete this image?",
-        middleText: '',
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CustomButton(
-                isLoading: isLoading.value,
-                type: ButtonTypes.elevated,
-                text: 'Cancel',
-                backgroundColor: AppColor.black,
-                onPressed: () => Get.back(),
-              ),
-              CustomButton(
-                isLoading: isLoading.value,
-                type: ButtonTypes.elevated,
-                text: 'Yes',
-                backgroundColor: AppColor.black,
-                width: 90,
-                onPressed: () {
-                  deleteImageFromFirebase(fileUrl);
-                  ownerPropertyImagesFromFirebase.remove(fileUrl);
-                },
-              ),
-            ],
-          ),
-        ]
-    );
-  }
-
-  // update property details method
-  Future<void> updateOwnerPropertyDetails() async {
+  // update property details method ,,,,,// give dynamic id ..left
+  Future<void> updateOwnerPropertyDetails(String propertyId) async {
     try {
       isLoading.value = true;
       await FirebaseFirestore.instance
           .collection('places')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc(propertyId) //static
           .update(
         {
           "name": editPropertyName.text,
@@ -699,15 +203,15 @@ class OwnerPropertyController extends GetxController {
           "distance": editPropertyDistance.text,
           "available_dates": editAvailableDate.text,
           "rating": editPropertyRatings.text,
-          "uuid": FirebaseAuth.instance.currentUser!.uid.toString(),
           "created_at": FieldValue.serverTimestamp(),
         },
       );
       Get.back();
+      SmartAlert.customSnackBar(title: 'Successfully edited your property.', desc: 'Now you can see.',);
     } on FirebaseFirestore catch (e) {
       SmartAlert.customSnackBar(
         title: 'Error!',
-        desc: 'Something went wrong.',
+        desc: 'Something went wrong. $e',
       );
     } finally {
       isLoading.value = false;
@@ -715,23 +219,21 @@ class OwnerPropertyController extends GetxController {
   }
 
   // owner all properties
-  Stream<dynamic> getAllDocumentById(String documentId) {
+  Stream<dynamic> getAllPropertiesByOwnerId(String documentId)  {
     try {
       return FirebaseFirestore.instance
           .collection('places')
-          .doc(documentId)
+          .where('uuid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
           .snapshots()
-          .map((DocumentSnapshot snapshot) {
-        return snapshot.data();
+          .map((querySnapshot) {
+        Map<String, Map<String, dynamic>> documents = {};
+        for (var doc in querySnapshot.docs) {
+          documents[doc.id] = doc.data();
+        }
+        return documents;
       });
     } catch (e) {
-      return Stream.error('Something went wrong.');
+      return Stream.error('Something went wrong. $e');
     }
   }
-}
-
-Widget _customTextFormField(){
-  return TextFormField(
-
-  );
 }

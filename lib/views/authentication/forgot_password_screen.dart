@@ -32,19 +32,11 @@ class ForgotPasswordScreen extends GetView<AuthController> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your email',
-                  ),
+                CustomTextFormField(
+                  hintText: 'Enter your email',
                   controller: controller.emailController,
                   keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email!';
-                    }
-                    return null;
-                  },
+                  validatorText: 'Please enter your email!',
                 ),
                 Obx((){
                   return CustomButton(

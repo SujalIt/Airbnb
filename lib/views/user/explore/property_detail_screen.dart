@@ -38,21 +38,37 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                           Stack(
                             children: [
                               CarouselSlider(
-                                items: snapshot.data['images'].map<Widget>((url) {
-                                  return InkWell(
-                                    onTap: (){
-                                      controller.heroAnimation(context, url);
-                                    },
-                                    child: Hero(
-                                      tag: 'hero',
-                                      child: CustomImage(
-                                        path: url,
-                                        fit: BoxFit.cover,
-                                        width: Get.width,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
+                                items: snapshot.data['images'].isEmpty
+                                    ? [
+                                        InkWell(
+                                          onTap: () {
+                                            controller.heroAnimation(context, "assets/images/Image-Not-Found.jpg");
+                                          },
+                                          child: Hero(
+                                            tag: 'hero',
+                                            child: CustomImage(
+                                              path: 'assets/images/Image-Not-Found.jpg',
+                                              fit: BoxFit.cover,
+                                              width: Get.width,
+                                            ),
+                                          ),
+                                        )
+                                      ]
+                                    : snapshot.data['images'].map<Widget>((url) {
+                                        return InkWell(
+                                          onTap: (){
+                                            controller.heroAnimation(context, url);
+                                          },
+                                          child: Hero(
+                                            tag: 'hero',
+                                            child: CustomImage(
+                                              path: url,
+                                              fit: BoxFit.cover,
+                                              width: Get.width,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
                                 options: CarouselOptions(
                                   viewportFraction: 1,
                                   height: 250,

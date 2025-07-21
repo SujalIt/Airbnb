@@ -34,40 +34,25 @@ class LoginSignupScreen extends GetView<AuthController> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your email',
-                  ),
+                CustomTextFormField(
+                  hintText: 'Enter your email',
                   controller: controller.emailController,
                   keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email!';
-                    }
-                    return null;
-                  },
+                  validatorText: 'Please enter your email!',
                 ),
                 Obx(
-                  () => TextFormField(
+                  () => CustomTextFormField(
                     controller: controller.passwordController,
                     obscureText: !controller.isPasswordVisible.value,
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: OutlineInputBorder(),
-                      suffixIcon: IconButton(
-                        onPressed: controller.togglePasswordVisibility,
-                        icon: controller.isPasswordVisible.value
-                            ? Icon(Icons.visibility_off_sharp)
-                            : Icon(Icons.visibility),
-                      ),
+                    hintText: 'Password',
+                    suffixIcon: CustomButton(
+                      type: ButtonTypes.icon,
+                      onPressed: controller.togglePasswordVisibility,
+                      icon: controller.isPasswordVisible.value
+                          ? Icon(Icons.visibility_off_sharp)
+                          : Icon(Icons.visibility),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password!';
-                      }
-                      return null;
-                    },
+                    validatorText: 'Please enter your password!',
                   ),
                 ),
                 Align(

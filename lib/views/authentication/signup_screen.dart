@@ -37,90 +37,52 @@ class FinishSigningUpScreen extends GetView<AuthController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 10.0,
                   children: [
-                    TextFormField(
+                    CustomTextFormField(
                       controller: controller.fnameController,
-                      decoration: InputDecoration(
-                        hintText: 'First name on ID',
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your first name!';
-                        }
-                        return null;
-                      },
+                      hintText: 'First name on ID',
+                      validatorText: 'Please enter your first name!',
                     ),
-                    TextFormField(
+                    CustomTextFormField(
                       controller: controller.lnameController,
-                      decoration: InputDecoration(
-                        hintText: 'Surname on ID',
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your surname!';
-                        }
-                        return null;
-                      },
+                      hintText: 'Surname on ID',
+                      validatorText: 'Please enter your surname!',
                     ),
                     Obx(() {
-                      return TextFormField(
+                      return CustomTextFormField(
                         readOnly: true,
                         controller: TextEditingController(
                           text: controller.selectedDate.value == null
                               ? ''
                               : DateFormat("dd/MM/yyyy").format(controller.selectedDate.value!),
-                        ),
-                        decoration: InputDecoration(
+                          ),
                           hintText: "Date of Birth",
-                          border: OutlineInputBorder(),
-                          suffixIcon: IconButton(
+                          suffixIcon: CustomButton(
+                            type: ButtonTypes.icon,
                             icon: Icon(Icons.calendar_today),
                             onPressed: () => controller.pickDate(context),
                           ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Select Your date of birth!';
-                          }
-                          return null;
-                        },
+                        validatorText: 'Please Select Your date of birth!',
                       );
                     }),
-                    TextFormField(
+                    CustomTextFormField(
                       controller: controller.emailController,
-                      decoration: InputDecoration(
-                        hintText: 'Email',
-                        border: OutlineInputBorder(),
-                      ),
+                      hintText: 'Email',
                       keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email!';
-                        }
-                        return null;
-                      },
+                      validatorText: 'Please enter your email!',
                     ),
                     Obx(
-                      () => TextFormField(
+                      () => CustomTextFormField(
                         controller: controller.passwordController,
                         obscureText: !controller.isPasswordVisible.value,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          border: OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            onPressed: controller.togglePasswordVisibility,
-                              icon: controller.isPasswordVisible.value
-                                  ? Icon(Icons.visibility_off_sharp)
-                                  : Icon(Icons.visibility),
-                            ),
+                        hintText: 'Password',
+                        suffixIcon: CustomButton(
+                          type: ButtonTypes.icon,
+                          onPressed: controller.togglePasswordVisibility,
+                          icon: controller.isPasswordVisible.value
+                              ? Icon(Icons.visibility_off_sharp)
+                              : Icon(Icons.visibility),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password!';
-                          }
-                          return null;
-                        },
+                        validatorText: 'Please enter your password!',
                       ),
                     ),
                   ],
