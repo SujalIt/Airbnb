@@ -10,19 +10,11 @@ class OwnerPropertyController extends GetxController {
   GlobalKey<FormState> addPropertyFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> editPropertyFormKey = GlobalKey<FormState>();
 
-  // add form -> controllers
   TextEditingController propertyName = TextEditingController();
   TextEditingController propertyDistance = TextEditingController();
   TextEditingController availableDate = TextEditingController();
   TextEditingController propertyPrice = TextEditingController();
   TextEditingController propertyRatings = TextEditingController();
-
-  // edit form -> controllers
-  TextEditingController editPropertyName = TextEditingController();
-  TextEditingController editPropertyDistance = TextEditingController();
-  TextEditingController editAvailableDate = TextEditingController();
-  TextEditingController editPropertyPrice = TextEditingController();
-  TextEditingController editPropertyRatings = TextEditingController();
 
   // for multiple images
   var pickedImagesForUI = [].obs;
@@ -169,12 +161,12 @@ class OwnerPropertyController extends GetxController {
 
   var ownerPropertyImagesFromFirebase = [].obs;
 
-  void deleteImageFromFirebase(String fileUrl) async {
+  void deleteImageFromFirebase(String fileUrl,String propertyId) async {
     try {
       isLoading.value = true;
       await FirebaseFirestore.instance
           .collection('places')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc(propertyId)
           .update(
         {
           'images': FieldValue.arrayRemove([fileUrl]),
@@ -188,21 +180,21 @@ class OwnerPropertyController extends GetxController {
     }
   }
 
-  // update property details method ,,,,,// give dynamic id ..left
+  // update property details method
   Future<void> updateOwnerPropertyDetails(String propertyId) async {
     try {
       isLoading.value = true;
       await FirebaseFirestore.instance
           .collection('places')
-          .doc(propertyId) //static
+          .doc(propertyId)
           .update(
         {
-          "name": editPropertyName.text,
-          "price": editPropertyPrice.text,
+          "name": propertyName.text,
+          "price": propertyPrice.text,
           "images": FieldValue.arrayUnion(imageUrlsToUpload),
-          "distance": editPropertyDistance.text,
-          "available_dates": editAvailableDate.text,
-          "rating": editPropertyRatings.text,
+          "distance": propertyDistance.text,
+          "available_dates": availableDate.text,
+          "rating": propertyRatings.text,
           "created_at": FieldValue.serverTimestamp(),
         },
       );

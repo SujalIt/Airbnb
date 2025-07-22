@@ -182,19 +182,13 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                   );
                 }
                 if (snapshot.hasData) {
-                  controller.editPropertyName.text =
-                      snapshot.data['name'] ?? "name";
-                  controller.editPropertyDistance.text =
-                      snapshot.data['distance'] ?? "distance";
-                  controller.editAvailableDate.text =
-                      snapshot.data['available_dates'] ?? "availableDate";
-                  controller.editPropertyPrice.text =
-                      snapshot.data['price'] ?? "price";
-                  controller.editPropertyRatings.text =
-                      snapshot.data['rating'] ?? "rating";
+                  controller.propertyName.text = snapshot.data['name'] ?? "name";
+                  controller.propertyDistance.text = snapshot.data['distance'] ?? "distance";
+                  controller.availableDate.text = snapshot.data['available_dates'] ?? "availableDate";
+                  controller.propertyPrice.text = snapshot.data['price'] ?? "price";
+                  controller.propertyRatings.text = snapshot.data['rating'] ?? "rating";
                   controller.ownerPropertyImagesFromFirebase.clear();
-                  controller.ownerPropertyImagesFromFirebase.addAll(List.from(
-                      snapshot.data['images'])); // ensuring list<dynamic>
+                  controller.ownerPropertyImagesFromFirebase.addAll(List.from(snapshot.data['images'])); // ensuring list<dynamic>
 
                   controller.pickedImagesForUI.clear();
                   return Column(
@@ -211,31 +205,31 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                       ),
                       // name
                       CustomTextFormField(
-                        controller: controller.editPropertyName,
+                        controller: controller.propertyName,
                         hintText: 'Enter name',
                         validatorText: 'Please enter name',
                       ),
                       // distance
                       CustomTextFormField(
-                        controller: controller.editPropertyDistance,
+                        controller: controller.propertyDistance,
                         hintText: 'Enter distance',
                         validatorText: 'Please enter distance',
                       ),
                       // available dates
                       CustomTextFormField(
-                        controller: controller.editAvailableDate,
+                        controller: controller.availableDate,
                         hintText: 'Enter available dates eg. 14-20 Dec',
                         validatorText: 'Please enter available dates!',
                       ),
                       // price
                       CustomTextFormField(
-                        controller: controller.editPropertyPrice,
+                        controller: controller.propertyPrice,
                         hintText: 'Enter price',
                         validatorText: 'Please enter price',
                       ),
                       // ratings
                       CustomTextFormField(
-                        controller: controller.editPropertyRatings,
+                        controller: controller.propertyRatings,
                         hintText: 'Enter ratings',
                         validatorText: 'Please enter ratings',
                       ),
@@ -271,7 +265,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                           iconButtonStyle: IconButton.styleFrom(backgroundColor: AppColor.red),
                                           type: ButtonTypes.icon,
                                           onPressed: () {
-                                            deleteConfirmDialog(file,true);
+                                            deleteConfirmDialog(file,true,propertyId);
                                           },
                                           icon: Icon(
                                             Icons.delete_outline,
@@ -383,10 +377,8 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                             if (controller.editPropertyFormKey.currentState!
                                 .validate()) {
                               if (controller.pickedImagesForUI.isNotEmpty) {
-                                controller.uploadImagesToImageKit(isAdd: false);
+                                controller.uploadImagesToImageKit(isAdd: false,propertyId: propertyId);
                               } else {
-                                print(propertyId);
-                                print("object");
                                 controller.updateOwnerPropertyDetails(propertyId);
                               }
                             }
@@ -412,7 +404,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
     );
   }
 
-  void deleteConfirmDialog(String fileUrl, bool deleteFromFirebase) {
+  void deleteConfirmDialog(String fileUrl, bool deleteFromFirebase,String propertyId) {
     Get.defaultDialog(
         title: "Are you sure you want to delete this image?",
         middleText: '',
@@ -435,7 +427,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                 width: 90,
                 onPressed: () {
                   if(deleteFromFirebase == true) {
-                    controller.deleteImageFromFirebase(fileUrl);
+                    controller.deleteImageFromFirebase(fileUrl,propertyId);
                     controller.ownerPropertyImagesFromFirebase.remove(fileUrl);
                   }else{
                     // controller.pickedImagesForUI.remove(file);
