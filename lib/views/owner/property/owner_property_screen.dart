@@ -5,156 +5,225 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
 
   // add new property form
   void addNewPropertyForm() {
-    controller.propertyName.clear();
-    controller.propertyDistance.clear();
+    controller.name.clear();
+    controller.distance.clear();
     controller.availableDate.clear();
-    controller.propertyPrice.clear();
-    controller.propertyRatings.clear();
+    controller.price.clear();
+    controller.ratings.clear();
     controller.pickedImagesForUI.clear();
-    Get.bottomSheet(
-      isScrollControlled: true,
-      backgroundColor: AppColor.white,
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
-        child: Form(
-          key: controller.addPropertyFormKey,
-          child: SingleChildScrollView(
-            child: Column(
-              spacing: 15,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // title
-                Text(
-                  "Add Property Details",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 27,
-                  ),
-                ),
-                // name
-                CustomTextFormField(
-                  controller: controller.propertyName,
-                  hintText: 'Enter name',
-                  validatorText: 'Please enter name',
-                ),
-                // distance
-                CustomTextFormField(
-                  controller: controller.propertyDistance,
-                  hintText: 'Enter distance',
-                  validatorText: 'Please enter distance',
-                ),
-                // available dates
-                CustomTextFormField(
-                  controller: controller.availableDate,
-                  hintText: 'Enter available dates eg. 14-20 Dec',
-                  validatorText: 'Please enter available dates!',
-                ),
-                // price
-                CustomTextFormField(
-                  controller: controller.propertyPrice,
-                  hintText: 'Enter price',
-                  validatorText: 'Please enter price',
-                ),
-                // ratings
-                CustomTextFormField(
-                  controller: controller.propertyRatings,
-                  hintText: 'Enter ratings',
-                  validatorText: 'Please enter ratings',
-                ),
-
-                // image selection
-                Column(
+      Get.bottomSheet(
+        isScrollControlled: true,
+        backgroundColor: AppColor.white,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 12),
+          child: Form(
+            key: controller.addPropertyFormKey,
+            child: Padding(
+              padding: EdgeInsetsGeometry.only(top: 18,),
+              child: SingleChildScrollView(
+                child: Column(
+                  spacing: 15,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Obx(() {
-                      if (controller.pickedImagesForUI.isNotEmpty) {
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: controller.pickedImagesForUI.map((file) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 15.0),
-                                child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadiusGeometry.circular(10),
-                                  child: Image.file(
-                                    file,
-                                    height: 150,
-                                    width: 150,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stacktrace) {
-                                      return Icon(Icons.broken_image);
-                                    },
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      } else if (controller.pickedSvgImagesForUI.isNotEmpty) {
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children:
-                                controller.pickedSvgImagesForUI.map((svg) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 15.0),
-                                child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadiusGeometry.circular(10),
-                                  child: SvgPicture.string(
-                                    svg,
-                                    height: 150,
-                                    width: 150,
-                                    fit: BoxFit.cover,
-                                    placeholderBuilder: (context) =>
-                                        CircularProgressIndicator(),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      } else {
-                        return Text(
-                          'No images selected.',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        );
-                      }
-                    }),
-                    SizedBox(height: 20),
-                    CustomButton(
-                      type: ButtonTypes.elevated,
-                      onPressed: () => controller.pickImages(),
-                      text: 'Pick Images',
-                    ),
-                  ],
-                ),
+                    SizedBox(height: 5,),
 
-                // add button
-                Obx(
-                  () => CustomButton(
-                    type: ButtonTypes.elevated,
-                    isLoading: controller.isLoading.value,
-                    onPressed: () {
-                      if (controller.addPropertyFormKey.currentState!
-                          .validate()) {
-                        controller.uploadImagesToImageKit(isAdd: true);
-                      }
-                    },
-                    width: Get.width,
-                    text: "Add",
-                    textStyle: TextStyle(
-                      fontSize: 18,
+                    CustomButton(
+                      type: ButtonTypes.icon,
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: (){
+                        Get.back();
+                      },
                     ),
+
+                    // title
+                    Text(
+                      "Add Property Details",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 27,
+                      ),
+                    ),
+                    // name
+                    CustomTextFormField(
+                      controller: controller.name,
+                      hintText: 'Enter name',
+                      labelText: 'Enter name',
+                      validatorText: 'Please enter name',
+                    ),
+                    // distance
+                    CustomTextFormField(
+                      controller: controller.distance,
+                      hintText: 'Enter distance',
+                      labelText: 'Enter distance',
+                      validatorText: 'Please enter distance',
+                    ),
+                    // available dates
+                    CustomTextFormField(
+                      controller: controller.availableDate,
+                      labelText: 'Enter date',
+                      hintText: 'Enter available dates eg. 14-20 Dec',
+                      validatorText: 'Please enter available dates!',
+                    ),
+                    // price
+                    CustomTextFormField(
+                      controller: controller.price,
+                      hintText: 'Enter price',
+                      labelText: 'Enter price',
+                      validatorText: 'Please enter price',
+                    ),
+                    // ratings
+                    CustomTextFormField(
+                      controller: controller.ratings,
+                      hintText: 'Enter ratings',
+                      labelText: 'Enter ratings',
+                      validatorText: 'Please enter ratings',
+                    ),
+
+                    // image selection
+                    Column(
+                    children: [
+                      Obx(() {
+                        if (controller.pickedImagesForUI.isNotEmpty) {
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: controller.pickedImagesForUI.map((file) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 15.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadiusGeometry.circular(10),
+                                    child: Image.file(
+                                      file,
+                                      height: 150,
+                                      width: 150,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stacktrace) {
+                                        return Icon(Icons.broken_image);
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        } else if (controller.pickedSvgImagesForUI.isNotEmpty) {
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children:
+                                  controller.pickedSvgImagesForUI.map((svg) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 15.0),
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadiusGeometry.circular(10),
+                                    child: SvgPicture.string(
+                                      svg,
+                                      height: 150,
+                                      width: 150,
+                                      fit: BoxFit.cover,
+                                      placeholderBuilder: (context) =>
+                                          CircularProgressIndicator(),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        } else {
+                          return Text(
+                            'No images selected.',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          );
+                        }
+                      }),
+                      SizedBox(height: 20),
+                      CustomButton(
+                        type: ButtonTypes.elevated,
+                        onPressed: () => controller.pickImages(),
+                        text: 'Pick Images',
+                      ),
+                    ],
                   ),
-                )
-              ],
+
+                    // property title
+                    CustomTextFormField(
+                      controller: controller.title,
+                      labelText: 'Property-Title',
+                      hintText: 'Enter title',
+                      validatorText: 'Please enter title',
+                    ),
+                    // profile image
+
+
+                    // about us
+                    CustomTextFormField(
+                      controller: controller.aboutUs,
+                      labelText: 'About-Us',
+                      hintText: 'Enter description',
+                      validatorText: 'Please enter description',
+                    ),
+                    // room title
+                    CustomTextFormField(
+                      controller: controller.roomTitle,
+                      labelText: 'Room-Title',
+                      hintText: 'Enter title',
+                      validatorText: 'Please enter room title',
+                    ),
+                    // room subtitle
+                    CustomTextFormField(
+                      controller: controller.roomSubtitle,
+                      labelText: 'Room-Subtitle',
+                      hintText: 'Enter subtitle',
+                      validatorText: 'Please enter subtitle',
+                    ),
+                    // cancellation policy
+                    CustomTextFormField(
+                      controller: controller.cancellationPolicy,
+                      labelText: 'Cancellation-Policy',
+                      hintText: 'Enter policy',
+                      validatorText: 'Please enter policy',
+                    ),
+                    // house rules
+                    CustomTextFormField(
+                      controller: controller.houseRules,
+                      labelText: 'House-Rules',
+                      hintText: 'Enter house rules',
+                      validatorText: 'Please enter rules',
+                    ),
+                    // safety & property
+                    CustomTextFormField(
+                      controller: controller.safetynProperty,
+                      labelText: 'Safety-Property',
+                      hintText: 'Enter safety&property',
+                      validatorText: 'Please enter details',
+                    ),
+
+                    Obx(
+                    () => CustomButton(
+                      type: ButtonTypes.elevated,
+                      isLoading: controller.isLoading.value,
+                      onPressed: () {
+                        if (controller.addPropertyFormKey.currentState!
+                            .validate()) {
+                          controller.uploadImagesToImageKit(isAdd: true);
+                        }
+                      },
+                      width: Get.width,
+                      text: "Add",
+                      textStyle: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+                        ),
             ),
-          ),
         ),
-      ),
+              ),
     );
   }
 
@@ -182,11 +251,11 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                   );
                 }
                 if (snapshot.hasData) {
-                  controller.propertyName.text = snapshot.data['name'] ?? "name";
-                  controller.propertyDistance.text = snapshot.data['distance'] ?? "distance";
+                  controller.name.text = snapshot.data['name'] ?? "name";
+                  controller.distance.text = snapshot.data['distance'] ?? "distance";
                   controller.availableDate.text = snapshot.data['available_dates'] ?? "availableDate";
-                  controller.propertyPrice.text = snapshot.data['price'] ?? "price";
-                  controller.propertyRatings.text = snapshot.data['rating'] ?? "rating";
+                  controller.price.text = snapshot.data['price'] ?? "price";
+                  controller.ratings.text = snapshot.data['rating'] ?? "rating";
                   controller.ownerPropertyImagesFromFirebase.clear();
                   controller.ownerPropertyImagesFromFirebase.addAll(List.from(snapshot.data['images'])); // ensuring list<dynamic>
 
@@ -205,32 +274,37 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                       ),
                       // name
                       CustomTextFormField(
-                        controller: controller.propertyName,
+                        controller: controller.name,
                         hintText: 'Enter name',
+                        labelText: 'Enter name',
                         validatorText: 'Please enter name',
                       ),
                       // distance
                       CustomTextFormField(
-                        controller: controller.propertyDistance,
+                        controller: controller.distance,
                         hintText: 'Enter distance',
+                        labelText: 'Enter distance',
                         validatorText: 'Please enter distance',
                       ),
                       // available dates
                       CustomTextFormField(
                         controller: controller.availableDate,
+                        labelText: 'Enter date',
                         hintText: 'Enter available dates eg. 14-20 Dec',
                         validatorText: 'Please enter available dates!',
                       ),
                       // price
                       CustomTextFormField(
-                        controller: controller.propertyPrice,
+                        controller: controller.price,
                         hintText: 'Enter price',
+                        labelText: 'Enter price',
                         validatorText: 'Please enter price',
                       ),
                       // ratings
                       CustomTextFormField(
-                        controller: controller.propertyRatings,
+                        controller: controller.ratings,
                         hintText: 'Enter ratings',
+                        labelText: 'Enter ratings',
                         validatorText: 'Please enter ratings',
                       ),
 
@@ -469,8 +543,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
               ),
             ),
             StreamBuilder<dynamic>(
-              stream: controller.getAllPropertiesByOwnerId(
-                  FirebaseAuth.instance.currentUser!.uid.toString()),
+              stream: controller.getAllPropertiesByOwnerId(FirebaseAuth.instance.currentUser!.uid.toString()),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(
@@ -512,6 +585,14 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                     fit: BoxFit.cover,
                                     width: Get.width,
                                   ),
+                                ),
+                              ),
+                              CustomButton(
+                                type: ButtonTypes.icon,
+                                onPressed: (){},
+                                icon: IconButton(
+                                  onPressed: (){},
+                                  icon: Icon(Icons.more_vert,),
                                 ),
                               ),
                             ],

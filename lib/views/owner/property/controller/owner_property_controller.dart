@@ -10,11 +10,19 @@ class OwnerPropertyController extends GetxController {
   GlobalKey<FormState> addPropertyFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> editPropertyFormKey = GlobalKey<FormState>();
 
-  TextEditingController propertyName = TextEditingController();
-  TextEditingController propertyDistance = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController distance = TextEditingController();
   TextEditingController availableDate = TextEditingController();
-  TextEditingController propertyPrice = TextEditingController();
-  TextEditingController propertyRatings = TextEditingController();
+  TextEditingController price = TextEditingController();
+  TextEditingController ratings = TextEditingController();
+
+  TextEditingController title = TextEditingController();
+  TextEditingController roomTitle = TextEditingController();
+  TextEditingController roomSubtitle = TextEditingController();
+  TextEditingController aboutUs = TextEditingController();
+  TextEditingController cancellationPolicy = TextEditingController();
+  TextEditingController houseRules = TextEditingController();
+  TextEditingController safetynProperty = TextEditingController();
 
   // for multiple images
   var pickedImagesForUI = [].obs;
@@ -115,13 +123,22 @@ class OwnerPropertyController extends GetxController {
       await FirebaseFirestore.instance
           .collection("places")
           .add({
-        "name": propertyName.text,
-        "price": propertyPrice.text,
+        "name": name.text,
+        "price": price.text,
         "images": imageUrlsToUpload,
-        "distance": propertyDistance.text,
+        "distance": distance.text,
         "available_dates": availableDate.text,
-        "rating": propertyRatings.text,
+        "rating": ratings.text,
         "uuid": FirebaseAuth.instance.currentUser!.uid.toString(),
+
+        // "title": title.text,
+        // "about_us": aboutUs.text,
+        // "room_title": roomTitle.text,
+        // "room_subtitle": roomSubtitle.text,
+        // "cancellation_policy": cancellationPolicy.text,
+        // "house_rules": houseRules.text,
+        // "safety_property": safetynProperty.text,
+
         "created_at": FieldValue.serverTimestamp(),
       });
       Get.back();
@@ -189,12 +206,12 @@ class OwnerPropertyController extends GetxController {
           .doc(propertyId)
           .update(
         {
-          "name": propertyName.text,
-          "price": propertyPrice.text,
+          "name": name.text,
+          "price": price.text,
           "images": FieldValue.arrayUnion(imageUrlsToUpload),
-          "distance": propertyDistance.text,
+          "distance": distance.text,
           "available_dates": availableDate.text,
-          "rating": propertyRatings.text,
+          "rating": ratings.text,
           "created_at": FieldValue.serverTimestamp(),
         },
       );
