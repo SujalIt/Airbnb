@@ -19,6 +19,13 @@ class OwnerPropertyController extends GetxController {
   TextEditingController title = TextEditingController();
   TextEditingController roomTitle = TextEditingController();
   TextEditingController roomSubtitle = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController link = TextEditingController();
+  TextEditingController state = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController pincode = TextEditingController();
+  TextEditingController latitude = TextEditingController();
+  TextEditingController longitude = TextEditingController();
   TextEditingController aboutUs = TextEditingController();
   TextEditingController cancellationPolicy = TextEditingController();
   TextEditingController houseRules = TextEditingController();
@@ -33,7 +40,7 @@ class OwnerPropertyController extends GetxController {
     if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
       final picker = ImagePicker();
 
-      multiplePickedFiles = await picker.pickMultiImage();
+      multiplePickedFiles = await picker.pickMultiImage(); // when no images selected then old selected images will also clear from list ... manage this
 
       if (multiplePickedFiles.isNotEmpty) {
         for (var file in multiplePickedFiles) {
@@ -45,6 +52,31 @@ class OwnerPropertyController extends GetxController {
         }
       }
     }
+  }
+
+  void clearAddFormFields(){
+    name.clear();
+    distance.clear();
+    availableDate.clear();
+    price.clear();
+    ratings.clear();
+    pickedImagesForUI.clear();
+    multiplePickedFiles.clear();
+
+    title.clear();
+    aboutUs.clear();
+    roomTitle.clear();
+    roomSubtitle.clear();
+    address.clear();
+    link.clear();
+    state.clear();
+    city.clear();
+    pincode.clear();
+    latitude.clear();
+    longitude.clear();
+    cancellationPolicy.clear();
+    houseRules.clear();
+    safetynProperty.clear();
   }
 
   // selected images url ..to upload in firebase
@@ -131,21 +163,35 @@ class OwnerPropertyController extends GetxController {
         "rating": ratings.text,
         "uuid": FirebaseAuth.instance.currentUser!.uid.toString(),
 
-        // "title": title.text,
-        // "about_us": aboutUs.text,
-        // "room_title": roomTitle.text,
-        // "room_subtitle": roomSubtitle.text,
-        // "cancellation_policy": cancellationPolicy.text,
-        // "house_rules": houseRules.text,
-        // "safety_property": safetynProperty.text,
-
+        "title": title.text,
+        "about_us": aboutUs.text,
+        "room": [
+          {
+          'title': roomTitle.text,
+          'subtitle': roomSubtitle.text,
+          },
+        ],
+        "address": address.text,
+        "link": link.text,
+        "state": state.text,
+        "city": city.text,
+        "pin_code": pincode.text,
+        "location": [
+          {
+            'latitude': latitude.text,
+            'longitude': longitude.text,
+          }
+        ],
+        "cancellation_policy": cancellationPolicy.text,
+        "house_rules": houseRules.text,
+        "safety_property": safetynProperty.text,
         "created_at": FieldValue.serverTimestamp(),
       });
-      Get.back();
       SmartAlert.customSnackBar(
         title: 'Property added Successfully',
         desc: "Now you can see your properties.",
       );
+      Get.back();
     } catch (e) {
       SmartAlert.customSnackBar(title: "Failed..Try again", desc: '$e');
     } finally {
@@ -212,6 +258,29 @@ class OwnerPropertyController extends GetxController {
           "distance": distance.text,
           "available_dates": availableDate.text,
           "rating": ratings.text,
+
+          "title": title.text,
+          "about_us": aboutUs.text,
+          "room": [
+            {
+              'title': roomTitle.text,
+              'subtitle': roomSubtitle.text,
+            },
+          ],
+          "address": address.text,
+          "link": link.text,
+          "state": state.text,
+          "city": city.text,
+          "pin_code": pincode.text,
+          "location": [
+            {
+              'latitude': latitude.text,
+              'longitude': longitude.text,
+            }
+          ],
+          "cancellation_policy": cancellationPolicy.text,
+          "house_rules": houseRules.text,
+          "safety_property": safetynProperty.text,
           "created_at": FieldValue.serverTimestamp(),
         },
       );
@@ -243,6 +312,16 @@ class OwnerPropertyController extends GetxController {
       });
     } catch (e) {
       return Stream.error('Something went wrong. $e');
+    }
+  }
+
+  void deleteProperty(String docId) async{
+    try{
+      await FirebaseFirestore.instance.collection('places').doc(docId).delete();
+      Get.back();
+    } on FirebaseFirestore catch (e){
+      SmartAlert.customSnackBar(title: 'Something wrong.', desc: 'Please try again');
+      Get.back();
     }
   }
 }

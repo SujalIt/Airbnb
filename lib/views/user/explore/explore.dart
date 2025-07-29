@@ -202,11 +202,10 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        documentData["name"] ?? "name",
+                                        documentData["name"] ?? "name null",
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -219,7 +218,7 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                             size: 18,
                                           ),
                                           Text(
-                                            documentData["rating"] ?? "rating",
+                                            documentData["rating"] ?? "rating null",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w500,
                                             ),
@@ -229,14 +228,14 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                     ],
                                   ),
                                   Text(
-                                    documentData["distance"] ?? "distance",
+                                    documentData["distance"] ?? "distance null",
                                     style: TextStyle(
                                       color: AppColor.blueGrey,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                   Text(
-                                    documentData["available_dates"] ?? "availableDates",
+                                    documentData["available_dates"] ?? "availableDates null",
                                     style: TextStyle(
                                       color: AppColor.blueGrey,
                                       fontWeight: FontWeight.w600,
@@ -246,7 +245,7 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                                     spacing: 3,
                                     children: [
                                       Text(
-                                        '₹${documentData["price"] ?? "price"}',
+                                        '₹${documentData["price"] ?? "price null"}',
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: AppColor.black,

@@ -4,5 +4,6 @@ class OwnerPropertyBinding extends Bindings{
   @override
   void dependencies() {
     Get.lazyPut(()=> OwnerPropertyController());
+    Get.lazyPut(()=> ImagePickerController());
   }
 }

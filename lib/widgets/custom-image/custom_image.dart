@@ -24,10 +24,10 @@ class CustomImage extends GetView<ImagePickerController> {
       return ImageTypes.network;
     } else if (path.startsWith('assets')) {
       return ImageTypes.asset;
-    } else if (path.isEmpty) {
+    } else if (path.startsWith('/data')) { //mobile..[File: '/data/user/0/com.peanut.airbnb/cache/640fde1d-ba56-45ab-b311-030ec13c6fe3/1000223444.jpg']
       return ImageTypes.file;
     } else {
-      return ImageTypes.asset;
+      return ImageTypes.noImage;
     }
   }
 
@@ -96,61 +96,53 @@ class CustomImage extends GetView<ImagePickerController> {
                 },
               ));
       case ImageTypes.file:
-        return Column(
-          children: [
-            Obx(() {
-              if (controller.svgString.value != null) {
-                return SvgPicture.string(
-                  controller.svgString.value ?? '',
-                  height: height,
-                  width: width,
-                  fit: fit,
-                  placeholderBuilder: (context) => CircularProgressIndicator(),
+        return Obx(() {
+          if (controller.svgString.value != null) {
+            return SvgPicture.string(
+              controller.svgString.value ?? '',
+              height: height,
+              width: width,
+              fit: fit,
+              placeholderBuilder: (context) => CircularProgressIndicator(),
+            );
+          } else if (kIsWeb) {
+            return controller.imageBytes.value == null
+                ? Text('No image selected.',
+                style: TextStyle(
+                  fontSize: 16,
+                ))
+                : Image.memory(
+              controller.imageBytes.value!,
+              height: height,
+              width: width,
+              fit: fit,
+              errorBuilder: (context, error, stacktrace) {
+                return Icon(
+                  Icons.broken_image,
                 );
-              } else if (kIsWeb) {
-                return controller.imageBytes.value == null
-                    ? Text('No image selected.',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ))
-                    : Image.memory(
-                        controller.imageBytes.value!,
-                        height: height,
-                        width: width,
-                        fit: fit,
-                        errorBuilder: (context, error, stacktrace) {
-                          return Icon(
-                            Icons.broken_image,
-                          );
-                        },
-                      );
-              } else {
-                return controller.imageFile.value == null
-                    ? Text('No image selected.',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ))
-                    : Image.file(
-                        controller.imageFile.value!,
-                        height: height,
-                        width: width,
-                        fit: fit,
-                        errorBuilder: (context, error, stacktrace) {
-                          return Icon(
-                            Icons.broken_image,
-                          );
-                        },
-                      );
-              }
-            }),
-            SizedBox(height: 20),
-            CustomButton(
-              type: ButtonTypes.elevated,
-              onPressed: () => controller.pickImage(),
-              text: 'Pick Image',
-            ),
-          ],
-        );
+              },
+            );
+          } else {
+            return controller.imageFile.value == null
+                ? Text('No image selected.',
+                style: TextStyle(
+                  fontSize: 16,
+                ))
+                : Image.file(
+              controller.imageFile.value!,
+              height: height,
+              width: width,
+              fit: fit,
+              errorBuilder: (context, error, stacktrace) {
+                return Icon(
+                  Icons.broken_image,
+                );
+              },
+            );
+          }
+        });
+      default:
+        return Text("No image selected");
     }
   }
 }

@@ -34,6 +34,7 @@ class ImagePickerController extends GetxController {
 
       //
 
+      // mobile
       if (pickedFile != null) {
         if (pickedFile.path.toLowerCase().endsWith('.svg')) {
           svgString.value = await File(pickedFile.path).readAsString();
@@ -48,6 +49,7 @@ class ImagePickerController extends GetxController {
         allowedExtensions: ['svg', 'jpg', 'jpeg', 'png'],
       );
 
+      // web
       if (result != null) {
         if (kIsWeb) {
           if (result.files.single.extension == 'svg') {

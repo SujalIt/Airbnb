@@ -5,103 +5,121 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
 
   // add new property form
   void addNewPropertyForm() {
-    controller.name.clear();
-    controller.distance.clear();
-    controller.availableDate.clear();
-    controller.price.clear();
-    controller.ratings.clear();
-    controller.pickedImagesForUI.clear();
-      Get.bottomSheet(
-        isScrollControlled: true,
-        backgroundColor: AppColor.white,
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 12),
-          child: Form(
-            key: controller.addPropertyFormKey,
-            child: Padding(
-              padding: EdgeInsetsGeometry.only(top: 18,),
-              child: SingleChildScrollView(
-                child: Column(
-                  spacing: 15,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 5,),
+    controller.clearAddFormFields();
+    Get.bottomSheet(
+      isScrollControlled: true,
+      backgroundColor: AppColor.white,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 12),
+        child: Form(
+          key: controller.addPropertyFormKey,
+          child: Padding(
+            padding: EdgeInsetsGeometry.only(
+              top: 18,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                spacing: 15,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 5,
+                  ),
 
-                    CustomButton(
-                      type: ButtonTypes.icon,
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: (){
-                        Get.back();
-                      },
-                    ),
+                  CustomButton(
+                    type: ButtonTypes.icon,
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
 
-                    // title
-                    Text(
-                      "Add Property Details",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 27,
-                      ),
+                  // title
+                  Text(
+                    "Add Property Details",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 27,
                     ),
-                    // name
-                    CustomTextFormField(
-                      controller: controller.name,
-                      hintText: 'Enter name',
-                      labelText: 'Enter name',
-                      validatorText: 'Please enter name',
-                    ),
-                    // distance
-                    CustomTextFormField(
-                      controller: controller.distance,
-                      hintText: 'Enter distance',
-                      labelText: 'Enter distance',
-                      validatorText: 'Please enter distance',
-                    ),
-                    // available dates
-                    CustomTextFormField(
-                      controller: controller.availableDate,
-                      labelText: 'Enter date',
-                      hintText: 'Enter available dates eg. 14-20 Dec',
-                      validatorText: 'Please enter available dates!',
-                    ),
-                    // price
-                    CustomTextFormField(
-                      controller: controller.price,
-                      hintText: 'Enter price',
-                      labelText: 'Enter price',
-                      validatorText: 'Please enter price',
-                    ),
-                    // ratings
-                    CustomTextFormField(
-                      controller: controller.ratings,
-                      hintText: 'Enter ratings',
-                      labelText: 'Enter ratings',
-                      validatorText: 'Please enter ratings',
-                    ),
+                  ),
+                  // name
+                  CustomTextFormField(
+                    controller: controller.name,
+                    hintText: 'Enter name',
+                    labelText: 'Enter name',
+                    validatorText: 'Please enter name',
+                  ),
+                  // distance
+                  CustomTextFormField(
+                    controller: controller.distance,
+                    hintText: 'Enter distance',
+                    labelText: 'Enter distance',
+                    validatorText: 'Please enter distance',
+                  ),
+                  // available dates
+                  CustomTextFormField(
+                    controller: controller.availableDate,
+                    labelText: 'Enter date',
+                    hintText: 'Enter available dates eg. 14-20 Dec',
+                    validatorText: 'Please enter available dates!',
+                  ),
+                  // price
+                  CustomTextFormField(
+                    controller: controller.price,
+                    hintText: 'Enter price',
+                    labelText: 'Enter price',
+                    validatorText: 'Please enter price',
+                  ),
+                  // ratings
+                  CustomTextFormField(
+                    controller: controller.ratings,
+                    hintText: 'Enter ratings',
+                    labelText: 'Enter ratings',
+                    validatorText: 'Please enter ratings',
+                  ),
 
-                    // image selection
-                    Column(
+                  // image selection
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Obx(() {
                         if (controller.pickedImagesForUI.isNotEmpty) {
                           return SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              children: controller.pickedImagesForUI.map((file) {
+                              children:
+                                  controller.pickedImagesForUI.map((file) {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 15.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadiusGeometry.circular(10),
-                                    child: Image.file(
-                                      file,
-                                      height: 150,
-                                      width: 150,
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stacktrace) {
-                                        return Icon(Icons.broken_image);
-                                      },
+                                  child: Stack(children: [
+                                    // custom image(this is for single image) not use ...
+                                    ClipRRect(
+                                      borderRadius:
+                                          BorderRadiusGeometry.circular(10),
+                                      child: Image.file(
+                                        file,
+                                        height: 150,
+                                        width: 150,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
+                                    Positioned(
+                                      top: 55,
+                                      left: 50,
+                                      child: CustomButton(
+                                        iconButtonStyle: IconButton.styleFrom(
+                                            backgroundColor: AppColor.red),
+                                        type: ButtonTypes.icon,
+                                        onPressed: () {
+                                          controller.pickedImagesForUI
+                                              .remove(file);
+                                        },
+                                        icon: Icon(
+                                          Icons.delete_outline,
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
                                 );
                               }).toList(),
                             ),
@@ -148,60 +166,157 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                     ],
                   ),
 
-                    // property title
-                    CustomTextFormField(
-                      controller: controller.title,
-                      labelText: 'Property-Title',
-                      hintText: 'Enter title',
-                      validatorText: 'Please enter title',
-                    ),
-                    // profile image
+                  // property title
+                  CustomTextFormField(
+                    controller: controller.title,
+                    labelText: 'Property-Title',
+                    hintText: 'Enter title',
+                    validatorText: 'Please enter title',
+                  ),
+                  // about us
+                  CustomTextFormField(
+                    controller: controller.aboutUs,
+                    labelText: 'About-Us',
+                    hintText: 'Enter description',
+                    validatorText: 'Please enter description',
+                  ),
+                  // room title
+                  CustomTextFormField(
+                    controller: controller.roomTitle,
+                    labelText: 'Room-Title',
+                    hintText: 'Enter title',
+                    validatorText: 'Please enter room title',
+                  ),
+                  // room subtitle
+                  CustomTextFormField(
+                    controller: controller.roomSubtitle,
+                    labelText: 'Room-Subtitle',
+                    hintText: 'Enter subtitle',
+                    validatorText: 'Please enter subtitle',
+                  ),
 
+                  // property address
+                  CustomTextFormField(
+                    controller: controller.address,
+                    labelText: 'Address',
+                    hintText: 'Enter address',
+                    keyboardType: TextInputType.streetAddress,
+                    validatorText: 'Please enter address',
+                  ),
+                  // location link
+                  CustomTextFormField(
+                    controller: controller.link,
+                    labelText: 'Location Link',
+                    hintText: 'Enter link',
+                    keyboardType: TextInputType.url,
+                    validatorText: 'Please enter link',
+                  ),
+                  // state
+                  DropdownButtonFormField(
+                    hint: Text("Select State"),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    items: [
+                      DropdownMenuItem(
+                        value: "Gujarat",
+                        child: Text("Gujarat"),
+                      ),
+                      DropdownMenuItem(
+                        value: "Rajasthan",
+                        child: Text("Rajasthan"),
+                      ),
+                      DropdownMenuItem(
+                        value: "Uttar Pradesh",
+                        child: Text("Uttar Pradesh"),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      controller.state.text = value ?? "state null";
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select state';
+                      }
+                      return null;
+                    },
+                  ),
+                  // city
+                  DropdownButtonFormField(
+                    hint: Text("Select City"),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    items: [
+                      DropdownMenuItem(
+                        value: "Ahmedabad",
+                        child: Text("Ahmedabad"),
+                      ),
+                      DropdownMenuItem(
+                        value: "Surat",
+                        child: Text("Surat"),
+                      ),
+                      DropdownMenuItem(
+                        value: "Rajkot",
+                        child: Text("Rajkot"),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      controller.city.text = value ?? "city null";
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select city';
+                      }
+                      return null;
+                    },
+                  ),
+                  // pin code
+                  CustomTextFormField(
+                    controller: controller.pincode,
+                    labelText: 'Pin code',
+                    hintText: 'Enter pin code eg.382210',
+                    keyboardType: TextInputType.number,
+                    validatorText: 'Please enter pin code',
+                  ),
 
-                    // about us
-                    CustomTextFormField(
-                      controller: controller.aboutUs,
-                      labelText: 'About-Us',
-                      hintText: 'Enter description',
-                      validatorText: 'Please enter description',
-                    ),
-                    // room title
-                    CustomTextFormField(
-                      controller: controller.roomTitle,
-                      labelText: 'Room-Title',
-                      hintText: 'Enter title',
-                      validatorText: 'Please enter room title',
-                    ),
-                    // room subtitle
-                    CustomTextFormField(
-                      controller: controller.roomSubtitle,
-                      labelText: 'Room-Subtitle',
-                      hintText: 'Enter subtitle',
-                      validatorText: 'Please enter subtitle',
-                    ),
-                    // cancellation policy
-                    CustomTextFormField(
-                      controller: controller.cancellationPolicy,
-                      labelText: 'Cancellation-Policy',
-                      hintText: 'Enter policy',
-                      validatorText: 'Please enter policy',
-                    ),
-                    // house rules
-                    CustomTextFormField(
-                      controller: controller.houseRules,
-                      labelText: 'House-Rules',
-                      hintText: 'Enter house rules',
-                      validatorText: 'Please enter rules',
-                    ),
-                    // safety & property
-                    CustomTextFormField(
-                      controller: controller.safetynProperty,
-                      labelText: 'Safety-Property',
-                      hintText: 'Enter safety&property',
-                      validatorText: 'Please enter details',
-                    ),
+                  // location map
+                  CustomTextFormField(
+                    controller: controller.latitude,
+                    labelText: 'location latitude',
+                    hintText: 'eg. 22.9742°',
+                    validatorText: 'Please enter latitude',
+                  ),
+                  CustomTextFormField(
+                    controller: controller.longitude,
+                    labelText: 'location longitude',
+                    hintText: 'eg. 72.4971°',
+                    validatorText: 'Please enter longitude',
+                  ),
 
-                    Obx(
+                  // cancellation policy
+                  CustomTextFormField(
+                    controller: controller.cancellationPolicy,
+                    labelText: 'Cancellation-Policy',
+                    hintText: 'Enter policy',
+                    validatorText: 'Please enter policy',
+                  ),
+                  // house rules
+                  CustomTextFormField(
+                    controller: controller.houseRules,
+                    labelText: 'House-Rules',
+                    hintText: 'Enter house rules',
+                    validatorText: 'Please enter rules',
+                  ),
+                  // safety & property
+                  CustomTextFormField(
+                    controller: controller.safetynProperty,
+                    labelText: 'Safety-Property',
+                    hintText: 'Enter safety&property',
+                    validatorText: 'Please enter details',
+                  ),
+
+                  Obx(
                     () => CustomButton(
                       type: ButtonTypes.elevated,
                       isLoading: controller.isLoading.value,
@@ -217,14 +332,37 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                         fontSize: 18,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
-                        ),
             ),
+          ),
         ),
-              ),
+      ),
     );
+  }
+
+  void _initializeControllerFields(dynamic data){
+    controller.name.text = data['name'] ?? "name null";
+    controller.distance.text = data['distance'] ?? "distance null";
+    controller.availableDate.text = data['available_dates'] ?? "availableDates null";
+    controller.price.text = data['price'] ?? "price null";
+    controller.ratings.text = data['rating'] ?? "rating null";
+    controller.ownerPropertyImagesFromFirebase.clear();
+    controller.ownerPropertyImagesFromFirebase.addAll(List.from(data['images'])); // ensuring list<dynamic>
+
+    controller.title.text = data['title'] ?? "title null";
+    controller.aboutUs.text = data['about_us'] ?? "about us null";
+    controller.address.text = data['address'] ?? 'address null';
+    controller.state.text = data['state'] ?? 'state null';
+    controller.city.text = data['city'] ?? "city null";
+    controller.link.text = data['link'] ?? "link null";
+    controller.pincode.text = data['pin_code'];
+    controller.cancellationPolicy.text = data['cancellation_policy'] ?? "cancellation policy null";
+    controller.houseRules.text = data['house_rules'] ?? "house rules null";
+    controller.safetynProperty.text = data['safety_property'] ?? "safety null";
+
+    controller.pickedImagesForUI.clear();
   }
 
   // edit property form
@@ -233,288 +371,488 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
       isScrollControlled: true,
       backgroundColor: AppColor.white,
       Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 12),
         child: Form(
           key: controller.editPropertyFormKey,
-          child: SingleChildScrollView(
-            child: FutureBuilder(
-              future: controller.fetchOwnerPropertyDetails(propertyId),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text("Error"),
-                  );
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.hasData) {
-                  controller.name.text = snapshot.data['name'] ?? "name";
-                  controller.distance.text = snapshot.data['distance'] ?? "distance";
-                  controller.availableDate.text = snapshot.data['available_dates'] ?? "availableDate";
-                  controller.price.text = snapshot.data['price'] ?? "price";
-                  controller.ratings.text = snapshot.data['rating'] ?? "rating";
-                  controller.ownerPropertyImagesFromFirebase.clear();
-                  controller.ownerPropertyImagesFromFirebase.addAll(List.from(snapshot.data['images'])); // ensuring list<dynamic>
-
-                  controller.pickedImagesForUI.clear();
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 15,
-                    children: [
-                      // title
-                      Text(
-                        "Edit Property Details",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 27,
-                        ),
-                      ),
-                      // name
-                      CustomTextFormField(
-                        controller: controller.name,
-                        hintText: 'Enter name',
-                        labelText: 'Enter name',
-                        validatorText: 'Please enter name',
-                      ),
-                      // distance
-                      CustomTextFormField(
-                        controller: controller.distance,
-                        hintText: 'Enter distance',
-                        labelText: 'Enter distance',
-                        validatorText: 'Please enter distance',
-                      ),
-                      // available dates
-                      CustomTextFormField(
-                        controller: controller.availableDate,
-                        labelText: 'Enter date',
-                        hintText: 'Enter available dates eg. 14-20 Dec',
-                        validatorText: 'Please enter available dates!',
-                      ),
-                      // price
-                      CustomTextFormField(
-                        controller: controller.price,
-                        hintText: 'Enter price',
-                        labelText: 'Enter price',
-                        validatorText: 'Please enter price',
-                      ),
-                      // ratings
-                      CustomTextFormField(
-                        controller: controller.ratings,
-                        hintText: 'Enter ratings',
-                        labelText: 'Enter ratings',
-                        validatorText: 'Please enter ratings',
-                      ),
-
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-
-                            // old firebase images
-                            Obx(
-                              () => Row(
-                                children: controller
-                                    .ownerPropertyImagesFromFirebase
-                                    .map((file) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 15.0),
-                                    child: Stack(children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadiusGeometry.circular(10),
-                                        child: CustomImage(
-                                          path: '$file',
-                                          height: 150,
-                                          width: 150,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: 55,
-                                        left: 50,
-                                        child: CustomButton(
-                                          iconButtonStyle: IconButton.styleFrom(backgroundColor: AppColor.red),
-                                          type: ButtonTypes.icon,
-                                          onPressed: () {
-                                            deleteConfirmDialog(file,true,propertyId);
-                                          },
-                                          icon: Icon(
-                                            Icons.delete_outline,
-                                          ),
-                                        ),
-                                      ),
-                                    ]),
-                                  );
-                                }).toList(),
-                              ),
+          child: FutureBuilder(
+            future: controller.fetchOwnerPropertyDetails(propertyId),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("Error"),
+                );
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasData) {
+                _initializeControllerFields(snapshot.data);
+                return Padding(
+                  padding: EdgeInsetsGeometry.only(top: 18),
+                  child: ListView.builder(
+                    itemCount: 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      controller.roomTitle.text = snapshot.data['room'][index]['title'] ?? "room title null";
+                      controller.roomSubtitle.text = snapshot.data['room'][index]['subtitle'] ?? "room subtitle null";
+                      controller.latitude.text = snapshot.data['location'][index]['latitude'] ?? "latitude null";
+                      controller.longitude.text = snapshot.data['location'][index]['longitude'] ?? "longitude null";
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 15,
+                        children: [
+                          SizedBox(
+                            height: 5,
+                          ),
+                          CustomButton(
+                            type: ButtonTypes.icon,
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: () {
+                              Get.back();
+                            },
+                          ),
+                          // title
+                          Text(
+                            "Edit Property Details",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 27,
                             ),
+                          ),
+                          // name
+                          CustomTextFormField(
+                            controller: controller.name,
+                            hintText: 'Enter name',
+                            labelText: 'Enter name',
+                            validatorText: 'Please enter name',
+                          ),
+                          // distance
+                          CustomTextFormField(
+                            controller: controller.distance,
+                            hintText: 'Enter distance',
+                            labelText: 'Enter distance',
+                            validatorText: 'Please enter distance',
+                          ),
+                          // available dates
+                          CustomTextFormField(
+                            controller: controller.availableDate,
+                            labelText: 'Enter date',
+                            hintText: 'Enter available dates eg. 14-20 Dec',
+                            validatorText: 'Please enter available dates!',
+                          ),
+                          // price
+                          CustomTextFormField(
+                            controller: controller.price,
+                            hintText: 'Enter price',
+                            labelText: 'Enter price',
+                            validatorText: 'Please enter price',
+                          ),
+                          // ratings
+                          CustomTextFormField(
+                            controller: controller.ratings,
+                            hintText: 'Enter ratings',
+                            labelText: 'Enter ratings',
+                            validatorText: 'Please enter ratings',
+                          ),
 
-                            // current added images
-                            Obx(() {
-                              if (controller.pickedImagesForUI.isNotEmpty) {
-                                return SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: controller.pickedImagesForUI.map((file) {
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                // old firebase images
+                                Obx(
+                                  () => Row(
+                                    children: controller
+                                        .ownerPropertyImagesFromFirebase
+                                        .map((file) {
                                       return Padding(
-                                        padding: const EdgeInsets.only(
-                                          right: 15.0,
-                                        ),
+                                        padding:
+                                            const EdgeInsets.only(right: 15.0),
                                         child: Stack(children: [
                                           ClipRRect(
-                                            borderRadius: BorderRadiusGeometry.circular(10),
-                                            child: Image.file(
-                                              file,
+                                            borderRadius:
+                                                BorderRadiusGeometry.circular(
+                                                    10),
+                                            child: CustomImage(
+                                              path: '$file',
                                               height: 150,
                                               width: 150,
                                               fit: BoxFit.cover,
-                                              errorBuilder: (
-                                                context,
-                                                error,
-                                                stacktrace,
-                                              ) {
-                                                return Icon(
-                                                  Icons.broken_image,
-                                                );
-                                              },
                                             ),
                                           ),
                                           Positioned(
                                             top: 55,
                                             left: 50,
                                             child: CustomButton(
+                                              iconButtonStyle:
+                                                  IconButton.styleFrom(
+                                                      backgroundColor:
+                                                          AppColor.red),
                                               type: ButtonTypes.icon,
-                                              iconButtonStyle: IconButton.styleFrom(backgroundColor: AppColor.red),
                                               onPressed: () {
-                                                // deleteConfirmDialog(file.toString(), false);
-
-                                                controller.pickedImagesForUI.remove(file); // changes left
+                                                deleteConfirmDialog(
+                                                    file, true, propertyId);
                                               },
                                               icon: Icon(
                                                 Icons.delete_outline,
                                               ),
                                             ),
                                           ),
-                                        ],),
+                                        ]),
                                       );
                                     }).toList(),
                                   ),
-                                );
-                              } else if (controller.pickedSvgImagesForUI.isNotEmpty) {
-                                return SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: controller.pickedSvgImagesForUI
-                                        .map((svg) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 15.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadiusGeometry.circular(10),
-                                          child: SvgPicture.string(
-                                            svg,
-                                            height: 150,
-                                            width: 150,
-                                            fit: BoxFit.cover,
-                                            placeholderBuilder: (context) =>
-                                                CircularProgressIndicator(),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                );
-                              } else {
-                                return Text(
-                                  '',
-                                );
-                              }
-                            }),
-                          ],
-                        ),
-                      ),
+                                ),
 
-                      CustomButton(
-                        type: ButtonTypes.elevated,
-                        onPressed: () => controller.pickImages(),
-                        text: 'Add new Images',
-                      ),
-                      Obx(
-                        () => CustomButton(
-                          type: ButtonTypes.elevated,
-                          isLoading: controller.isLoading.value,
-                          onPressed: () {
-                            if (controller.editPropertyFormKey.currentState!
-                                .validate()) {
-                              if (controller.pickedImagesForUI.isNotEmpty) {
-                                controller.uploadImagesToImageKit(isAdd: false,propertyId: propertyId);
-                              } else {
-                                controller.updateOwnerPropertyDetails(propertyId);
-                              }
-                            }
-                          },
-                          width: Get.width,
-                          text: "Save",
-                          textStyle: TextStyle(
-                            fontSize: 18,
+                                // current added images
+                                Obx(() {
+                                  if (controller.pickedImagesForUI.isNotEmpty) {
+                                    return SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: controller.pickedImagesForUI
+                                            .map((file) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 15.0,
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadiusGeometry
+                                                          .circular(10),
+                                                  child: Image.file(
+                                                    // path: "$file",
+                                                    file,
+                                                    height: 150,
+                                                    width: 150,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  top: 55,
+                                                  left: 50,
+                                                  child: CustomButton(
+                                                    type: ButtonTypes.icon,
+                                                    iconButtonStyle:
+                                                        IconButton.styleFrom(
+                                                            backgroundColor:
+                                                                AppColor.red),
+                                                    onPressed: () {
+                                                      controller
+                                                          .pickedImagesForUI
+                                                          .remove(file);
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.delete_outline,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    );
+                                  } else if (controller
+                                      .pickedSvgImagesForUI.isNotEmpty) {
+                                    return SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: controller
+                                            .pickedSvgImagesForUI
+                                            .map((svg) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 15.0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadiusGeometry.circular(
+                                                      10),
+                                              child: SvgPicture.string(
+                                                svg,
+                                                height: 150,
+                                                width: 150,
+                                                fit: BoxFit.cover,
+                                                placeholderBuilder: (context) =>
+                                                    CircularProgressIndicator(),
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    );
+                                  } else {
+                                    return Text(
+                                      '',
+                                    );
+                                  }
+                                }),
+                              ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
-                  );
-                }
-                return Center(
-                  child: Text("No data found."),
+
+                          CustomButton(
+                            type: ButtonTypes.elevated,
+                            onPressed: () => controller.pickImages(),
+                            text: 'Add new Images',
+                          ),
+
+                          // property title
+                          CustomTextFormField(
+                            controller: controller.title,
+                            labelText: 'Property-Title',
+                            hintText: 'Enter title',
+                            validatorText: 'Please enter title',
+                          ),
+                          // about us
+                          CustomTextFormField(
+                            controller: controller.aboutUs,
+                            labelText: 'About-Us',
+                            hintText: 'Enter description',
+                            validatorText: 'Please enter description',
+                          ),
+                          // room title
+                          CustomTextFormField(
+                            controller: controller.roomTitle,
+                            labelText: 'Room-Title',
+                            hintText: 'Enter title',
+                            validatorText: 'Please enter room title',
+                          ),
+                          // room subtitle
+                          CustomTextFormField(
+                            controller: controller.roomSubtitle,
+                            labelText: 'Room-Subtitle',
+                            hintText: 'Enter subtitle',
+                            validatorText: 'Please enter subtitle',
+                          ),
+                          // property address
+                          CustomTextFormField(
+                            controller: controller.address,
+                            labelText: 'Address',
+                            hintText: 'Enter address',
+                            keyboardType: TextInputType.streetAddress,
+                            validatorText: 'Please enter address',
+                          ),
+                          // link
+                          CustomTextFormField(
+                            controller: controller.link,
+                            labelText: 'Location Link',
+                            hintText: 'Enter link',
+                            keyboardType: TextInputType.url,
+                            validatorText: 'Please enter link',
+                          ),
+                          // state
+                          DropdownButtonFormField(
+                            value: controller.state.text,
+                            hint: Text("Select State"),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            items: [
+                              DropdownMenuItem(
+                                value: "Gujarat",
+                                child: Text("Gujarat"),
+                              ),
+                              DropdownMenuItem(
+                                value: "Rajasthan",
+                                child: Text("Rajasthan"),
+                              ),
+                              DropdownMenuItem(
+                                value: "Uttar Pradesh",
+                                child: Text("Uttar Pradesh"),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              controller.state.text = value ?? "state null";
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please select state';
+                              }
+                              return null;
+                            },
+                          ),
+                          // city
+                          DropdownButtonFormField(
+                            hint: Text("Select City"),
+                            value: controller.city.text,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            items: [
+                              DropdownMenuItem(
+                                value: "Ahmedabad",
+                                child: Text("Ahmedabad"),
+                              ),
+                              DropdownMenuItem(
+                                value: "Surat",
+                                child: Text("Surat"),
+                              ),
+                              DropdownMenuItem(
+                                value: "Rajkot",
+                                child: Text("Rajkot"),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              controller.city.text = value ?? "city null";
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please select city';
+                              }
+                              return null;
+                            },
+                          ),
+                          // pin code
+                          CustomTextFormField(
+                            controller: controller.pincode,
+                            labelText: 'Pin code',
+                            hintText: 'Enter pin code eg.382210',
+                            keyboardType: TextInputType.number,
+                            validatorText: 'Please enter pin code',
+                          ),
+                          // location map
+                          CustomTextFormField(
+                            controller: controller.latitude,
+                            labelText: 'location latitude',
+                            hintText: 'eg. 22.9742°',
+                            validatorText: 'Please enter latitude',
+                          ),
+                          CustomTextFormField(
+                            controller: controller.longitude,
+                            labelText: 'location longitude',
+                            hintText: 'eg. 72.4971°',
+                            validatorText: 'Please enter longitude',
+                          ),
+                          // cancellation policy
+                          CustomTextFormField(
+                            controller: controller.cancellationPolicy,
+                            labelText: 'Cancellation-Policy',
+                            hintText: 'Enter policy',
+                            validatorText: 'Please enter policy',
+                          ),
+                          // house rules
+                          CustomTextFormField(
+                            controller: controller.houseRules,
+                            labelText: 'House-Rules',
+                            hintText: 'Enter house rules',
+                            validatorText: 'Please enter rules',
+                          ),
+                          // safety & property
+                          CustomTextFormField(
+                            controller: controller.safetynProperty,
+                            labelText: 'Safety-Property',
+                            hintText: 'Enter safety&property',
+                            validatorText: 'Please enter details',
+                          ),
+                          Obx(
+                            () => CustomButton(
+                              type: ButtonTypes.elevated,
+                              isLoading: controller.isLoading.value,
+                              onPressed: () {
+                                if (controller.editPropertyFormKey.currentState!
+                                    .validate()) {
+                                  if (controller.pickedImagesForUI.isNotEmpty) {
+                                    controller.uploadImagesToImageKit(
+                                        isAdd: false, propertyId: propertyId);
+                                  } else {
+                                    controller
+                                        .updateOwnerPropertyDetails(propertyId);
+                                  }
+                                }
+                              },
+                              width: Get.width,
+                              text: "Save",
+                              textStyle: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 );
-              },
-            ),
+              }
+              return Center(
+                child: Text("No data found."),
+              );
+            },
           ),
         ),
       ),
     );
   }
 
-  void deleteConfirmDialog(String fileUrl, bool deleteFromFirebase,String propertyId) {
+  void deleteConfirmDialog(String fileUrl, bool deleteFromFirebase, String propertyId) {
     Get.defaultDialog(
-        title: "Are you sure you want to delete this image?",
-        middleText: '',
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CustomButton(
-                isLoading: controller.isLoading.value,
-                type: ButtonTypes.elevated,
-                text: 'Cancel',
-                backgroundColor: AppColor.black,
-                onPressed: () => Get.back(),
-              ),
-              CustomButton(
-                isLoading: controller.isLoading.value,
-                type: ButtonTypes.elevated,
-                text: 'Yes',
-                backgroundColor: AppColor.black,
-                width: 90,
-                onPressed: () {
-                  if(deleteFromFirebase == true) {
-                    controller.deleteImageFromFirebase(fileUrl,propertyId);
-                    controller.ownerPropertyImagesFromFirebase.remove(fileUrl);
-                  }else{
-                    // controller.pickedImagesForUI.remove(file);
-                    // print(fileUrl);
-                    // controller.pickedImagesForUI.remove(fileUrl);
-                    // Get.back();
-                    // print("object");
-                  }
-                },
-              ),
-            ],
-          ),
-        ],
+      title: "Are you sure you want to delete this image?",
+      middleText: '',
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CustomButton(
+              isLoading: controller.isLoading.value,
+              type: ButtonTypes.elevated,
+              text: 'Cancel',
+              backgroundColor: AppColor.black,
+              onPressed: () => Get.back(),
+            ),
+            CustomButton(
+              isLoading: controller.isLoading.value,
+              type: ButtonTypes.elevated,
+              text: 'Yes',
+              backgroundColor: AppColor.black,
+              width: 90,
+              onPressed: () {
+                if (deleteFromFirebase == true) {
+                  controller.deleteImageFromFirebase(fileUrl, propertyId);
+                  controller.ownerPropertyImagesFromFirebase.remove(fileUrl);
+                } else {
+                  // controller.pickedImagesForUI.remove(file);
+                  // print(fileUrl);
+                  // controller.pickedImagesForUI.remove(fileUrl);
+                  // Get.back();
+                  // print("object");
+                }
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void deletePropertyDialog(String propertyId) {
+    Get.defaultDialog(
+      title: 'Are you sure you want to delete this property?',
+      middleText: '',
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CustomButton(
+              isLoading: controller.isLoading.value,
+              type: ButtonTypes.elevated,
+              text: 'Cancel',
+              backgroundColor: AppColor.black,
+              onPressed: () => Get.back(),
+            ),
+            CustomButton(
+              isLoading: controller.isLoading.value,
+              type: ButtonTypes.elevated,
+              text: 'Yes',
+              backgroundColor: AppColor.black,
+              width: 90,
+              onPressed: () => controller.deleteProperty(propertyId),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -543,7 +881,8 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
               ),
             ),
             StreamBuilder<dynamic>(
-              stream: controller.getAllPropertiesByOwnerId(FirebaseAuth.instance.currentUser!.uid.toString()),
+              stream: controller.getAllPropertiesByOwnerId(
+                  FirebaseAuth.instance.currentUser!.uid.toString()),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(
@@ -557,7 +896,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No documents found'));
+                  return Center(child: Text('No properties found'));
                 }
                 return Expanded(
                   child: ListView.builder(
@@ -579,7 +918,8 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                   ),
                                   child: CustomImage(
                                     height: 330,
-                                    path: snapshot.data[docId]['images']?.isNotEmpty
+                                    path: snapshot
+                                            .data[docId]['images']?.isNotEmpty
                                         ? snapshot.data[docId]['images'][0]
                                         : "assets/images/Image-Not-Found.jpg",
                                     fit: BoxFit.cover,
@@ -587,12 +927,24 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                   ),
                                 ),
                               ),
-                              CustomButton(
-                                type: ButtonTypes.icon,
-                                onPressed: (){},
-                                icon: IconButton(
-                                  onPressed: (){},
-                                  icon: Icon(Icons.more_vert,),
+                              Positioned(
+                                left: 280,
+                                child: PopupMenuButton(
+                                  iconColor: AppColor.white,
+                                  color: AppColor.white,
+                                  offset: Offset(0, 35),
+                                  onSelected: (value) =>
+                                      deletePropertyDialog(docId),
+                                  itemBuilder: (BuildContext context) {
+                                    return [
+                                      PopupMenuItem(
+                                        value: 'Delete',
+                                        child: Text(
+                                          "Delete",
+                                        ),
+                                      ),
+                                    ];
+                                  },
                                 ),
                               ),
                             ],
@@ -606,7 +958,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    snapshot.data[docId]["name"] ?? "name",
+                                    snapshot.data[docId]["name"] ?? "name null",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -620,7 +972,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                       ),
                                       Text(
                                         snapshot.data[docId]["rating"] ??
-                                            "rating",
+                                            "rating null",
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -630,7 +982,8 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                 ],
                               ),
                               Text(
-                                snapshot.data[docId]["distance"] ?? "distance",
+                                snapshot.data[docId]["distance"] ??
+                                    "distance null",
                                 style: TextStyle(
                                   color: AppColor.blueGrey,
                                   fontWeight: FontWeight.w600,
@@ -638,7 +991,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                               ),
                               Text(
                                 snapshot.data[docId]["available_dates"] ??
-                                    "availableDates",
+                                    "availableDates null",
                                 style: TextStyle(
                                   color: AppColor.blueGrey,
                                   fontWeight: FontWeight.w600,
@@ -648,7 +1001,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                 spacing: 3,
                                 children: [
                                   Text(
-                                    '₹${snapshot.data[docId]["price"] ?? "price"}',
+                                    '₹${snapshot.data[docId]["price"] ?? "price null"}',
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: AppColor.black,

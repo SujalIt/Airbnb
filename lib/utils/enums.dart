@@ -5,5 +5,5 @@ enum ButtonTypes{
 
 // dynamic images
 enum ImageTypes{
-  network, asset, file,
+  network, asset, file, noImage
 }

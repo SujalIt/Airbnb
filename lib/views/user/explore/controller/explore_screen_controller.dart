@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 
 class ExploreScreenController extends GetxController {
 
+  var profileController = Get.find<ProfileController>();
+
   Future<void> addPlace(
     String name,
     String rating,
@@ -126,98 +128,6 @@ class ExploreScreenController extends GetxController {
         );
       },
     );
-  }
-
-  void bottomSheetShowMore() {
-    Get.bottomSheet(
-      isScrollControlled: true,
-      backgroundColor: AppColor.white,
-      SizedBox(
-        height: 750,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomButton(
-                  type: ButtonTypes.icon,
-                  padding: EdgeInsetsGeometry.only(right: 28),
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: Icon(Icons.cancel_outlined,size: 27,),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                // About this place
-                Text(
-                  "About this place",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                _textShowMore(
-                  "Enjoy an elegant private room of 20 m2 in a renovated apartment of 160 m2 in the heart of the city center of Nantes in the Graslin district.",
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                _textShowMore(
-                  "The charm of the old renovated: ceiling height of 3.60 m, period parquet, black marble fireplace, comfortable bathroom.",
-                ),
-                SizedBox(
-                  height: 18,
-                ),
-                // The Space
-                Text(
-                  "The space",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Column(
-                  spacing: 10,
-                  children: [
-                    _textShowMore(
-                      "Push the door of this 1793 Haussmanian building. You will access a majestic hall and climb a wide stone staircase to the 3rd floor (no elevator).",
-                    ),
-                    _textShowMore(
-                      "The bedroom sleeps 2. If you’re traveling with 1 adult, the La Graslin room in the same unit can possibly accommodate it depending on the availability of this room. See the listing “La Graslin” on my profile.",
-                    ),
-                    _textShowMore(
-                      "You will be close to all the amenities of the city center: restaurants, cafes, the Graslin theater, grocery stores and all shops.",
-                    ),
-                    _textShowMore(
-                      "The central point of public transport in Nantes (tram, bus, busway) is a 2-minute walk from the building.",
-                    ),
-                    _textShowMore(
-                      "The train station is within 10 minutes by tram without change (3 stops to Commerce)For our friends who love soft mobility, a \"bicloo\" rental bike station is available at the foot of the building.",
-                    ),
-                    _textShowMore(
-                      "The apartment is ideally located for your sightseeing tours: it is located 10 minutes from Machines de l 'Ile et des nefs, 2 minutes from Pommeray passage, Place Royale, a 10-minute walk from the Château des Ducs.You'll get to the Beaujoire Exhibition Center in 20 minutes by tram.",
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _textShowMore(String text){
-    return Text(text);
   }
 
   void bottomSheetAmenities() {

@@ -4,5 +4,6 @@ class ExploreScreenBinding implements Bindings{
   @override
   void dependencies() {
     Get.lazyPut(()=>  ExploreScreenController());
+    Get.lazyPut(()=> ProfileController());
   }
 }

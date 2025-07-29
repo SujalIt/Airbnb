@@ -189,3 +189,22 @@ class AuthController extends GetxController {
     }
   }
 }
+
+// profile image
+// Obx(()=> ClipRRect(
+//     borderRadius: BorderRadiusGeometry.circular(80),
+//     child: CustomImage(
+//       path: controller.imageController.imageFile.value?.path ?? "",
+//       height: 100,
+//       width: 100,
+//       fit: BoxFit.cover,
+//     ),
+//   ),
+// ),
+// CustomButton(
+//   type: ButtonTypes.elevated,
+//   text: 'Select profile image',
+//   onPressed: ()=> controller.imageController.pickImage(),
+// ),
+
+// about us
