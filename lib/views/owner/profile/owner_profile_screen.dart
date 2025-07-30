@@ -72,24 +72,12 @@ class OwnerProfileScreen extends GetView<OwnerProfileController> {
                               ),
                             ],
                           ),
-                          Row(
-                            spacing: 9,
-                            children: [
-                              Text(
-                                snapshot.data['first_name'],
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                snapshot.data['last_name'],
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+                          Text(
+                            '${snapshot.data['first_name']} ${snapshot.data['last_name']}',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ],
                       );

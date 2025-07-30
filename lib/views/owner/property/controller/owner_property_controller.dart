@@ -178,8 +178,8 @@ class OwnerPropertyController extends GetxController {
         "pin_code": pincode.text,
         "location": [
           {
-            'latitude': latitude.text,
-            'longitude': longitude.text,
+            'latitude': latitude.value,
+            'longitude': longitude.value,
           }
         ],
         "cancellation_policy": cancellationPolicy.text,
@@ -274,8 +274,8 @@ class OwnerPropertyController extends GetxController {
           "pin_code": pincode.text,
           "location": [
             {
-              'latitude': latitude.text,
-              'longitude': longitude.text,
+              'latitude': latitude.value,
+              'longitude': longitude.value,
             }
           ],
           "cancellation_policy": cancellationPolicy.text,

@@ -59,6 +59,7 @@ class AuthController extends GetxController {
               "dob": selectedDate.value.toString(),
               "email": emailController.text,
               "password": passwordController.text,
+              "created_at":  FieldValue.serverTimestamp(),
             });
             SmartAlert.customSnackBar(
               title: 'Success',

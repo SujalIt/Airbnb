@@ -5,8 +5,6 @@ import 'package:http/http.dart' as http;
 
 class ExploreScreenController extends GetxController {
 
-  var profileController = Get.find<ProfileController>();
-
   Future<void> addPlace(
     String name,
     String rating,
@@ -53,6 +51,15 @@ class ExploreScreenController extends GetxController {
       }
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<dynamic> getPropertyOwnerDetails(String ownerId) async{
+    try{
+      var ownerDetails = await FirebaseFirestore.instance.collection('users').doc(ownerId).get();
+      return ownerDetails.data();
+    } on FirebaseFirestore catch (e){
+      SmartAlert.customSnackBar(title: 'Something went wrong', desc: 'Try again');
     }
   }
 
@@ -466,6 +473,7 @@ class ExploreScreenController extends GetxController {
   Widget _text(String text){
     return Text(text);
   }
+
 
   // imagekit.io website for image(places)
   Future<void> uploadImageToImageKit() async {

@@ -283,12 +283,14 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                   // location map
                   CustomTextFormField(
                     controller: controller.latitude,
+                    keyboardType: TextInputType.number,
                     labelText: 'location latitude',
                     hintText: 'eg. 22.9742°',
                     validatorText: 'Please enter latitude',
                   ),
                   CustomTextFormField(
                     controller: controller.longitude,
+                    keyboardType: TextInputType.number,
                     labelText: 'location longitude',
                     hintText: 'eg. 72.4971°',
                     validatorText: 'Please enter longitude',
@@ -349,7 +351,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
     controller.price.text = data['price'] ?? "price null";
     controller.ratings.text = data['rating'] ?? "rating null";
     controller.ownerPropertyImagesFromFirebase.clear();
-    controller.ownerPropertyImagesFromFirebase.addAll(List.from(data['images'])); // ensuring list<dynamic>
+    controller.ownerPropertyImagesFromFirebase.addAll(List.from(data['images'] ?? ["null"])); // ensuring list<dynamic>
 
     controller.title.text = data['title'] ?? "title null";
     controller.aboutUs.text = data['about_us'] ?? "about us null";
@@ -357,7 +359,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
     controller.state.text = data['state'] ?? 'state null';
     controller.city.text = data['city'] ?? "city null";
     controller.link.text = data['link'] ?? "link null";
-    controller.pincode.text = data['pin_code'];
+    controller.pincode.text = data['pin_code'] ?? 'pincode null';
     controller.cancellationPolicy.text = data['cancellation_policy'] ?? "cancellation policy null";
     controller.houseRules.text = data['house_rules'] ?? "house rules null";
     controller.safetynProperty.text = data['safety_property'] ?? "safety null";
@@ -396,8 +398,8 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                     itemBuilder: (BuildContext context, int index) {
                       controller.roomTitle.text = snapshot.data['room'][index]['title'] ?? "room title null";
                       controller.roomSubtitle.text = snapshot.data['room'][index]['subtitle'] ?? "room subtitle null";
-                      controller.latitude.text = snapshot.data['location'][index]['latitude'] ?? "latitude null";
-                      controller.longitude.text = snapshot.data['location'][index]['longitude'] ?? "longitude null";
+                      // controller.latitude.text = snapshot.data['location'][index]['latitude'] ?? "latitude null";
+                      // controller.longitude.text = snapshot.data['location'][index]['longitude'] ?? "longitude null";
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 15,
@@ -718,12 +720,14 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                           CustomTextFormField(
                             controller: controller.latitude,
                             labelText: 'location latitude',
+                            keyboardType: TextInputType.number,
                             hintText: 'eg. 22.9742°',
                             validatorText: 'Please enter latitude',
                           ),
                           CustomTextFormField(
                             controller: controller.longitude,
                             labelText: 'location longitude',
+                            keyboardType: TextInputType.number,
                             hintText: 'eg. 72.4971°',
                             validatorText: 'Please enter longitude',
                           ),
