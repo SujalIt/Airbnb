@@ -19,7 +19,6 @@ class CustomButton extends StatelessWidget {
   final ButtonStyle? iconButtonStyle;
   final Widget? icon;
 
-
   const CustomButton({
     super.key,
     required this.type,

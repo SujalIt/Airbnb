@@ -274,8 +274,8 @@ class OwnerPropertyController extends GetxController {
           "pin_code": pincode.text,
           "location": [
             {
-              'latitude': latitude.value,
-              'longitude': longitude.value,
+              'latitude': double.tryParse(latitude.text),
+              'longitude': double.tryParse(longitude.text),
             }
           ],
           "cancellation_policy": cancellationPolicy.text,

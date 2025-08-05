@@ -331,25 +331,26 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                                   height: 50,
                                                   child: CircleAvatar(
                                                     backgroundColor: AppColor.black,
-                                                    child: Text(
-                                                      ownerData.data['first_name'][0],
-                                                      style: TextStyle(
-                                                        color: AppColor.white,
-                                                        fontSize: 23,
-                                                      ),
-                                                    ),
+                                                    child: ownerData.data['profile_image'] == null
+                                                      ? Text(
+                                                          ownerData.data['first_name'][0],
+                                                          style: TextStyle(
+                                                            color: AppColor.white,
+                                                            fontSize: 23,
+                                                          ),
+                                                        )
+                                                      : CustomImage(
+                                                          clipBehaviour: Clip.antiAlias,
+                                                          boxDecoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(30),
+                                                          ),
+                                                          width: 50,
+                                                          height: 50,
+                                                          path: ownerData.data['profile_image'],
+                                                        ),
                                                   ),
                                                 ),
-                                                // CustomImage(
-                                                //   clipBehaviour: Clip.antiAlias,
-                                                //   boxDecoration: BoxDecoration(
-                                                //     borderRadius:
-                                                //     BorderRadius.circular(30),
-                                                //   ),
-                                                //   width: 50,
-                                                //   height: 50,
-                                                //   path: "https://w0.peakpx.com/wallpaper/107/46/HD-wallpaper-best-pose-for-profile-for-men-profile-pose-men-best-glasses.jpg",
-                                                // ),
+
                                               ],
                                             ),
                                             Text(

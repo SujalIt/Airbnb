@@ -283,14 +283,14 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                   // location map
                   CustomTextFormField(
                     controller: controller.latitude,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                     labelText: 'location latitude',
                     hintText: 'eg. 22.9742°',
                     validatorText: 'Please enter latitude',
                   ),
                   CustomTextFormField(
                     controller: controller.longitude,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                     labelText: 'location longitude',
                     hintText: 'eg. 72.4971°',
                     validatorText: 'Please enter longitude',
@@ -398,8 +398,8 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                     itemBuilder: (BuildContext context, int index) {
                       controller.roomTitle.text = snapshot.data['room'][index]['title'] ?? "room title null";
                       controller.roomSubtitle.text = snapshot.data['room'][index]['subtitle'] ?? "room subtitle null";
-                      // controller.latitude.text = snapshot.data['location'][index]['latitude'] ?? "latitude null";
-                      // controller.longitude.text = snapshot.data['location'][index]['longitude'] ?? "longitude null";
+                      controller.latitude.text = snapshot.data['location'][index]['latitude'].toString();
+                      controller.longitude.text = snapshot.data['location'][index]['longitude'].toString();
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 15,
@@ -720,14 +720,14 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                           CustomTextFormField(
                             controller: controller.latitude,
                             labelText: 'location latitude',
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.numberWithOptions(decimal: true),
                             hintText: 'eg. 22.9742°',
                             validatorText: 'Please enter latitude',
                           ),
                           CustomTextFormField(
                             controller: controller.longitude,
                             labelText: 'location longitude',
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.numberWithOptions(decimal: true),
                             hintText: 'eg. 72.4971°',
                             validatorText: 'Please enter longitude',
                           ),

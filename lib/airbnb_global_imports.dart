@@ -59,8 +59,10 @@ export 'package:airbnb/widgets/custom-image/custom_image.dart';
 export 'package:airbnb/widgets/alert/smart_alert.dart';
 export 'package:airbnb/widgets/custom_text_form_field.dart';
 
-// Screens
+// services
+export 'package:airbnb/service/imagekit_api.dart';
 
+// Screens
 // Splash Screen
 export 'package:airbnb/views/splash/splash_screen.dart';
 export 'package:airbnb/views/splash/splash_controller.dart';
