@@ -73,14 +73,14 @@ class AuthController extends GetxController {
                 .doc(res.user?.uid)
                 .delete();
             SmartAlert.customSnackBar(
-              title: 'Error!',
+              title: 'Error! $e',
               desc: 'Something went wrong.',
             );
           }
         }
       } on FirebaseAuthException catch (e) {
         SmartAlert.customSnackBar(
-          title: 'Error!',
+          title: 'Error! $e',
           desc: 'Something went wrong.',
         );
       } finally {
@@ -129,14 +129,14 @@ class AuthController extends GetxController {
           FirebaseFirestore.instance.collection("users").doc(user.uid).delete();
           SmartAlert.customSnackBar(
             title: "Sign-in failed!",
-            desc: "Something went wrong.",
+            desc: "Something went wrong. $e",
           );
         }
       }
     } on FirebaseException catch (e) {
       SmartAlert.customSnackBar(
         title: 'Sign-in failed!',
-        desc: 'Something went wrong.',
+        desc: 'Something went wrong. $e',
       );
     } finally {
       isLoadingGoogleSignin.value = false;
@@ -161,7 +161,7 @@ class AuthController extends GetxController {
       } on FirebaseAuthException catch (e) {
         SmartAlert.customSnackBar(
           title: 'Invalid username or password!',
-          desc: "Something went wrong.",
+          desc: "Something went wrong. $e",
         );
       } finally {
         isLoading.value = false;
@@ -181,7 +181,7 @@ class AuthController extends GetxController {
         Get.offNamed(Routes.login);
       } on FirebaseAuthException catch (e) {
         SmartAlert.customSnackBar(
-          title: 'Error!',
+          title: 'Error! $e',
           desc: 'Something went wrong.',
         );
       } finally {
@@ -190,22 +190,3 @@ class AuthController extends GetxController {
     }
   }
 }
-
-// profile image
-// Obx(()=> ClipRRect(
-//     borderRadius: BorderRadiusGeometry.circular(80),
-//     child: CustomImage(
-//       path: controller.imageController.imageFile.value?.path ?? "",
-//       height: 100,
-//       width: 100,
-//       fit: BoxFit.cover,
-//     ),
-//   ),
-// ),
-// CustomButton(
-//   type: ButtonTypes.elevated,
-//   text: 'Select profile image',
-//   onPressed: ()=> controller.imageController.pickImage(),
-// ),
-
-// about us

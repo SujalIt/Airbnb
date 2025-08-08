@@ -1,5 +1,4 @@
 import 'package:airbnb/airbnb_global_imports.dart';
-import 'package:flutter/services.dart';
 
 class CustomListTile extends StatelessWidget{
 

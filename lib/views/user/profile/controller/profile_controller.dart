@@ -49,7 +49,7 @@ class ProfileController extends GetxController {
       return userId.data();
     } on FirebaseFirestore catch (e) {
       SmartAlert.customSnackBar(
-        title: 'Error!',
+        title: 'Error! $e',
         desc: 'Something went wrong.',
       );
     }
@@ -87,7 +87,7 @@ class ProfileController extends GetxController {
         Get.back();
       } on FirebaseFirestore catch (e) {
         SmartAlert.customSnackBar(
-          title: 'Error!',
+          title: 'Error! $e',
           desc: 'Something went wrong.',
         );
       } finally {

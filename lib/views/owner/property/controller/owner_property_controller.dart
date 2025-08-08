@@ -1,11 +1,14 @@
 import 'dart:io';
 import 'package:airbnb/airbnb_global_imports.dart';
 import 'package:flutter/foundation.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:http/http.dart' as http;
 
 class OwnerPropertyController extends GetxController {
 
   var isLoading = false.obs;
+
+  HtmlEditorController aboutUs = HtmlEditorController();
 
   GlobalKey<FormState> addPropertyFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> editPropertyFormKey = GlobalKey<FormState>();
@@ -26,7 +29,6 @@ class OwnerPropertyController extends GetxController {
   TextEditingController pincode = TextEditingController();
   TextEditingController latitude = TextEditingController();
   TextEditingController longitude = TextEditingController();
-  TextEditingController aboutUs = TextEditingController();
   TextEditingController cancellationPolicy = TextEditingController();
   TextEditingController houseRules = TextEditingController();
   TextEditingController safetynProperty = TextEditingController();
@@ -150,6 +152,7 @@ class OwnerPropertyController extends GetxController {
   }
 
   Future<void> addProperty() async {
+    var aboutUsData = await aboutUs.getText();
     try {
       isLoading.value = true;
       await FirebaseFirestore.instance
@@ -164,7 +167,6 @@ class OwnerPropertyController extends GetxController {
         "uuid": FirebaseAuth.instance.currentUser!.uid.toString(),
 
         "title": title.text,
-        "about_us": aboutUs.text,
         "room": [
           {
           'title': roomTitle.text,
@@ -172,14 +174,17 @@ class OwnerPropertyController extends GetxController {
           },
         ],
         "address": address.text,
+
+        "aboutUs": aboutUsData,
+
         "link": link.text,
         "state": state.text,
         "city": city.text,
         "pin_code": pincode.text,
         "location": [
           {
-            'latitude': latitude.value,
-            'longitude': longitude.value,
+            'latitude': latitude.text,
+            'longitude': longitude.text,
           }
         ],
         "cancellation_policy": cancellationPolicy.text,
@@ -194,6 +199,7 @@ class OwnerPropertyController extends GetxController {
       Get.back();
     } catch (e) {
       SmartAlert.customSnackBar(title: "Failed..Try again", desc: '$e');
+      print(e);
     } finally {
       isLoading.value = false;
     }
@@ -245,6 +251,7 @@ class OwnerPropertyController extends GetxController {
 
   // update property details method
   Future<void> updateOwnerPropertyDetails(String propertyId) async {
+    var aboutUsEditedData = await aboutUs.getText();
     try {
       isLoading.value = true;
       await FirebaseFirestore.instance
@@ -258,9 +265,8 @@ class OwnerPropertyController extends GetxController {
           "distance": distance.text,
           "available_dates": availableDate.text,
           "rating": ratings.text,
-
           "title": title.text,
-          "about_us": aboutUs.text,
+          'about_us': aboutUsEditedData,
           "room": [
             {
               'title': roomTitle.text,
@@ -320,7 +326,7 @@ class OwnerPropertyController extends GetxController {
       await FirebaseFirestore.instance.collection('places').doc(docId).delete();
       Get.back();
     } on FirebaseFirestore catch (e){
-      SmartAlert.customSnackBar(title: 'Something wrong.', desc: 'Please try again');
+      SmartAlert.customSnackBar(title: 'Something wrong. $e', desc: 'Please try again');
       Get.back();
     }
   }

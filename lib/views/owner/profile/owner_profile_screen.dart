@@ -33,37 +33,29 @@ class OwnerProfileScreen extends GetView<OwnerProfileController> {
                   ],
                 ),
                 // image
-                Obx(()=> CircleAvatar(
-                      radius: 40,
-                      backgroundColor: AppColor.black,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
-                        child: controller.imageController.imageFile.value != null
-                            ? CustomImage(
+                Obx(()=> ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: controller.imageController.imageFile.value != null
+                      ? CustomImage(
                           fit: BoxFit.cover,
                           height: 80,
                           width: 80,
                           path: controller.imageController.imageFile.value!.path,
                         )
-                            : imageUrlFromDatabaseForUI == null
-                              ? Text(
-                                  controller.fnameController.text.isNotEmpty ? controller.fnameController.text[0] : 'null',
-                                  style: TextStyle(
-                                    color: AppColor.white,
-                                    fontSize: 30,
-                                  ),
-                                )
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(40),
-                                  child: CustomImage(
-                                    fit: BoxFit.cover,
-                                    height: 80,
-                                    width: 80,
-                                    path: imageUrlFromDatabaseForUI,
-                                  ),
+                      : imageUrlFromDatabaseForUI == null
+                        ? CustomImage(
+                            path: 'assets/images/profile_placeholder.png',
+                            fit: BoxFit.cover,
+                            height: 80,
+                            width: 80,
+                          )
+                        : CustomImage(
+                          fit: BoxFit.cover,
+                          height: 80,
+                          width: 80,
+                          path: imageUrlFromDatabaseForUI,
                         ),
-                      ),
-                    ),
+                ),
                 ),
                 InkWell(
                   onTap: ()=> controller.imageController.pickImage(),
@@ -149,8 +141,8 @@ class OwnerProfileScreen extends GetView<OwnerProfileController> {
       backgroundColor: AppColor.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        child: FutureBuilder<dynamic>(
-          future: controller.fetchOwnerDetails(),
+        child: StreamBuilder<dynamic>(
+          stream: controller.ownerDetailsStream(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               controller.fnameController.text = snapshot.data['first_name'];
@@ -161,64 +153,58 @@ class OwnerProfileScreen extends GetView<OwnerProfileController> {
                 spacing: 15,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  StreamBuilder(
-                    stream: controller.ownerDetailsStream(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
-                      if (!snapshot.hasData) {
-                        return CircularProgressIndicator();
-                      }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 2,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 2,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                radius: 35,
-                                backgroundColor: AppColor.black,
-                                child: Text(
-                                  snapshot.data['first_name'][0],
-                                  style: TextStyle(
-                                    color: AppColor.white,
-                                    fontSize: context.screenWidth * 0.06,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(40),
+                            child: snapshot.data['profile_image'] == null
+                                ? CustomImage(
+                                    path: 'assets/images/profile_placeholder.png',
+                                    fit: BoxFit.cover,
+                                    height: 80,
+                                    width: 80,
+                                  )
+                                : CustomImage(
+                                    fit: BoxFit.cover,
+                                    height: 80,
+                                    width: 80,
+                                    path: snapshot.data['profile_image'],
                                   ),
-                                ),
-                              ),
-                              CustomButton(
-                                type: ButtonTypes.outlined,
-                                onPressed: () {
-                                  Get.offAllNamed(Routes.master);
-                                  GoogleSignIn().signOut();
-                                  FirebaseAuth.instance.signOut();
-                                },
-                                outlineButtonStyle:
-                                OutlinedButton.styleFrom(
-                                  side: BorderSide(
-                                    color: AppColor.pink,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                text: "Logout",
-                                textStyle: TextStyle(
-                                  color: AppColor.pink,
-                                ),
-                              ),
-                            ],
                           ),
-                          Text(
-                            '${snapshot.data['first_name']} ${snapshot.data['last_name']}',
-                            style: TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w500,
+                          CustomButton(
+                            type: ButtonTypes.outlined,
+                            onPressed: () {
+                              Get.offAllNamed(Routes.master);
+                              GoogleSignIn().signOut();
+                              FirebaseAuth.instance.signOut();
+                            },
+                            outlineButtonStyle:
+                            OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                color: AppColor.pink,
+                                style: BorderStyle.solid,
+                              ),
+                            ),
+                            text: "Logout",
+                            textStyle: TextStyle(
+                              color: AppColor.pink,
                             ),
                           ),
                         ],
-                      );
-                    },
+                      ),
+                      Text(
+                        '${snapshot.data['first_name']} ${snapshot.data['last_name']}',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                   Divider(),
                   Text(

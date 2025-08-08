@@ -14,6 +14,6 @@ class Routes{
   static const messageNotification = '/message-notification';
   static const personalInformation = '/personal-information';
 
- // admin routes
+  // admin routes
   static const owner = '/owner';
 }

@@ -2,7 +2,6 @@ import 'package:airbnb/airbnb_global_imports.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   // Firebase Init
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -1,7 +1,9 @@
 import 'package:airbnb/airbnb_global_imports.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 
 class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
   const OwnerPropertyScreen({super.key});
+
 
   // add new property form
   void addNewPropertyForm() {
@@ -174,11 +176,18 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                     validatorText: 'Please enter title',
                   ),
                   // about us
-                  CustomTextFormField(
+                  HtmlEditor(
                     controller: controller.aboutUs,
-                    labelText: 'About-Us',
-                    hintText: 'Enter description',
-                    validatorText: 'Please enter description',
+                    htmlEditorOptions: HtmlEditorOptions(
+                      hint: 'Enter about your property',
+                      autoAdjustHeight: true,
+                    ),
+                    otherOptions: OtherOptions(
+                      height: 475,
+                    ),
+                    htmlToolbarOptions: HtmlToolbarOptions(
+                      toolbarType: ToolbarType.nativeGrid,
+                    ),
                   ),
                   // room title
                   CustomTextFormField(
@@ -354,7 +363,9 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
     controller.ownerPropertyImagesFromFirebase.addAll(List.from(data['images'] ?? ["null"])); // ensuring list<dynamic>
 
     controller.title.text = data['title'] ?? "title null";
-    controller.aboutUs.text = data['about_us'] ?? "about us null";
+    Future.delayed(Duration(seconds: 2),(){
+      controller.aboutUs.setText(data['about_us']);
+    });
     controller.address.text = data['address'] ?? 'address null';
     controller.state.text = data['state'] ?? 'state null';
     controller.city.text = data['city'] ?? "city null";
@@ -487,14 +498,12 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                             top: 55,
                                             left: 50,
                                             child: CustomButton(
-                                              iconButtonStyle:
-                                                  IconButton.styleFrom(
-                                                      backgroundColor:
-                                                          AppColor.red),
+                                              iconButtonStyle: IconButton.styleFrom(backgroundColor: AppColor.red),
                                               type: ButtonTypes.icon,
                                               onPressed: () {
                                                 deleteConfirmDialog(
-                                                    file, true, propertyId);
+                                                  file, true, propertyId,
+                                                );
                                               },
                                               icon: Icon(
                                                 Icons.delete_outline,
@@ -558,8 +567,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                         }).toList(),
                                       ),
                                     );
-                                  } else if (controller
-                                      .pickedSvgImagesForUI.isNotEmpty) {
+                                  } else if (controller.pickedSvgImagesForUI.isNotEmpty) {
                                     return SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
@@ -570,9 +578,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                             padding: const EdgeInsets.only(
                                                 right: 15.0),
                                             child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadiusGeometry.circular(
-                                                      10),
+                                              borderRadius: BorderRadiusGeometry.circular(10),
                                               child: SvgPicture.string(
                                                 svg,
                                                 height: 150,
@@ -610,11 +616,18 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                             validatorText: 'Please enter title',
                           ),
                           // about us
-                          CustomTextFormField(
+                          HtmlEditor(
                             controller: controller.aboutUs,
-                            labelText: 'About-Us',
-                            hintText: 'Enter description',
-                            validatorText: 'Please enter description',
+                            htmlEditorOptions: HtmlEditorOptions(
+                              hint: 'Edit your text here',
+                              autoAdjustHeight: true,
+                            ),
+                            otherOptions: OtherOptions(
+                              height: 475,
+                            ),
+                            htmlToolbarOptions: HtmlToolbarOptions(
+                              toolbarType: ToolbarType.nativeGrid,
+                            ),
                           ),
                           // room title
                           CustomTextFormField(
@@ -757,14 +770,11 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                               type: ButtonTypes.elevated,
                               isLoading: controller.isLoading.value,
                               onPressed: () {
-                                if (controller.editPropertyFormKey.currentState!
-                                    .validate()) {
+                                if (controller.editPropertyFormKey.currentState!.validate()) {
                                   if (controller.pickedImagesForUI.isNotEmpty) {
-                                    controller.uploadImagesToImageKit(
-                                        isAdd: false, propertyId: propertyId);
+                                    controller.uploadImagesToImageKit(isAdd: false, propertyId: propertyId,);
                                   } else {
-                                    controller
-                                        .updateOwnerPropertyDetails(propertyId);
+                                    controller.updateOwnerPropertyDetails(propertyId);
                                   }
                                 }
                               },

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:airbnb/airbnb_global_imports.dart';
 
 class OwnerProfileController extends GetxController {
@@ -36,22 +34,6 @@ class OwnerProfileController extends GetxController {
           desc: 'You are not eligible ... you must be 18 year old.',
         );
       }
-    }
-  }
-
-  // for edit form
-  Future<dynamic> fetchOwnerDetails() async {
-    try {
-      var userId = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .get();
-      return userId.data();
-    } on FirebaseFirestore catch (e) {
-      SmartAlert.customSnackBar(
-        title: 'Error!',
-        desc: 'Something went wrong.',
-      );
     }
   }
 
@@ -95,7 +77,7 @@ class OwnerProfileController extends GetxController {
         Get.back();
       } on FirebaseFirestore catch (e) {
         SmartAlert.customSnackBar(
-          title: 'Error!',
+          title: 'Error! $e',
           desc: 'Something went wrong.',
         );
       } finally {
