@@ -3,38 +3,25 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 class ImagePickerController extends GetxController {
+
+  // for single image
   var imageFile = Rx<File?>(null);
   var imageBytes = Rx<Uint8List?>(null);
   var svgString = Rx<String?>(null);
 
   // for multiple images
-  // var multipleImages = [].obs;
-  // var svgStrings = [].obs;
-  //
+  var pickedImagesForUI = [].obs;
+  var pickedSvgImagesForUI = [].obs;
 
-  Future<void> pickImage() async {
-    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
-      final picker = ImagePicker();
+  // var multiplePickedFiles = []; // variable make outside -> for using in uploadImage method
+
+  Future<void> pickImage({required bool singleImage}) async {
+
+    final picker = ImagePicker();
+
+    if(singleImage){
+      // single image
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-      // multiple images code
-      // final multiplePickedFiles = await picker.pickMultiImage();
-      //
-      // if(multiplePickedFiles != null && multiplePickedFiles.isNotEmpty){
-      //   multipleImages.clear();
-      //   svgStrings.clear();
-      //   for(var file in multiplePickedFiles){
-      //     if(file.path.toLowerCase().endsWith('.svg')){
-      //       svgStrings.add(await File(file.path).readAsString());
-      //     }else{
-      //       multipleImages.add(File(file.path));
-      //     }
-      //   }
-      // }
-
-      //
-
-      // mobile
       if (pickedFile != null) {
         if (pickedFile.path.toLowerCase().endsWith('.svg')) {
           svgString.value = await File(pickedFile.path).readAsString();
@@ -43,28 +30,17 @@ class ImagePickerController extends GetxController {
           svgString.value = null;
         }
       }
-    } else {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['svg', 'jpg', 'jpeg', 'png'],
-      );
-
-      // web
-      if (result != null) {
-        if (kIsWeb) {
-          if (result.files.single.extension == 'svg') {
-            svgString.value = utf8.decode(result.files.single.bytes!);
-          } else {
-            imageBytes.value = result.files.single.bytes;
-            svgString.value = null;
-          }
-        } else {
-          if (result.files.single.extension == 'svg') {
-            svgString.value =
-                await File(result.files.single.path ?? '').readAsString();
-          } else {
-            imageFile.value = File(result.files.single.path ?? '');
-            svgString.value = null;
+    }else{
+      // multiple images code
+      var multiplePickedFiles = await picker.pickMultiImage();
+      if(multiplePickedFiles.isNotEmpty){
+        pickedImagesForUI.clear();
+        pickedSvgImagesForUI.clear();
+        for(var file in multiplePickedFiles){
+          if(file.path.toLowerCase().endsWith('.svg')){
+            pickedSvgImagesForUI.add(await File(file.path).readAsString());
+          }else{
+            pickedImagesForUI.add(File(file.path));
           }
         }
       }

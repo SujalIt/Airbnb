@@ -1,15 +1,11 @@
-import 'dart:io';
 import 'package:airbnb/airbnb_global_imports.dart';
-import 'package:flutter/foundation.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:http/http.dart' as http;
 
 class OwnerPropertyController extends GetxController {
 
   var isLoading = false.obs;
 
   HtmlEditorController aboutUs = HtmlEditorController();
-
   GlobalKey<FormState> addPropertyFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> editPropertyFormKey = GlobalKey<FormState>();
 
@@ -18,7 +14,6 @@ class OwnerPropertyController extends GetxController {
   TextEditingController availableDate = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController ratings = TextEditingController();
-
   TextEditingController title = TextEditingController();
   TextEditingController roomTitle = TextEditingController();
   TextEditingController roomSubtitle = TextEditingController();
@@ -33,28 +28,8 @@ class OwnerPropertyController extends GetxController {
   TextEditingController houseRules = TextEditingController();
   TextEditingController safetynProperty = TextEditingController();
 
-  // for multiple images
-  var pickedImagesForUI = [].obs;
-  var pickedSvgImagesForUI = [].obs;
-  var multiplePickedFiles = []; // variable make outside -> for using in uploadImage method
-
-  Future<void> pickImages() async {
-    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
-      final picker = ImagePicker();
-
-      multiplePickedFiles = await picker.pickMultiImage(); // when no images selected then old selected images will also clear from list ... manage this
-
-      if (multiplePickedFiles.isNotEmpty) {
-        for (var file in multiplePickedFiles) {
-          if (file.path.toLowerCase().endsWith('.svg')) {
-            pickedSvgImagesForUI.add(await File(file.path).readAsString());
-          } else {
-            pickedImagesForUI.add(File(file.path));
-          }
-        }
-      }
-    }
-  }
+  // custom image picker
+  var imageController = Get.find<ImagePickerController>();
 
   void clearAddFormFields(){
     name.clear();
@@ -62,8 +37,8 @@ class OwnerPropertyController extends GetxController {
     availableDate.clear();
     price.clear();
     ratings.clear();
-    pickedImagesForUI.clear();
-    multiplePickedFiles.clear();
+    imageController.pickedImagesForUI.clear();
+    // imageController.multiplePickedFiles.clear();
 
     title.clear();
     aboutUs.clear();
@@ -81,91 +56,25 @@ class OwnerPropertyController extends GetxController {
     safetynProperty.clear();
   }
 
-  // selected images url ..to upload in firebase
-  var imageUrlsToUpload = [].obs;
-
-  // upload image to imagekit , add property in firebase and edit property update in firebase
-  Future<void> uploadImagesToImageKit({required bool isAdd,String? propertyId}) async {
-    try {
-      isLoading.value = true;
-      imageUrlsToUpload.clear();
-      if (multiplePickedFiles.isEmpty) {
-        Get.snackbar(
-          "No images selected",
-          'Please select at least one image',
-          backgroundColor: AppColor.pink,
-        );
-        return;
-      }
-      // ImageKit API details
-      String apiUrl = "https://upload.imagekit.io/api/v1/files/upload";
-      String privateApiKey = "private_FanKyRKRVNogDW4OhBxa8L6e6/s=:";
-      String authHeader = "Basic ${base64Encode(utf8.encode('$privateApiKey:'))}";
-
-      var response;
-      for (var pickedFile in multiplePickedFiles) {
-        Uint8List? imageBytes;
-        String fileName = pickedFile.name;
-
-        if (kIsWeb) {
-          imageBytes = await pickedFile.readAsBytes();
-        } else {
-          File imageFile = File(pickedFile.path);
-          imageBytes = await imageFile.readAsBytes();
-        }
-
-        var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
-        request.headers["Authorization"] = authHeader;
-
-        request.fields["fileName"] = fileName;
-        request.fields["folder"] = "/dummy/test/";
-
-        request.files.add(http.MultipartFile.fromBytes(
-          "file",
-          imageBytes!,
-          filename: fileName,
-        ));
-
-        response = await request.send();
-        String responseData = await response.stream.bytesToString();
-        var jsonResponse = jsonDecode(responseData);
-        imageUrlsToUpload.add(jsonResponse['url']);
-      }
-
-      if (response.statusCode == 200) {
-        if (isAdd == true) {
-          addProperty();
-        }
-        updateOwnerPropertyDetails(propertyId!);
-      } else {
-        SmartAlert.customSnackBar(
-          title: "Something went wrong",
-          desc: 'Error...Try again!',
-        );
-      }
-      Get.back();
-    } catch (e) {
-      SmartAlert.customSnackBar(title: 'Error..Please try again', desc: '$e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
   Future<void> addProperty() async {
-    var aboutUsData = await aboutUs.getText();
+    List<String>? imageUrls;
     try {
       isLoading.value = true;
+      if(imageController.pickedImagesForUI.isNotEmpty){
+        imageUrls = await ImageKitApi.uploadImageToImageKit(imageFiles: imageController.pickedImagesForUI);
+      }
+      var aboutUsData = await aboutUs.getText();
+
       await FirebaseFirestore.instance
           .collection("places")
           .add({
         "name": name.text,
         "price": price.text,
-        "images": imageUrlsToUpload,
+        "images": imageUrls,
         "distance": distance.text,
         "available_dates": availableDate.text,
         "rating": ratings.text,
         "uuid": FirebaseAuth.instance.currentUser!.uid.toString(),
-
         "title": title.text,
         "room": [
           {
@@ -174,9 +83,7 @@ class OwnerPropertyController extends GetxController {
           },
         ],
         "address": address.text,
-
-        "aboutUs": aboutUsData,
-
+        "about_us": aboutUsData,
         "link": link.text,
         "state": state.text,
         "city": city.text,
@@ -196,10 +103,9 @@ class OwnerPropertyController extends GetxController {
         title: 'Property added Successfully',
         desc: "Now you can see your properties.",
       );
-      Get.back();
+      Get.back(); // back is no working
     } catch (e) {
       SmartAlert.customSnackBar(title: "Failed..Try again", desc: '$e');
-      print(e);
     } finally {
       isLoading.value = false;
     }
@@ -251,9 +157,13 @@ class OwnerPropertyController extends GetxController {
 
   // update property details method
   Future<void> updateOwnerPropertyDetails(String propertyId) async {
-    var aboutUsEditedData = await aboutUs.getText();
+    List<String>? imageUrls;
     try {
       isLoading.value = true;
+      if(imageController.pickedImagesForUI.isNotEmpty){
+        imageUrls = await ImageKitApi.uploadImageToImageKit(imageFiles: imageController.pickedImagesForUI);
+      }
+      var aboutUsEditedData = await aboutUs.getText();
       await FirebaseFirestore.instance
           .collection('places')
           .doc(propertyId)
@@ -261,7 +171,7 @@ class OwnerPropertyController extends GetxController {
         {
           "name": name.text,
           "price": price.text,
-          "images": FieldValue.arrayUnion(imageUrlsToUpload),
+          "images": FieldValue.arrayUnion(imageUrls ?? []),
           "distance": distance.text,
           "available_dates": availableDate.text,
           "rating": ratings.text,

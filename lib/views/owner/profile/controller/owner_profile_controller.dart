@@ -59,7 +59,8 @@ class OwnerProfileController extends GetxController {
         isLoading.value = true;
         String? profileImageUrl;
         if(image != null){
-          profileImageUrl = await ImageKitApi().uploadImageToImageKit(image);
+          var profileImageUrlArray = await ImageKitApi.uploadImageToImageKit(singleFile: image);
+          profileImageUrl = profileImageUrlArray?[0];
         }
 
         await FirebaseFirestore.instance

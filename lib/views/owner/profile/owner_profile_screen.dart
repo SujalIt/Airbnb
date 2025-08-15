@@ -58,7 +58,7 @@ class OwnerProfileScreen extends GetView<OwnerProfileController> {
                 ),
                 ),
                 InkWell(
-                  onTap: ()=> controller.imageController.pickImage(),
+                  onTap: ()=> controller.imageController.pickImage(singleImage: true),
                   child: Text(
                     "edit photo",
                     style: TextStyle(

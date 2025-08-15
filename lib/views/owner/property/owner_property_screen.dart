@@ -85,19 +85,17 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Obx(() {
-                        if (controller.pickedImagesForUI.isNotEmpty) {
+                        if (controller.imageController.pickedImagesForUI.isNotEmpty) {
                           return SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              children:
-                                  controller.pickedImagesForUI.map((file) {
+                              children: controller.imageController.pickedImagesForUI.map((file) {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 15.0),
                                   child: Stack(children: [
                                     // custom image(this is for single image) not use ...
                                     ClipRRect(
-                                      borderRadius:
-                                          BorderRadiusGeometry.circular(10),
+                                      borderRadius: BorderRadiusGeometry.circular(10),
                                       child: Image.file(
                                         file,
                                         height: 150,
@@ -110,11 +108,11 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                       left: 50,
                                       child: CustomButton(
                                         iconButtonStyle: IconButton.styleFrom(
-                                            backgroundColor: AppColor.red),
+                                          backgroundColor: AppColor.red,
+                                        ),
                                         type: ButtonTypes.icon,
                                         onPressed: () {
-                                          controller.pickedImagesForUI
-                                              .remove(file);
+                                          controller.imageController.pickedImagesForUI.remove(file);
                                         },
                                         icon: Icon(
                                           Icons.delete_outline,
@@ -126,12 +124,12 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                               }).toList(),
                             ),
                           );
-                        } else if (controller.pickedSvgImagesForUI.isNotEmpty) {
+                        } else if (controller.imageController.pickedSvgImagesForUI.isNotEmpty) {
                           return SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children:
-                                  controller.pickedSvgImagesForUI.map((svg) {
+                                  controller.imageController.pickedSvgImagesForUI.map((svg) {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 15.0),
                                   child: ClipRRect(
@@ -162,7 +160,9 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                       SizedBox(height: 20),
                       CustomButton(
                         type: ButtonTypes.elevated,
-                        onPressed: () => controller.pickImages(),
+                        onPressed: () {
+                          controller.imageController.pickImage(singleImage: false);
+                        },
                         text: 'Pick Images',
                       ),
                     ],
@@ -331,10 +331,11 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                     () => CustomButton(
                       type: ButtonTypes.elevated,
                       isLoading: controller.isLoading.value,
-                      onPressed: () {
-                        if (controller.addPropertyFormKey.currentState!
-                            .validate()) {
-                          controller.uploadImagesToImageKit(isAdd: true);
+                      onPressed: () { // html data validation , pending
+                        if (controller.addPropertyFormKey.currentState!.validate() && controller.imageController.pickedImagesForUI.isNotEmpty) {
+                          controller.addProperty();
+                        }else{
+                          SmartAlert.customSnackBar(title: 'Images not selected.', desc: 'Please select images.');
                         }
                       },
                       width: Get.width,
@@ -375,7 +376,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
     controller.houseRules.text = data['house_rules'] ?? "house rules null";
     controller.safetynProperty.text = data['safety_property'] ?? "safety null";
 
-    controller.pickedImagesForUI.clear();
+    controller.imageController.pickedImagesForUI.clear();
   }
 
   // edit property form
@@ -518,12 +519,11 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
 
                                 // current added images
                                 Obx(() {
-                                  if (controller.pickedImagesForUI.isNotEmpty) {
+                                  if (controller.imageController.pickedImagesForUI.isNotEmpty) {
                                     return SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
-                                        children: controller.pickedImagesForUI
-                                            .map((file) {
+                                        children: controller.imageController.pickedImagesForUI.map((file) {
                                           return Padding(
                                             padding: const EdgeInsets.only(
                                               right: 15.0,
@@ -531,9 +531,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                             child: Stack(
                                               children: [
                                                 ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadiusGeometry
-                                                          .circular(10),
+                                                  borderRadius: BorderRadiusGeometry.circular(10),
                                                   child: Image.file(
                                                     // path: "$file",
                                                     file,
@@ -552,9 +550,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                                             backgroundColor:
                                                                 AppColor.red),
                                                     onPressed: () {
-                                                      controller
-                                                          .pickedImagesForUI
-                                                          .remove(file);
+                                                      controller.imageController.pickedImagesForUI.remove(file);
                                                     },
                                                     icon: Icon(
                                                       Icons.delete_outline,
@@ -567,16 +563,15 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                                         }).toList(),
                                       ),
                                     );
-                                  } else if (controller.pickedSvgImagesForUI.isNotEmpty) {
+                                  } else if (controller.imageController.pickedSvgImagesForUI.isNotEmpty) {
                                     return SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
-                                        children: controller
-                                            .pickedSvgImagesForUI
-                                            .map((svg) {
+                                        children: controller.imageController.pickedSvgImagesForUI.map((svg) {
                                           return Padding(
                                             padding: const EdgeInsets.only(
-                                                right: 15.0),
+                                              right: 15.0,
+                                            ),
                                             child: ClipRRect(
                                               borderRadius: BorderRadiusGeometry.circular(10),
                                               child: SvgPicture.string(
@@ -604,7 +599,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
 
                           CustomButton(
                             type: ButtonTypes.elevated,
-                            onPressed: () => controller.pickImages(),
+                            onPressed: () => controller.imageController.pickImage(singleImage: false),
                             text: 'Add new Images',
                           ),
 
@@ -771,11 +766,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                               isLoading: controller.isLoading.value,
                               onPressed: () {
                                 if (controller.editPropertyFormKey.currentState!.validate()) {
-                                  if (controller.pickedImagesForUI.isNotEmpty) {
-                                    controller.uploadImagesToImageKit(isAdd: false, propertyId: propertyId,);
-                                  } else {
-                                    controller.updateOwnerPropertyDetails(propertyId);
-                                  }
+                                  controller.updateOwnerPropertyDetails(propertyId);
                                 }
                               },
                               width: Get.width,
