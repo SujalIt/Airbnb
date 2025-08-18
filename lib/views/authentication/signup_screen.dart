@@ -51,15 +51,15 @@ class FinishSigningUpScreen extends GetView<AuthController> {
                       return CustomTextFormField(
                         readOnly: true,
                         controller: TextEditingController(
-                          text: controller.selectedDate.value == null
+                          text: selectedDate.value == null
                               ? ''
-                              : DateFormat("dd/MM/yyyy").format(controller.selectedDate.value!),
+                              : DateFormat("dd/MM/yyyy").format(selectedDate.value!),
                           ),
                           hintText: "Date of Birth",
                           suffixIcon: CustomButton(
                             type: ButtonTypes.icon,
                             icon: Icon(Icons.calendar_today),
-                            onPressed: () => controller.pickDate(context),
+                            onPressed: () => pickDate(context),
                           ),
                         validatorText: 'Please Select Your date of birth!',
                       );

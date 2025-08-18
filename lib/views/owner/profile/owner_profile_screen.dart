@@ -83,8 +83,8 @@ class OwnerProfileScreen extends GetView<OwnerProfileController> {
                 Obx(() => TextFormField(
                     readOnly: true,
                     controller: TextEditingController(
-                      text: controller.selectedDate.value != null
-                          ? DateFormat("dd/MM/yyyy").format(controller.selectedDate.value!)
+                      text: selectedDate.value != null
+                          ? DateFormat("dd/MM/yyyy").format(selectedDate.value!)
                           : "",
                     ),
                     decoration: InputDecoration(
@@ -94,7 +94,7 @@ class OwnerProfileScreen extends GetView<OwnerProfileController> {
                         icon: Icon(
                           Icons.calendar_today,
                         ),
-                        onPressed: () => controller.pickDate(context),
+                        onPressed: () => pickDate(context),
                       ),
                     ),
                     validator: (value) {
@@ -148,7 +148,7 @@ class OwnerProfileScreen extends GetView<OwnerProfileController> {
               controller.fnameController.text = snapshot.data['first_name'];
               controller.lnameController.text = snapshot.data['last_name'];
               controller.emailController.text = snapshot.data['email'];
-              controller.selectedDate.value = DateTime.parse(snapshot.data['dob']);
+              selectedDate.value = DateTime.parse(snapshot.data['dob']);
               return Column(
                 spacing: 15,
                 crossAxisAlignment: CrossAxisAlignment.start,

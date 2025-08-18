@@ -99,14 +99,14 @@ class _ProfileBodyState extends State<ProfileBody> {
             () => CustomTextFormField(
               readOnly: true,
               controller: TextEditingController(
-                text: controller.selectedDate.value != null ? DateFormat("dd/MM/yyyy").format(controller.selectedDate.value!) : "",
+                text: selectedDate.value != null ? DateFormat("dd/MM/yyyy").format(selectedDate.value!) : "",
               ),
               hintText: 'Please Enter Your DOB',
               suffixIcon: IconButton(
                 icon: Icon(
                   Icons.calendar_today,
                 ),
-                onPressed: () => controller.pickDate(context),
+                onPressed: () => pickDate(context),
               ),
               validatorText: 'Please Select Your date of birth!',
             ),

@@ -47,6 +47,7 @@ export 'package:airbnb/utils/extensions.dart';
 export 'package:airbnb/utils/app_string.dart';
 export 'package:airbnb/utils/colors.dart';
 export 'package:airbnb/utils/images.dart';
+export 'package:airbnb/utils/date_picker.dart';
 
 // utils enums
 export 'package:airbnb/utils/enums.dart';
