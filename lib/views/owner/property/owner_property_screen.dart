@@ -4,7 +4,6 @@ import 'package:html_editor_enhanced/html_editor.dart';
 class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
   const OwnerPropertyScreen({super.key});
 
-
   // add new property form
   void addNewPropertyForm() {
     controller.clearAddFormFields();
@@ -166,6 +165,37 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                         text: 'Pick Images',
                       ),
                     ],
+                  ),
+
+                  // home category
+                  DropdownButtonFormField(
+                    hint: Text("Select Category your home"),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    items: [
+                      DropdownMenuItem(
+                        value: "tiny_homes",
+                        child: Text("Tiny homes"),
+                      ),
+                      DropdownMenuItem(
+                        value: "cabins",
+                        child: Text("Cabins"),
+                      ),
+                      DropdownMenuItem(
+                        value: "beachfront",
+                        child: Text("Beachfront"),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      controller.category.text = value ?? "category null";
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select category';
+                      }
+                      return null;
+                    },
                   ),
 
                   // property title
@@ -333,7 +363,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                       isLoading: controller.isLoading.value,
                       onPressed: () { // html data validation , pending
                         if (controller.addPropertyFormKey.currentState!.validate() && controller.imageController.pickedImagesForUI.isNotEmpty) {
-                          controller.addProperty();
+                          controller.addProperty(controller.category.text);
                         }else{
                           SmartAlert.customSnackBar(title: 'Images not selected.', desc: 'Please select images.');
                         }
@@ -656,7 +686,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                           ),
                           // state
                           DropdownButtonFormField(
-                            value: controller.state.text,
+                            initialValue: controller.state.text,
                             hint: Text("Select State"),
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
@@ -688,7 +718,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                           // city
                           DropdownButtonFormField(
                             hint: Text("Select City"),
-                            value: controller.city.text,
+                            initialValue: controller.city.text,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                             ),

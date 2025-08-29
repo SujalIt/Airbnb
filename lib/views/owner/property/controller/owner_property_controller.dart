@@ -14,6 +14,7 @@ class OwnerPropertyController extends GetxController {
   TextEditingController availableDate = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController ratings = TextEditingController();
+  TextEditingController category = TextEditingController();
   TextEditingController title = TextEditingController();
   TextEditingController roomTitle = TextEditingController();
   TextEditingController roomSubtitle = TextEditingController();
@@ -38,7 +39,6 @@ class OwnerPropertyController extends GetxController {
     price.clear();
     ratings.clear();
     imageController.pickedImagesForUI.clear();
-    // imageController.multiplePickedFiles.clear();
 
     title.clear();
     aboutUs.clear();
@@ -56,7 +56,7 @@ class OwnerPropertyController extends GetxController {
     safetynProperty.clear();
   }
 
-  Future<void> addProperty() async {
+  Future<void> addProperty(String category) async {
     List<String>? imageUrls;
     try {
       isLoading.value = true;
@@ -66,7 +66,7 @@ class OwnerPropertyController extends GetxController {
       var aboutUsData = await aboutUs.getText();
 
       await FirebaseFirestore.instance
-          .collection("places")
+          .collection(category)
           .add({
         "name": name.text,
         "price": price.text,
@@ -90,8 +90,8 @@ class OwnerPropertyController extends GetxController {
         "pin_code": pincode.text,
         "location": [
           {
-            'latitude': latitude.text,
-            'longitude': longitude.text,
+            'latitude': double.tryParse(latitude.text),
+            'longitude': double.tryParse(longitude.text),
           }
         ],
         "cancellation_policy": cancellationPolicy.text,

@@ -1,7 +1,22 @@
 import 'package:airbnb/airbnb_global_imports.dart';
 
-class ExploreScreen extends GetView<ExploreScreenController> {
+class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
+
+  @override
+  _ExploreScreenState createState() => _ExploreScreenState();
+}
+
+class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProviderStateMixin{
+
+  late final controller;
+
+  @override
+  void initState(){
+    super.initState();
+    controller = Get.find<ExploreScreenController>();
+    controller.tabController = TabController(length: 3, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,187 +102,39 @@ class ExploreScreen extends GetView<ExploreScreenController> {
                   ),
                 ),
               ),
-              DefaultTabController(
-                length: 8,
-                child: TabBar(
-                  tabAlignment: TabAlignment.start,
-                  labelColor: AppColor.black,
-                  unselectedLabelColor: AppColor.grey,
-                  isScrollable: true,
-                  indicatorColor: AppColor.black,
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.beach_access_outlined),
-                      text: "Beachfront",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.star),
-                      text: "Icons",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.bedroom_parent_sharp),
-                      text: "Rooms",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.cabin),
-                      text: "Cabins",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.home_outlined),
-                      text: "Tiny homes",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.grid_off),
-                      text: "Off-the-grid",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.view_comfortable_sharp),
-                      text: "Amazing views",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.pool_outlined),
-                      text: "Amazing pools",
-                    ),
-                  ],
-                ),
+              TabBar(
+                // tabAlignment: TabAlignment.start,
+                labelColor: AppColor.black,
+                unselectedLabelColor: AppColor.grey,
+                // isScrollable: true,
+                indicatorColor: AppColor.black,
+                controller: controller.tabController,
+                tabs: [
+                  Tab(
+                    icon: Icon(Icons.beach_access_outlined),
+                    text: "Beachfront",
+                  ),
+                  Tab(
+                    icon: Icon(Icons.cabin),
+                    text: "Cabins",
+                  ),
+                  Tab(
+                    icon: Icon(Icons.home_outlined),
+                    text: "Tiny homes",
+                  ),
+                ],
               ),
+
               // image container
               Expanded(
-                child: SingleChildScrollView(
-                  child: FutureBuilder<dynamic>(
-                    future: controller.getAllDocuments(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return SizedBox(
-                          height: 350,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
-                      if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      }
-                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(child: Text('No documents found'));
-                      }
-                      Map<String, Map<String, dynamic>> documents = snapshot.data!;
-                      return ListView.builder(
-                        itemCount: documents.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          String documentId = documents.keys.elementAt(index);
-                          Map<String, dynamic> documentData = documents[documentId]!;
-                          return Column(
-                            spacing: 15,
-                            children: [
-                              Stack(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Get.toNamed(
-                                        '${Routes.propertyDetail}?id=$documentId',
-                                      );
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                      child: CustomImage(
-                                        height: 330,
-                                        path: documentData['images'].isNotEmpty
-                                            ? documentData['images'][0]
-                                            : "assets/images/Image-Not-Found.jpg",
-                                        fit: BoxFit.cover,
-                                        width: Get.width,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.favorite_outline_rounded,
-                                        size: 30,
-                                        color: AppColor.white60,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                spacing: 1,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        documentData["name"] ?? "name null",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Row(
-                                        spacing: 1,
-                                        children: [
-                                          Icon(
-                                            Icons.star,
-                                            size: 18,
-                                          ),
-                                          Text(
-                                            documentData["rating"] ?? "rating null",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    documentData["distance"] ?? "distance null",
-                                    style: TextStyle(
-                                      color: AppColor.blueGrey,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    documentData["available_dates"] ?? "availableDates null",
-                                    style: TextStyle(
-                                      color: AppColor.blueGrey,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Row(
-                                    spacing: 3,
-                                    children: [
-                                      Text(
-                                        '₹${documentData["price"] ?? "price null"}',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: AppColor.black,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ),
-                                      Text(
-                                        'night',
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                  ),
+                child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: controller.tabController,
+                    children: [
+                      TabContent(controller: controller,placeName: "beachfront",),
+                      TabContent(controller: controller,placeName: "cabins",),
+                      TabContent(controller: controller,placeName: "tiny_homes",),
+                    ],
                 ),
               ),
             ],
@@ -303,6 +170,162 @@ class ExploreScreen extends GetView<ExploreScreenController> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
+
+class TabContent extends StatelessWidget{
+  TabContent({super.key,required this.placeName,required this.controller});
+
+  String placeName;
+  var controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: FutureBuilder<dynamic>(
+        future: controller.getDataByPlace(placeName),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return SizedBox(
+              height: 350,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No documents found'));
+          }
+          Map<String, Map<String, dynamic>> documents = snapshot.data!;
+          return ListView.builder(
+            itemCount: documents.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              String documentId = documents.keys.elementAt(index);
+              Map<String, dynamic> documentData =
+              documents[documentId]!;
+              return Column(
+                spacing: 15,
+                children: [
+                  Stack(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(
+                            '${Routes.propertyDetail}?id=$documentId',
+                            arguments: placeName, // to get docIds from specific place
+                          );
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                          child: CustomImage(
+                            height: 330,
+                            path: documentData['images']
+                                .isNotEmpty
+                                ? documentData['images'][0]
+                                : "assets/images/Image-Not-Found.jpg",
+                            fit: BoxFit.cover,
+                            width: Get.width,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.favorite_outline_rounded,
+                            size: 30,
+                            color: AppColor.white60,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    spacing: 1,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            documentData["name"] ?? "name null",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Row(
+                            spacing: 1,
+                            children: [
+                              Icon(
+                                Icons.star,
+                                size: 18,
+                              ),
+                              Text(
+                                documentData["rating"] ??
+                                    "rating null",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Text(
+                        documentData["distance"] ??
+                            "distance null",
+                        style: TextStyle(
+                          color: AppColor.blueGrey,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        documentData["available_dates"] ??
+                            "availableDates null",
+                        style: TextStyle(
+                          color: AppColor.blueGrey,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Row(
+                        spacing: 3,
+                        children: [
+                          Text(
+                            '₹${documentData["price"] ?? "price null"}',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: AppColor.black,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          Text(
+                            'night',
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

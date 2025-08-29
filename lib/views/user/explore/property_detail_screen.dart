@@ -383,12 +383,29 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
 
   @override
   Widget build(BuildContext context) {
+    var placeName = Get.arguments;
     return Scaffold(
       backgroundColor: AppColor.white,
       body: SafeArea(
         child: FutureBuilder(
-          future: controller.getDocumentById(propertyId),
+          future: controller.getDocumentById(propertyId,placeName),
           builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return SizedBox(
+                height: 350,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            }
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(child: Text('No documents found'));
+            }
             if (snapshot.hasData) {
               controller.currentIndexPropertyDetail.value = 0;
               return FutureBuilder(
