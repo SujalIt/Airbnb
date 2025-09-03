@@ -14,7 +14,7 @@ class OwnerPropertyController extends GetxController {
   TextEditingController availableDate = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController ratings = TextEditingController();
-  TextEditingController category = TextEditingController();
+  var category = '';
   TextEditingController title = TextEditingController();
   TextEditingController roomTitle = TextEditingController();
   TextEditingController roomSubtitle = TextEditingController();
@@ -56,7 +56,7 @@ class OwnerPropertyController extends GetxController {
     safetynProperty.clear();
   }
 
-  Future<void> addProperty(String category) async {
+  Future<void> addProperty() async {
     List<String>? imageUrls;
     try {
       isLoading.value = true;
@@ -66,7 +66,7 @@ class OwnerPropertyController extends GetxController {
       var aboutUsData = await aboutUs.getText();
 
       await FirebaseFirestore.instance
-          .collection(category)
+          .collection('properties')
           .add({
         "name": name.text,
         "price": price.text,
@@ -88,6 +88,7 @@ class OwnerPropertyController extends GetxController {
         "state": state.text,
         "city": city.text,
         "pin_code": pincode.text,
+        "category": category,
         "location": [
           {
             'latitude': double.tryParse(latitude.text),
@@ -116,7 +117,7 @@ class OwnerPropertyController extends GetxController {
     try {
       try {
         var userId = await FirebaseFirestore.instance
-            .collection('places')
+            .collection('properties')
             .doc(propertyId)
             .get();
         return userId.data();
@@ -140,7 +141,7 @@ class OwnerPropertyController extends GetxController {
     try {
       isLoading.value = true;
       await FirebaseFirestore.instance
-          .collection('places')
+          .collection('properties')
           .doc(propertyId)
           .update(
         {
@@ -165,7 +166,7 @@ class OwnerPropertyController extends GetxController {
       }
       var aboutUsEditedData = await aboutUs.getText();
       await FirebaseFirestore.instance
-          .collection('places')
+          .collection('properties')
           .doc(propertyId)
           .update(
         {
@@ -213,10 +214,10 @@ class OwnerPropertyController extends GetxController {
   }
 
   // owner all properties
-  Stream<dynamic> getAllPropertiesByOwnerId(String documentId)  {
+  Stream<dynamic> getAllPropertiesByOwnerId()  {
     try {
       return FirebaseFirestore.instance
-          .collection('places')
+          .collection('properties')
           .where('uuid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
           .snapshots()
           .map((querySnapshot) {
@@ -233,7 +234,7 @@ class OwnerPropertyController extends GetxController {
 
   void deleteProperty(String docId) async{
     try{
-      await FirebaseFirestore.instance.collection('places').doc(docId).delete();
+      await FirebaseFirestore.instance.collection('properties').doc(docId).delete();
       Get.back();
     } on FirebaseFirestore catch (e){
       SmartAlert.customSnackBar(title: 'Something wrong. $e', desc: 'Please try again');

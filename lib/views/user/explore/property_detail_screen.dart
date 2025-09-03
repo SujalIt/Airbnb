@@ -380,32 +380,15 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    var placeName = Get.arguments;
     return Scaffold(
       backgroundColor: AppColor.white,
       body: SafeArea(
         child: FutureBuilder(
-          future: controller.getDocumentById(propertyId,placeName),
+          future: controller.getDocumentById(propertyId),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return SizedBox(
-                height: 350,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-            if (snapshot.hasError) {
-              return Center(
-                child: Text('Error: ${snapshot.error}'),
-              );
-            }
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text('No documents found'));
-            }
+            // no more condition needed.
             if (snapshot.hasData) {
               controller.currentIndexPropertyDetail.value = 0;
               return FutureBuilder(
@@ -474,7 +457,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                         child: CustomButton(
                                           type: ButtonTypes.icon,
                                           iconButtonStyle: ButtonStyle(
-                                            iconSize: WidgetStatePropertyAll(10),
+                                            iconSize: WidgetStatePropertyAll(20),
                                           ),
                                           onPressed: () {
                                             Get.back();
@@ -1198,6 +1181,7 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                         ),
                                         Divider(),
 
+                                        // availability
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
@@ -1224,24 +1208,28 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                           ],
                                         ),
                                         Divider(),
+
+                                        // house rules
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Column(
-                                              spacing: 5,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'House rules',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 25,
+                                            Expanded(
+                                              child: Column(
+                                                spacing: 5,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'House rules',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 25,
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  snapshot.data['house_rules'] ?? 'house rules null',
-                                                ),
-                                              ],
+                                                  Text(
+                                                    snapshot.data['house_rules'] ?? 'house rules null',
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                             Icon(
                                               Icons.arrow_forward_ios,
@@ -1250,24 +1238,28 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                           ],
                                         ),
                                         Divider(),
+
+                                        // health safety
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Column(
-                                              spacing: 5,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Health & safety',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 25,
+                                            Expanded(
+                                              child: Column(
+                                                spacing: 5,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Health & safety',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 25,
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  snapshot.data['safety_property'] ?? 'safety null',
-                                                ),
-                                              ],
+                                                  Text(
+                                                    snapshot.data['safety_property'] ?? 'safety null',
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                             Icon(
                                               Icons.arrow_forward_ios,
@@ -1276,24 +1268,28 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                           ],
                                         ),
                                         Divider(),
+
+                                        // cancellation
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Column(
-                                              spacing: 5,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Cancellation policy',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 25,
+                                            Expanded(
+                                              child: Column(
+                                                spacing: 5,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Cancellation policy',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 25,
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  snapshot.data['cancellation_policy'] ?? 'cancellation policy null',
-                                                ),
-                                              ],
+                                                  Text(
+                                                    snapshot.data['cancellation_policy'] ?? 'cancellation policy null',
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                             Icon(
                                               Icons.arrow_forward_ios,
@@ -1302,6 +1298,8 @@ class PropertyDetailScreen extends GetView<ExploreScreenController> {
                                           ],
                                         ),
                                         Divider(),
+
+                                        // report
                                         Row(
                                           spacing: 10,
                                           children: [

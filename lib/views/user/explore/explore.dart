@@ -141,35 +141,6 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
           ),
         ),
       ),
-      floatingActionButton: SizedBox(
-        width: 100,
-        height: 45,
-        child: FloatingActionButton.extended(
-          onPressed: () {},
-          backgroundColor: AppColor.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          label: Row(
-            spacing: 5,
-            children: [
-              Text(
-                "Map",
-                style: TextStyle(
-                  color: AppColor.white,
-                  fontSize: 16,
-                ),
-              ),
-              Icon(
-                Icons.map,
-                color: AppColor.white,
-                size: 16,
-              )
-            ],
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
@@ -220,7 +191,6 @@ class TabContent extends StatelessWidget{
                         onTap: () {
                           Get.toNamed(
                             '${Routes.propertyDetail}?id=$documentId',
-                            arguments: placeName, // to get docIds from specific place
                           );
                         },
                         child: ClipRRect(

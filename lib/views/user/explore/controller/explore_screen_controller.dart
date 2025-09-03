@@ -9,7 +9,11 @@ class ExploreScreenController extends GetxController {
   TextEditingController searchController = TextEditingController();
 
   Future<dynamic> getDataByPlace(String placeName) async{
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection(placeName).get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore
+        .instance
+        .collection('properties')
+        .where('category',isEqualTo: placeName)
+        .get();
 
     Map<String, Map<String, dynamic>> documents = {};
     for (var doc in querySnapshot.docs) {
@@ -19,10 +23,10 @@ class ExploreScreenController extends GetxController {
   }
 
   // property detail screen
-  Future<dynamic> getDocumentById(String documentId,String placeName) async {
+  Future<dynamic> getDocumentById(String documentId,) async {
     try {
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-          .collection(placeName)
+          .collection('properties')
           .doc(documentId)
           .get();
       if (documentSnapshot.exists) {

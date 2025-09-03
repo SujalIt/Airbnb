@@ -169,7 +169,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
 
                   // home category
                   DropdownButtonFormField(
-                    hint: Text("Select Category your home"),
+                    hint: Text("Select Category of your home"),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                     ),
@@ -188,7 +188,8 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                       ),
                     ],
                     onChanged: (value) {
-                      controller.category.text = value ?? "category null";
+                      controller.category = '';
+                      controller.category = value ?? "category null";
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -363,7 +364,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                       isLoading: controller.isLoading.value,
                       onPressed: () { // html data validation , pending
                         if (controller.addPropertyFormKey.currentState!.validate() && controller.imageController.pickedImagesForUI.isNotEmpty) {
-                          controller.addProperty(controller.category.text);
+                          controller.addProperty();
                         }else{
                           SmartAlert.customSnackBar(title: 'Images not selected.', desc: 'Please select images.');
                         }
@@ -916,8 +917,7 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
               ),
             ),
             StreamBuilder<dynamic>(
-              stream: controller.getAllPropertiesByOwnerId(
-                  FirebaseAuth.instance.currentUser!.uid.toString()),
+              stream: controller.getAllPropertiesByOwnerId(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(
