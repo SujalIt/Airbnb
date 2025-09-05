@@ -7,6 +7,10 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
   // add new property form
   void addNewPropertyForm() {
     controller.clearAddFormFields();
+
+    var categoryIds = []; //pending
+    var titles = []; //pending
+
     Get.bottomSheet(
       isScrollControlled: true,
       backgroundColor: AppColor.white,
@@ -167,6 +171,54 @@ class OwnerPropertyScreen extends GetView<OwnerPropertyController> {
                     ],
                   ),
 
+                  // pending
+                  // FutureBuilder(
+                  //   future: controller.superAdminCategory(),
+                  //   builder: (BuildContext context,snapshot){
+                  //     if(snapshot.hasData){
+                  //       for(DocumentSnapshot doc in snapshot.data){
+                  //         categoryIds.add(doc.id);
+                  //         var temp = doc.data() as Map<String , dynamic>;
+                  //         titles.add(temp['title']);
+                  //       }
+                  //     }
+                  //     return ListView.builder(
+                  //       itemCount: categoryIds.length,
+                  //       itemBuilder: (BuildContext context, int index) {
+                  //         return  DropdownButtonFormField(
+                  //           hint: Text("Select Category of your home"),
+                  //           decoration: InputDecoration(
+                  //             border: OutlineInputBorder(),
+                  //           ),
+                  //           items: [
+                  //             DropdownMenuItem(
+                  //               value: categoryIds[index],
+                  //               child: Text(titles[index]),
+                  //             ),
+                  //             DropdownMenuItem(
+                  //               value: "cabins",
+                  //               child: Text("Cabins"),
+                  //             ),
+                  //             DropdownMenuItem(
+                  //               value: "beachfront",
+                  //               child: Text("Beachfront"),
+                  //             ),
+                  //           ],
+                  //           onChanged: (value) {
+                  //             // controller.category = '';
+                  //             // controller.category = value ?? "category null";
+                  //           },
+                  //           validator: (value) {
+                  //             // if (value == null || value.isEmpty) {
+                  //             //   return 'Please select category';
+                  //             // }
+                  //             return null;
+                  //           },
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  // ),
                   // home category
                   DropdownButtonFormField(
                     hint: Text("Select Category of your home"),

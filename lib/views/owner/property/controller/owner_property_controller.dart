@@ -241,4 +241,21 @@ class OwnerPropertyController extends GetxController {
       Get.back();
     }
   }
+
+
+  Future<dynamic> superAdminCategory() async{
+    try{
+      QuerySnapshot  t = await FirebaseFirestore.instance.collection('category').get();
+      // for (var doc in t.docs) {
+      //   // Print the document ID
+      //   print("Document ID: ${doc.id}");
+      // }
+      // print(t.docs.map((item)=> print(item.data())));
+      print("called in firebase");
+      return t.docs;
+    }on FirebaseException catch (e){
+      print(e);
+      print("error");
+    }
+  }
 }
