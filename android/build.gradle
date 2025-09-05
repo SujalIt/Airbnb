@@ -8,6 +8,7 @@ allprojects {
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+<<<<<<< HEAD
 
     if (project.name == 'uni_links') {
         afterEvaluate {
@@ -16,6 +17,8 @@ subprojects {
             }
         }
     }
+=======
+>>>>>>> 46fc877c3ce4efde169d09b186db5c890568237a
 }
 subprojects {
     project.evaluationDependsOn(":app")
