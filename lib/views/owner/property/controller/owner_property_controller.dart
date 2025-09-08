@@ -14,7 +14,9 @@ class OwnerPropertyController extends GetxController {
   TextEditingController availableDate = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController ratings = TextEditingController();
-  var category = '';
+  String selectedCategory = '';
+  // var categoryIds = []; //pending
+  // var categoryTitles = []; //pending
   TextEditingController title = TextEditingController();
   TextEditingController roomTitle = TextEditingController();
   TextEditingController roomSubtitle = TextEditingController();
@@ -28,6 +30,12 @@ class OwnerPropertyController extends GetxController {
   TextEditingController cancellationPolicy = TextEditingController();
   TextEditingController houseRules = TextEditingController();
   TextEditingController safetynProperty = TextEditingController();
+
+  @override
+  void onInit(){
+    super.onInit();
+    superAdminCategory();
+  }
 
   // custom image picker
   var imageController = Get.find<ImagePickerController>();
@@ -88,7 +96,7 @@ class OwnerPropertyController extends GetxController {
         "state": state.text,
         "city": city.text,
         "pin_code": pincode.text,
-        "category": category,
+        "category": selectedCategory,
         "location": [
           {
             'latitude': double.tryParse(latitude.text),
@@ -243,19 +251,20 @@ class OwnerPropertyController extends GetxController {
   }
 
 
+  var categories = [];
+
   Future<dynamic> superAdminCategory() async{
     try{
-      QuerySnapshot  t = await FirebaseFirestore.instance.collection('category').get();
-      // for (var doc in t.docs) {
-      //   // Print the document ID
-      //   print("Document ID: ${doc.id}");
-      // }
-      // print(t.docs.map((item)=> print(item.data())));
-      print("called in firebase");
-      return t.docs;
+      final snapshot = await FirebaseFirestore.instance.collection('category').get();
+      categories = snapshot.docs.map((doc){
+        return {
+          'id': doc.id,
+          'title': doc['title'],
+        };
+      }).toList();
+      return categories;
     }on FirebaseException catch (e){
-      print(e);
-      print("error");
+      SmartAlert.customSnackBar(title: 'Error', desc: "Failed try again: $e");
     }
   }
 }

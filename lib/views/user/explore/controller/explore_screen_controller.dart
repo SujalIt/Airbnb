@@ -4,15 +4,32 @@ class ExploreScreenController extends GetxController {
 
   var currentIndexPropertyDetail = 0.obs;
   late TabController tabController;
+  var categories = [];
 
   // review screen
   TextEditingController searchController = TextEditingController();
 
-  Future<dynamic> getDataByPlace(String placeName) async{
+
+  Future<dynamic> superAdminCategory() async{
+    try{
+      final snapshot = await FirebaseFirestore.instance.collection('category').get();
+      categories = snapshot.docs.map((doc){
+        return {
+          'id': doc.id,
+          'title': doc['title'],
+        };
+      }).toList();
+      return categories;
+    }on FirebaseException catch (e){
+      SmartAlert.customSnackBar(title: 'Error', desc: "Failed try again: $e");
+    }
+  }
+
+  Future<dynamic> getDataByCategory(String categoryId) async{
     QuerySnapshot querySnapshot = await FirebaseFirestore
         .instance
         .collection('properties')
-        .where('category',isEqualTo: placeName)
+        .where('category',isEqualTo: categoryId)
         .get();
 
     Map<String, Map<String, dynamic>> documents = {};

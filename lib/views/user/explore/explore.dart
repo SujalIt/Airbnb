@@ -27,117 +27,140 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
           padding: EdgeInsets.symmetric(
             horizontal: 25,
           ),
-          child: Column(
-            spacing: 20,
-            children: [
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                width: Get.width,
-                height: 65,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  border: Border.all(
-                    color: AppColor.white,
-                  ),
-                  color: AppColor.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColor.black26,
-                      blurRadius: 15,
+          child: FutureBuilder(
+            future: controller.superAdminCategory(),
+            builder: (context, asyncSnapshot) {
+              if(asyncSnapshot.connectionState == ConnectionState.waiting){
+                return Center(child: CircularProgressIndicator());
+              }
+              if(asyncSnapshot.hasError){
+                return Center(child: Text("Error: ${asyncSnapshot.error}"));
+              }
+              if(asyncSnapshot.hasData){
+                return Column(
+                  spacing: 20,
+                  children: [
+                    SizedBox(
+                      height: 5,
                     ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Icon(
-                        Icons.search,
-                        size: 28,
-                        color: AppColor.black,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Where to?',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17,
-                            ),
-                          ),
-                          Text(
-                            'Anywhere ∙ Any week ∙ Add guests',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                              color: AppColor.grey,
-                            ),
+                    Container(
+                      width: Get.width,
+                      height: 65,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        border: Border.all(
+                          color: AppColor.white,
+                        ),
+                        color: AppColor.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColor.black26,
+                            blurRadius: 15,
                           ),
                         ],
                       ),
-                      Container(
-                        width: 43,
-                        height: 43,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColor.black12,
-                          ),
-                          color: AppColor.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.tune,
-                            size: 20,
-                            color: AppColor.black,
-                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Icon(
+                              Icons.search,
+                              size: 28,
+                              color: AppColor.black,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Where to?',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                Text(
+                                  'Anywhere ∙ Any week ∙ Add guests',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                    color: AppColor.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              width: 43,
+                              height: 43,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColor.black12,
+                                ),
+                                color: AppColor.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.tune,
+                                  size: 20,
+                                  color: AppColor.black,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              TabBar(
-                // tabAlignment: TabAlignment.start,
-                labelColor: AppColor.black,
-                unselectedLabelColor: AppColor.grey,
-                // isScrollable: true,
-                indicatorColor: AppColor.black,
-                controller: controller.tabController,
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.beach_access_outlined),
-                    text: "Beachfront",
-                  ),
-                  Tab(
-                    icon: Icon(Icons.cabin),
-                    text: "Cabins",
-                  ),
-                  Tab(
-                    icon: Icon(Icons.home_outlined),
-                    text: "Tiny homes",
-                  ),
-                ],
-              ),
+                    ),
 
-              // image container
-              Expanded(
-                child: TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: controller.tabController,
-                    children: [
-                      TabContent(controller: controller,placeName: "beachfront",),
-                      TabContent(controller: controller,placeName: "cabins",),
-                      TabContent(controller: controller,placeName: "tiny_homes",),
-                    ],
-                ),
-              ),
-            ],
+                    controller.categories.isEmpty ? Text("no tab") :
+                    TabBar(
+                      // tabAlignment: TabAlignment.start,
+                      labelColor: AppColor.black,
+                      unselectedLabelColor: AppColor.grey,
+                      // isScrollable: true,
+                      indicatorColor: AppColor.black,
+                      controller: controller.tabController,
+                      tabs: [
+                        Tab(
+                          icon: Icon(Icons.beach_access_outlined),
+                          text: controller.categories[0]['title'],
+                        ),
+                        Tab(
+                          icon: Icon(Icons.cabin),
+                          text: controller.categories[1]['title'],
+                        ),
+                        Tab(
+                          icon: Icon(Icons.home_outlined),
+                          text: controller.categories[2]['title'],
+                        ),
+                      ],
+                    ),
+
+                    // image container
+                    controller.categories.isEmpty ? Text("no data") :
+                    Expanded(
+                      child: TabBarView(
+                        physics: NeverScrollableScrollPhysics(),
+                        controller: controller.tabController,
+                        // children: List.generate(controller.categories, (int index){
+                        //   return TabContent(
+                        //     controller: controller,
+                        //     categoryId: controller.categories[index]['id'],
+                        //   );
+                        // })
+                        children: [
+                          TabContent(controller: controller,categoryId: controller.categories[0]['id'],),
+                          TabContent(controller: controller,categoryId: controller.categories[1]['id'],),
+                          TabContent(controller: controller,categoryId: controller.categories[2]['id'],),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return Text("Data Not Found");
+            }
           ),
         ),
       ),
@@ -146,16 +169,16 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
 }
 
 class TabContent extends StatelessWidget{
-  TabContent({super.key,required this.placeName,required this.controller});
+  TabContent({super.key,required this.categoryId,required this.controller});
 
-  String placeName;
+  String categoryId;
   var controller;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: FutureBuilder<dynamic>(
-        future: controller.getDataByPlace(placeName),
+        future: controller.getDataByCategory(categoryId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return SizedBox(
